@@ -40,3 +40,18 @@ class BlogPostsByCategory(Feed):
     
     def items(self, obj):
         return obj.post_set.published()[:10]
+
+class CommentsFeed(Feed):
+    _site = Site.objects.get_current()
+    title = '%s comment feed' % _site.name
+    description = '%s comments feed.' % _site.name
+
+    def link(self):
+        return reverse('blog_index')
+
+    def items(self):
+        return Comment.objects.all()[:10]
+
+    def item_pubdate(self, obj):
+        return obj.submit_date
+
