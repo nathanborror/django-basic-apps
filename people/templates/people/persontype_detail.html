@@ -1,0 +1,18 @@
+{% extends "people/base_people.html" %}
+
+
+{% block title %}{{ object.title }}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ object.title }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <ul class="link_list">
+    {% for person in object.person_set.all %}
+    <li><a href="{{ person.get_absolute_url }}">{{ person.full_name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

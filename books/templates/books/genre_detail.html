@@ -1,0 +1,21 @@
+{% extends "books/base_books.html" %}
+
+
+{% block title %}{{ object.title }}{% endblock %}
+{% block body_class %}{{ block.super }} book_genres{% endblock %}
+
+
+{% block content_title %}
+  <h2>Book Genres</h2>
+  {% include "books/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <h3>{{ object.title }}</h3>
+  <ul class="link_list">
+    {% for book in object.book_set.all %}
+    <li><a href="{{ book.get_absolute_url }}">{{ book.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "places/base_places.html" %}
+
+
+{% block title %}Places for {{ object }}{% endblock %}
+
+
+{% block content_title %}
+  <h2>Places for {{ object }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <ul class="link_list">
+    {% for place in object.place_set.all %}
+    <li><a href="{{ place.get_absolute_url }}">{{ place.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

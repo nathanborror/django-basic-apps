@@ -1,0 +1,34 @@
+changes:
+  date: 2008-09-17
+    change: Enabled the ability to override the default template names.
+    
+  date: 2008-09-04
+    change: Removed edit_inline from people model and added it to admin.py.
+    
+  date: 2008-05-18
+    change: Converted everything to 4 space tabs and made a few other changes to comply with Python Style Guide.
+    
+  date: 2008-4-20
+    change: Added a foreign key relationship to User.
+    change: Added Conversation and ConversationItem models.
+  
+  date: 2008-02-15
+    change: Internationalized models.
+
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}.
+
+  date: 2008-01-25
+    change: Moved generic view logic out of urls.py and into a view.
+
+  date: 2008-01-20
+    change: Added a field called 'mugshot_credit'
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'
+
+  date: 2007-12-21
+    change: Added Quote model
+
+  date: 2007-12-12
+    change: Cleaned up unit tests.

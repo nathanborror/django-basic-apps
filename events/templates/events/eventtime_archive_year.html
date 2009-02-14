@@ -1,0 +1,15 @@
+{% extends "events/base_events.html" %}
+
+
+{% block content_title %}
+  <h2>Events for {{ year }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <ul>
+    {% for month in date_list %}
+    <li><a href="./{{ month|date:"b" }}/">{{ month|date:"F" }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

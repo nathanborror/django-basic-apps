@@ -1,0 +1,154 @@
+[
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "1",
+        "fields" : {
+            "title": "AT&T",
+            "domain": "txt.att.net"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "2",
+        "fields" : {
+            "title": "Sprint",
+            "domain": "messaging.sprintpcs.com"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "3",
+        "fields" : {
+            "title": "Verizon",
+            "domain": "vtext.com"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "4",
+        "fields" : {
+            "title": "T-Mobile",
+            "domain": "tmomail.net "
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "5",
+        "fields" : {
+            "title": "Virgin Mobile",
+            "domain": "vmobl.com"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "6",
+        "fields" : {
+            "title": "Alltel",
+            "domain": "message.alltel.com"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "7",
+        "fields" : {
+            "title": "Nextel",
+            "domain": "messaging.nextel.com"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "8",
+        "fields" : {
+            "title": "VoiceStream",
+            "domain": "voicestream.net"
+        }
+    },
+    {
+        "model" : "profiles.mobileprovider",
+        "pk" : "9",
+        "fields" : {
+            "title": "SunCom",
+            "domain": "tms.suncom.com"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "1",
+        "fields" : {
+            "title": "Flickr",
+            "url": "http://www.flickr.com/photos/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "2",
+        "fields" : {
+            "title": "Twitter",
+            "url": "http://www.twitter.com/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "3",
+        "fields" : {
+            "title": "Pownce",
+            "url": "http://www.pownce.com/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "4",
+        "fields" : {
+            "title": "Facebook",
+            "url": "http://www.facebook.com/profile.php?id={user}"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "5",
+        "fields" : {
+            "title": "Digg",
+            "url": "http://digg.com/users/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "6",
+        "fields" : {
+            "title": "Del.icio.us",
+            "url": "http://del.icio.us/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "7",
+        "fields" : {
+            "title": "You Tube",
+            "url": "http://www.youtube.com/user/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "8",
+        "fields" : {
+            "title": "MySpace",
+            "url": "http://www.myspace.com/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "9",
+        "fields" : {
+            "title": "Dopplr",
+            "url": "http://www.dopplr.com/traveller/{user}/"
+        }
+    },
+    {
+        "model" : "profiles.servicetype",
+        "pk" : "10",
+        "fields" : {
+            "title": "Wordie",
+            "url": "http://www.wordie.com/people/{user}/"
+        }
+    }
+]

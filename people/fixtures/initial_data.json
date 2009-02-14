@@ -1,0 +1,26 @@
+[
+  {
+    "model" : "people.persontype",
+    "pk" : "1",
+    "fields" : {
+      "title" : "Author",
+      "slug" : "author"
+    }
+  },
+  {
+    "model" : "people.persontype",
+    "pk" : "2",
+    "fields" : {
+      "title" : "Director",
+      "slug" : "director"
+    }
+  },
+  {
+    "model" : "people.persontype",
+    "pk" : "3",
+    "fields" : {
+      "title" : "Musician",
+      "slug" : "musician"
+    }
+  }
+]

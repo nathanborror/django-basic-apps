@@ -1,0 +1,21 @@
+[
+  {
+    "model" : "people.persontype",
+    "pk" : 1,
+    "fields" : {
+      "title" : "Author",
+      "slug" : "author"
+    }
+  },
+  {
+    "model" : "people.person",
+    "pk" : 1,
+    "fields" : {
+      "first_name": "Jane",
+      "last_name" : "Jacobs",
+      "slug": "jane-jacobs",
+      "gender": 2,
+      "person_types": [1]
+    }
+  }
+]

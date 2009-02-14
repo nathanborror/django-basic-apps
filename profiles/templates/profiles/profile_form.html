@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block title %}Profile form{% endblock %}
+
+
+{% block content_title %}
+  <h2>Profile form</h2>
+{% endblock %}
+
+
+
+{% block content %}
+  <form action="." method="post" enctype="multipart/form-data" class="profile_form">
+    <table>
+      {{ user_form.as_table }}
+      {{ profile_form.as_table }}
+    </table>
+    
+    <fieldset>
+      <h4>Other profiles <small>(e.g. Flickr, Twitter, etc.)</small></h4>
+      {{ service_formset.management_form }}
+      
+      {% for form in service_formset.forms %}
+      <ul class="service">
+        {{ form.as_ul }}
+      </ul>
+      {% endfor %}
+      
+      <p class="quiet">To add more services than displayed save and continue editing.</p>
+    </fieldset>
+    
+    <fieldset>
+      <h4>Personal links <small>(Example: Your blog, you personal site, etc.)</small></h4>
+      {{ link_formset.management_form }}
+      
+      {% for form in link_formset.forms %}
+      <ul class="link">
+        {{ form.as_ul }}
+      </ul>
+      {% endfor %}
+      
+      <p class="quiet">To add more links than displayed save and continue editing.</p>
+    </fieldset>
+    
+    <p><input class="button" type="submit" value="Save"></p>
+  </form>
+{% endblock %}

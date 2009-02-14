@@ -1,0 +1,41 @@
+{% extends "people/base_people.html" %}
+
+
+{% block title %}{{ object.full_name }}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ object.full_name }}
+  <em>{% for type in object.person_types.all %}<a href="{{ type.get_absolute_url }}">{{ type.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</em></h2>
+{% endblock %}
+
+
+{% block content %}
+  {% if object.book_set.all %}
+  <h3 class="list_title">Books</h3>
+  <ul class="link_list">
+    {% for book in object.book_set.all %}
+    <li><a href="{{ book.get_absolute_url }}">{{ book.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  {% if object.band_set.all %}
+  <h3 class="list_title">Bands</h3>
+  <ul class="link_list">
+    {% for band in object.band_set.all %}
+    <li><a href="{{ band.get_absolute_url }}">{{ band.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  {% if object.movie_set.all %}
+  <h3 class="list_title">Movies</h3>
+  <ul class="link_list">
+    {% for movie in object.movie_set.all %}
+    <li><a href="{{ movie.get_absolute_url }}">{{ movie.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+{% endblock %}

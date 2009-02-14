@@ -1,0 +1,34 @@
+{% extends "music/base_music.html" %}
+
+
+{% block title %}{{ object.full_title }}{% endblock %}
+{% block body_class %}{{ block.super }} music_bands{% endblock %}
+
+
+{% block content_title %}
+  <h2>Music Bands</h2>
+  {% include "music/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <h3>{{ object.full_title }} <em><a href="{{ object.website }}">Website</a></em></h3>
+  
+  {% if object.musicians.all %}
+  <h4>Members</h4>
+  <ul class="link_list">
+    {% for member in object.musicians.all %}
+    <li><a href="{{ member.get_absolute_url }}">{{ member.full_name }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  {% if object.album_set.all %}
+  <h4>Albums</h4>
+  <ul class="link_list">
+    {% for album in object.album_set.all %}
+    <li><a href="{{ album.get_absolute_url }}">{{ album.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+changes:
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}
+
+  date: 2008-01-26
+    change: Added navigation to *_detail.html templates.
+
+  date: 2008-01-25
+    change: Moved generic view logic out of urls.py and into a view.
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'
+
+  date: 2007-12-21
+    change: Added genre_list.html and genre_detail.html
+    change: Added track_list.html and track_detail.html
+    change: Added an index.html for when you hit the music root
+    change: Updated models.py and urls.conf to handle the new templates
+
+  date: 2007-12-11
+    change: Changed album.thumbnail to album.cover. Changed thumbnail_url method to cover_url.
+    change: Changed album.released to album.release_date
+    change: Added album.is_ep and album.is_compilation boolean fields
+    change: Changed Song model to Track (urls.py and models.py)
+    change: Changed song.artist to track.band

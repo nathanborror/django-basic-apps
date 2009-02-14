@@ -1,0 +1,39 @@
+changes:
+  date: 2008-04-30
+    change: Changed /publisher/ to /publishers/.
+    change: Added a Page model and removed 'bookmark' from Book model.
+    change: Removed 'has_read' method from Book model.
+    change: Added 'user' field to Highlight model.
+    change: Added 'website' field to Publisher.
+    change: Added 'created' and 'modified' fields to Book model.
+    change: Renamed 'review' to 'description' on Book model.
+    
+  date: 2008-02-23
+    change: Removed edit_inline from Highlights
+
+  date: 2008-02-11
+    change: Made Highlight model "edit inline"
+
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}
+
+  date: 2008-01-26
+    change: Added navigation to *_detail.html templates.
+    change: Fixed the get_absolute_url method on the Genre and Publisher models
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'
+
+  date: 2008-01-15
+    change: Added a Highlights model.
+
+  date: 2007-12-21
+    change: Added genre_list.html and genre_detail.html
+    change: Updated models.py and urls.conf to handle the new templates
+
+  date: 2007-12-12
+    change: Added unit tests and fixtures.
+
+  date: 2007-12-11
+    change: Added an has_read property to the book model.
+    change: Changed book.thumbnail to book.cover. Changed thumbnail_url method to cover_url.

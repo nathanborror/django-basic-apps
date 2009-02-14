@@ -1,0 +1,31 @@
+{% extends "places/base_places.html" %}
+
+
+{% block title %}Places{% endblock %}
+
+
+{% block content_title %}
+  <h2>Places</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <ul class="link_list">
+    {% for place in object_list %}
+    <li><a href="{{ place.get_absolute_url }}">{{ place.title }}</a></li>
+    {% endfor %}
+  </ul>
+  
+  {% if is_paginated %}
+  <p class="pagination">
+    {% if has_next %}
+    <a href="?page={{ next }}">Previous</a>
+    {% endif %}
+    {% if has_next and has_previous %} | {% endif %}
+    {% if has_previous %}
+    <a href="?page={{ previous }}">Next</a>
+    {% endif %}
+  </p>
+  {% endif %}
+{% endblock %}

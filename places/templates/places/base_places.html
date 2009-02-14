@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block body_class %}places{% endblock %}
+
+
+{% block body %}
+  <div>
+    {% block content_title %}{% endblock %}
+  </div>
+  <div class="content_map">
+    {% block content_map %}{% endblock %}
+  </div>
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+{% endblock %}

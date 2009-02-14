@@ -1,0 +1,16 @@
+changes:
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}
+
+  date: 2008-01-26
+    change: Added navigation to *_detail.html templates.
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'
+
+  date: 2007-12-21
+    change: Added genre_list.html and genre_detail.html
+    change: Updated models.py and urls.conf to handle the new templates
+
+  date: 2007-12-11
+    change: Changed movie.thumbnail to movie.cover. Changed thumbnail_url method to cover_url.

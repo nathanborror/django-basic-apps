@@ -1,0 +1,15 @@
+{% extends "events/base_events.html" %}
+
+
+{% block content_title %}
+  <h2>Events for {{ day|date:"l, F j, Y" }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <ul>
+    {% for eventtime in object_list %}
+    <li><a href="{{ eventtime.get_absolute_url }}">{{ eventtime }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

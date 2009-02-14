@@ -1,0 +1,20 @@
+{% extends "music/base_music.html" %}
+
+
+{% block title %}Music Labels{% endblock %}
+{% block body_class %}{{ block.super }} music_labels{% endblock %}
+
+
+{% block content_title %}
+  <h2>Music Labels</h2>
+  {% include "music/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <ul class="link_list">
+  {% for label in object_list %}
+    <li><a href="{{ label.get_absolute_url }}">{{ label.full_title }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

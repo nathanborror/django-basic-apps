@@ -1,0 +1,14 @@
+changes:
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}
+
+  date: 2008-01-27
+    change: Videos - removed 'tagging.register(Video)' from model. It was causing too many unnecessary SQL JOINS.
+    change: Photos - removed 'tagging.register(Photo)' from model. It was causing too many unnecessary SQL JOINS.
+
+  date: 2008-01-22
+    change: Videos - Registered the Video model with the tagging app
+    change: Photos - Registered the Photo model with the tagging app
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'

@@ -1,0 +1,19 @@
+{% extends "movies/base_movies.html" %}
+
+
+{% block title %}Movies{% endblock %}
+
+
+{% block content_title %}
+  <h2>Movies</h2>
+  {% include "movies/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <ul class="link_list">
+  {% for movie in object_list %}
+    <li><a href="{{ movie.get_absolute_url }}">{{ movie.full_title }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

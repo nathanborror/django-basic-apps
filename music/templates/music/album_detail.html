@@ -1,0 +1,61 @@
+{% extends "music/base_music.html" %}
+
+
+{% block title %}{{ object.full_title }}{% endblock %}
+{% block body_class %}{{ block.super }} music_albums{% endblock %}
+
+
+{% block content_title %}
+  <h2>Music Albums</h2>
+  {% include "music/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <h3>{{ object.full_title }}
+    <em><a href="{{ object.band.get_absolute_url }}">{{ object.band.full_title }}</a></em></h3>
+  
+  {% if object.cover %}
+  <a class="cover" href="{{ object.amazon_url }}"><img src="{{ object.cover_url }}" alt="Album cover"></a>
+  {% else %}
+  <div class="no_cover"></div>
+  {% endif %}
+  
+  <ul class="info_list">
+    <li>Label: <a href="{{ object.label.get_absolute_url }}">{{ object.label.full_title }}</a></li>
+    <li>Released: {{ object.released|date:"d F Y" }}</li>
+    <li>Genre: {% for genre in object.genre.all %}{{ genre.title }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+    <li>ASIN: {{ object.asin }} (<a href="{{ object.amazon_url }}">Amazon</a>)</li>
+  </ul>
+  
+  {% if object.review %}
+  <div class="review">
+    <h3>Review</h3>
+    {{ object.review|markdown:"safe" }}
+  </div>
+  {% endif %}
+  
+  {% if object.band.album_set.all %}
+  {% ifnotequal object.band.album_set.count 1 %}
+  <h4>Other albums</h4>
+  <ul>
+    {% for album in object.band.album_set.all %}
+    {% ifnotequal album object %}
+    <li><a href="{{ album.get_absolute_url }}">{{ album.full_title }}</a></li>
+    {% endifnotequal %}
+    {% endfor %}
+  </ul>
+  {% endifnotequal %}
+  {% endif %}
+  
+  {% if object.tracks.all %}
+  <h4>Mp3's</h4>
+  <ul>
+    {% for track in object.tracks.all %}
+    <li><a href="{{ track.mp3_url }}">{{ track.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+{% endblock %}

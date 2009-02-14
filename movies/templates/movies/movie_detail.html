@@ -1,0 +1,38 @@
+{% extends "movies/base_movies.html" %}
+
+
+{% block title %}{{ object.full_title }}{% endblock %}
+
+
+{% block content_title %}
+  <h2>Movies</h2>
+  {% include "movies/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <h3>{{ object.full_title }}
+  {% if object.subtitle %}<em>{{ object.subtitle }}</em></h3>{% endif %}
+  
+  {% if object.cover %}
+  <a class="cover" href="{{ object.amazon_url }}"><img src="{{ object.cover_url }}" alt="Movie cover"></a>
+  {% else %}
+  <div class="no_cover"></div>
+  {% endif %}
+  
+  <ul class="info_list">
+    <li>Directors: {% for director in object.directors.all %}<a href="{{ director.get_absolute_url }}">{{ director.full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+    <li>Studio: <a href="{{ object.studio.get_absolute_url }}">{{ object.studio.full_title }}</a></li>
+    <li>Released: {{ object.released|date:"d F Y" }}</li>
+    <li>Genre: {% for genre in object.genre.all %}{{ genre.title }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+    <li>ASIN: {{ object.asin }} (<a href="{{ object.amazon_url }}">Amazon</a>)</li>
+  </ul>
+  
+  {% if object.review %}
+  <div class="review">
+    <h4>Review</h4>
+    {{ object.review|markdown:"safe" }}
+  </div>
+  {% endif %}
+{% endblock %}

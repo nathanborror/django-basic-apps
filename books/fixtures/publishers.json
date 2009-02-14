@@ -1,0 +1,10 @@
+[
+  {
+    "model" : "books.publisher",
+    "pk" : 1,
+    "fields" : {
+      "title" : "Random House",
+      "slug" : "random-house"
+    }
+  }
+]

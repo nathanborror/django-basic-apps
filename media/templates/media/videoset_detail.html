@@ -1,0 +1,19 @@
+{% extends "media/base_videos.html" %}
+
+
+{% block title %}{{ object.title }}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ object.title }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <h3>Videos</h3>
+  <ul class="video_list">
+    {% for video in object.videos.all %}
+    <li><a href="{{ video.get_absolute_url }}">{{ video.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

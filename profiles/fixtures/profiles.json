@@ -1,0 +1,16 @@
+[
+    {
+        "model" : "profiles.profile",
+        "pk" : "1",
+        "fields" : {
+            "user": 1,
+            "gender": 1,
+            "birth_date": "1980-01-02",
+            "address1": "947 New Hampshire St.",
+            "city": 1,
+            "zip": "66044",
+            "mobile": "555-555-5555",
+            "mobile_provider": 1
+        }
+    }
+]

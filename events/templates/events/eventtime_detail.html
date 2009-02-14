@@ -1,0 +1,20 @@
+{% extends "events/base_events.html" %}
+
+
+{% block content_title %}
+  <h2>{{ object }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <ul>
+    <li>Starts at {{ object.start|date:"g:iA l, F j, Y" }}</li>
+    {% if object.is_all_day %}
+      <li>Event lasts all day</li>
+    {% else %}
+      {% if object.end %}<li>End: {{ object.end }}</li>{% endif %}
+    {% endif %}
+  </ul>
+  {{ object.event.description|markdown }}
+{% endblock %}

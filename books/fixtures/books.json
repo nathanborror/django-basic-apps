@@ -1,0 +1,19 @@
+[
+  {
+    "model" : "books.book",
+    "pk" : 1,
+    "fields" : {
+      "title" : "Death and Life of Great American Cities",
+      "prefix": "The",
+      "slug" : "death-and-life-great-american-cities",
+      "authors" : [1],
+      "isbn": "0375508732",
+      "pages": 250,
+      "bookmark": 150,
+      "publisher" : 1,
+      "published" : "2007-11-25",
+      "review" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "genre": [1,2]
+    }
+  }
+]

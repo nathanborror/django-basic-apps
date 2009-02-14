@@ -1,0 +1,19 @@
+{% extends "places/base_places.html" %}
+
+
+{% block title %}Place types{% endblock %}
+
+
+{% block content_title %}
+  <h2>Place types</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <ul class="link_list">
+    {% for type in object_list %}
+    <li><a href="{{ type.get_absolute_url }}">{{ type }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

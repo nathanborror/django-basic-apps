@@ -1,0 +1,29 @@
+{% extends "music/base_music.html" %}
+
+
+{% block title %}Music Tracks{% endblock %}
+{% block body_class %}{{ block.super }} music_tracks{% endblock %}
+
+
+{% block content_title %}
+  <h2>Music Tracks</h2>
+  {% include "music/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <table>
+    <tr>
+      <th>Band</th>
+      <th>Album</th>
+      <th>Song</th>
+    </tr>
+  {% for track in object_list %}
+    <tr class="{% cycle 'odd' 'even' %}">
+      <td class="band"><a href="{{ track.band.get_absolute_url }}">{{ track.band }}</a></td>
+      <td class="album"><a href="{{ track.album.get_absolute_url }}">{{ track.album }}</a></td>
+      <td><a href="{{ track.get_absolute_url }}">"{{ track.title }}"</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}

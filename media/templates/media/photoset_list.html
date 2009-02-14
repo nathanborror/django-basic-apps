@@ -1,0 +1,18 @@
+{% extends "media/base_photos.html" %}
+
+
+{% block title %}Photo Sets{% endblock %}
+
+
+{% block content_title %}
+  <h2>Photo Sets</h2>
+{% endblock %}
+
+
+{% block content %}
+  <ul>
+  {% for set in object_list %}
+    <li><a href="{{ set.get_absolute_url }}">{{ set.title }}</a> ({{ set.videos.count }} photo{{ set.videos.count|pluralize }})</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

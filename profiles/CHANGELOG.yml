@@ -1,0 +1,35 @@
+changes:
+  date: 2008-09-02
+    change: Changed PhoneNumberField to use localflavor
+    
+  date: 2008-08-24
+    change: Added a profile edit form
+    
+  date: 2008-02-15
+    change: Internationalized models
+
+  date: 2008-02-11
+    change: Changed foreign key in Service from User to Profile.
+    change: Changed foreign key in Link from User to Profile. 
+    change: Enabled edit_inline for both Service and Link.
+
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'
+
+  date: 2008-01-07
+    change: Removed foreign key to City object in the Places app. City is now a character field.
+    change: Added a field for state.
+    change: Made wrappers for generic views.
+    change: Service url now allows for more complex profile urls.
+    change: Changed Service url to use {user} as its variable name opposed to '%s'.
+
+  date: 2007-12-21
+    change: Changed Service so user and service is unique_together
+    change: Changed MobileProvider.domain to be unique
+    change: Changed ServiceType.url to be unique
+
+  date: 2007-12-12
+    change: Cleaned up unit tests.

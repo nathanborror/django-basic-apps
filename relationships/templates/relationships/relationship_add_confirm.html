@@ -1,0 +1,18 @@
+{% extends "relationships/base_relationships.html" %}
+
+
+{% block title %}{{ block.super }} | Add confirm{% endblock %}
+{% block body_class %}{{ block.super }} relationship_add_confirm{% endblock %}
+
+
+{% block content_title %}
+  <h2>Add {{ to_user }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <form action="{% url relationship_follow to_user_id=to_user.id %}" method="post">
+    <p>Are you sure you want to add {{ to_user }} as a friend?
+      <button type="submit" name="submit" value="Indeed">Indeed</button></p>
+  </form>
+{% endblock %}

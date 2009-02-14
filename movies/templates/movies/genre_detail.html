@@ -1,0 +1,21 @@
+{% extends "movies/base_movies.html" %}
+
+
+{% block title %}{{ object.title }}{% endblock %}
+{% block body_class %}{{ block.super }} movie_genres{% endblock %}
+
+
+{% block content_title %}
+  <h2>Movie Genres</h2>
+  {% include "movies/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <h3>{{ object.title }}</h4>
+  <ul class="link_list">
+    {% for movie in object.movie_set.all %}
+    <li><a href="{{ movie.get_absolute_url }}">{{ movie.full_title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

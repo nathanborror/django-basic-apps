@@ -1,0 +1,12 @@
+<div id="section_nav">
+  <ul>
+    <li class="music"><a href="{% url music_index %}">Music</a></li>
+    <li class="movies"><a href="{% url movie_list %}">Movies</a></li>
+    <li class="books"><a href="{% url book_list %}">Books</a>
+      <ul>
+        <li class="genres"><a href="{% url book_genre_list %}">Genres</a></li>
+        <li class="publishers"><a href="{% url book_publisher_list %}">Publishers</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>

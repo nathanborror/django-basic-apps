@@ -1,0 +1,43 @@
+{% extends "places/base_places.html" %}
+
+
+{% block title %}{{ object.full_title }}{% endblock %}
+{% block body_id %}place_detail_page{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ object.full_title }} <em class="phone">{{ object.phone }}</em></h2>
+  <h3 class="address">{{ object.point.address }}, <a href="{{ object.point.city.get_absolute_url }}">{{ object.point.city }}</a> {{ object.point.zip }}</h3>
+{% endblock %}
+
+
+{% block content_map %}
+  <div id="place_map"></div>
+  <script src="http://maps.google.com/maps?file=api&amp;v=2.s&amp;key=ABQIAAAAfeJyb2UVee9F890m28IJbxQCULP4XOMyhPd8d_NrQQEO8sT8XBS4-6jBOOUOr3uKUrxuIjBaT1VikQ" type="text/javascript"></script>
+  <script type="text/javascript">
+    if (GBrowserIsCompatible()) {
+      var latlong = new GLatLng({{ object.latitude }}, {{ object.longitude }});
+      var map = new GMap2(document.getElementById("place_map"));
+      map.addControl(new GSmallMapControl());
+      map.setCenter(latlong, 15);
+      map.addOverlay(new GMarker(latlong));
+    }
+  </script>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <ul class="link_list">
+    <li><a href="{{ object.url }}">Website</a></li>
+    <li><a href="mailto:{{ object.email }}">Email</a></li>
+    <li>Type: {% for type in object.place_types.all %}<a href="{{ type.get_absolute_url }}">{{ type }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+  </ul>
+  
+  {% if object.description %}
+  <div class="description">
+    <h3>Description</h3>
+    {{ object.description|markdown:"safe" }}
+  </div>
+  {% endif %}
+{% endblock %}

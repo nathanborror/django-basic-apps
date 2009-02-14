@@ -1,0 +1,15 @@
+<div id="section_nav">
+  <ul class="tabs">
+    <li class="music"><a href="{% url music_index %}">Music</a>
+      <ul>
+        <li class="genres"><a href="{% url music_genre_list %}">Genres</a></li>
+        <li class="albums"><a href="{% url music_album_list %}">Albums</a></li>
+        <li class="bands"><a href="{% url music_band_list %}">Bands</a></li>
+        <li class="labels"><a href="{% url music_label_list %}">Labels</a></li>
+        <li class="tracks"><a href="{% url music_track_list %}">Tracks</a></li>
+      </ul>
+    </li>
+    <li class="movies"><a href="{% url movie_list %}">Movies</a></li>
+    <li class="books"><a href="{% url book_list %}">Books</a></li>
+  </ul>
+</div>

@@ -1,0 +1,31 @@
+changes:
+  date: 2008-09-02
+    change: Changed PhoneNumberField to use localflavor
+    
+  date: 2008-05-18
+    change: Added doctests.
+    change: Converted everything to 4 space tabs and made a few other changes to comply with Python Style Guide.
+    
+  date: 2008-04-20
+    change: The City models state field is now a CharField with a max_length changed to 100.
+    
+  date: 2008-02-15
+    change: Internationalized models
+
+  date: 2008-02-04
+    change: Templates: added a {% block content_title %}
+
+  date: 2008-01-27
+    change: removed 'tagging.register(Post)' from model. It was causing too many unnecessary SQL JOINS.
+
+  date: 2008-01-25
+    change: Moved generic view logic out of urls.py and into a view.
+
+  date: 2008-01-22
+    change: Registered the Place model with the tagging app
+
+  date: 2008-01-19
+    change: Renamed the 'list' class to 'link_list'
+
+  date: 2007-12-12
+    change: Cleaned up unit tests.

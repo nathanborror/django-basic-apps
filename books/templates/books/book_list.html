@@ -1,0 +1,28 @@
+{% extends "books/base_books.html" %}
+
+
+{% block title %}Books{% endblock %}
+
+
+{% block content_title %}
+  <h2>Books</h2>
+  {% include "books/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <table class="book_table">
+    <tr>
+      <th>Title</th>
+      <th>Authors</th>
+      <th>Progress</th>
+    </tr>
+  {% for book in object_list %}
+    <tr>
+      <td class="title"><a href="{{ book.get_absolute_url }}">{{ book.title }}{% if book.prefix %}, {{ book.prefix }}{% endif %}</a></td>
+      <td class="authors">{% for author in book.authors.all %}<a href="{{ author.get_absolute_url }}">{{ author.full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      <td class="publisher"><a href="{{ book.publisher.get_absolute_url }}">{{ book.publisher.full_title }}</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}

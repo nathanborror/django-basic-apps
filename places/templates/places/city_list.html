@@ -1,0 +1,19 @@
+{% extends "places/base_places.html" %}
+
+
+{% block title %}Cities{% endblock %}
+
+
+{% block content_title %}
+  <h2>Cities</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <ul class="link_list">
+    {% for city in object_list %}
+    <li><a href="{{ city.get_absolute_url }}">{{ city }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

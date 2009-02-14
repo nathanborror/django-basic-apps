@@ -1,0 +1,10 @@
+[
+  {
+    "model" : "books.genre",
+    "pk" : 1,
+    "fields" : {
+      "title" : "Architecture",
+      "slug" : "architecture"
+    }
+  }
+]

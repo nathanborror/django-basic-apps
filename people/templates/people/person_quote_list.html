@@ -1,0 +1,22 @@
+{% extends "people/base_people.html" %}
+
+
+{% block title %}{{ person.full_name }}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ person.full_name }}
+  <em>{% for type in person.person_types.all %}<a href="{{ type.get_absolute_url }}">{{ type.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</em></h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  
+  {% for quote in object_list %}
+  <blockquote class="quote">
+    {{ quote.quote|markdown:"safe" }}
+    <p class="source">&mdash; {{ quote.source }}<p>
+  </blockquote>
+  {% endfor %}
+{% endblock %}

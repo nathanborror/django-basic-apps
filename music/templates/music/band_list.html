@@ -1,0 +1,20 @@
+{% extends "music/base_music.html" %}
+
+
+{% block title %}Music Bands{% endblock %}
+{% block body_class %}{{ block.super }} music_bands{% endblock %}
+
+
+{% block content_title %}
+  <h2>Music Bands</h2>
+  {% include "music/_nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+  <ul class="link_list">
+  {% for band in object_list %}
+    <li><a href="{{ band.get_absolute_url }}">{{ band.full_title }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

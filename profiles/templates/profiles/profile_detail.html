@@ -1,0 +1,32 @@
+{% extends "profiles/base_profile.html" %}
+
+
+{% block title %}Profile for {{ object.user.get_full_name }}{% endblock %}
+
+
+{% block content_title %}
+  <h2 id="user_name">{{ object.user.get_full_name }}
+    <em id="user_city">{{ object.city }}, {{ object.state }}</em></h2>
+  <h3 id="user_age_and_gender">{{ object.get_gender_display }}{% if object.age %}, {{ object.age }}{% endif %}</h3>
+{% endblock %}
+
+
+{% block content %}
+  {% if object.user.service_set.all %}
+  <h3 class="list_title">Services</h3>
+  <ul class="link_list">
+    {% for service in object.user.service_set.all %}
+    <li><a href="{{ service.service_url }}">{{ service.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  {% if object.user.link_set.all %}
+  <h3 class="list_title">Links</h3>
+  <ul class="link_list">
+    {% for link in object.user.link_set.all %}
+    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% endblock %}
