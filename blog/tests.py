@@ -20,45 +20,45 @@
 >>> post2.categories.add(category2)
 
 >>> response = client.get(reverse('blog_index'))
->>> response.context[-1]['object_list']
+>>> response.context[0]['object_list']
 [<Post: DJ Ango>, <Post: Where my grails at?>]
 >>> response.status_code
 200
 
 >>> response = client.get(reverse('blog_category_list'))
->>> response.context[-1]['object_list']
+>>> response.context[0]['object_list']
 [<Category: Django>, <Category: Rails>]
 >>> response.status_code
 200
 
 >>> response = client.get(category.get_absolute_url())
->>> response.context[-1]['object_list']
+>>> response.context[0]['object_list']
 [<Post: DJ Ango>]
 >>> response.status_code
 200
 
 >>> response = client.get(post.get_absolute_url())
->>> response.context[-1]['object']
+>>> response.context[0]['object']
 <Post: DJ Ango>
 >>> response.status_code
 200
 
 >>> response = client.get(reverse('blog_search'), {'q': 'DJ'})
->>> response.context[-1]['object_list']
+>>> response.context[0]['object_list']
 [<Post: DJ Ango>]
 >>> response.status_code
 200
 >>> response = client.get(reverse('blog_search'), {'q': 'Holy'})
->>> response.context[-1]['object_list']
+>>> response.context[0]['object_list']
 [<Post: Where my grails at?>]
 >>> response.status_code
 200
 >>> response = client.get(reverse('blog_search'), {'q': ''})
->>> response.context[-1]['message']
+>>> response.context[0]['message']
 'Search term was too vague. Please try again.'
 
 >>> response = client.get(reverse('blog_detail', args=[2008, 'apr', 2, 'where']))
->>> response.context[-1]['object']
+>>> response.context[0]['object']
 <Post: Where my grails at?>
 >>> response.status_code
 200
