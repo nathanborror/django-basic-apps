@@ -40,7 +40,7 @@
       div.setAttribute('style', 'margin-top:10px;');
       div.innerHTML = content;
       
-      body_div.insertBefore(div);
+      body_div.insertBefore(div, document.getElementById('id_body').nextSibling);
     }
     
     function insertInline(type, id, classname) {
