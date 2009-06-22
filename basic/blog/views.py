@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.http import Http404
 from django.views.generic import date_based, list_detail
 from django.db.models import Q
+from django.conf import settings
 from basic.blog.models import *
 
 import datetime
@@ -13,7 +14,7 @@ def post_list(request, page=0, **kwargs):
     return list_detail.object_list(
         request,
         queryset = Post.objects.published(),
-        paginate_by = 20,
+        paginate_by = getattr(settings,'BLOG_PAGESIZE',20),
         page = page,
         **kwargs
     )
