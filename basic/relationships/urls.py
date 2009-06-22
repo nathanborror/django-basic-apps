@@ -7,7 +7,7 @@ urlpatterns = patterns('',
         view=relationship_views.follow,
         name='relationship_follow'),
 
-    url(r'^stop-following/(?P<to_user_id>\d+)/$',
-        view=relationship_views.stop_follow,
-        name='relationship_stop_follow'),
+    url(r'^unfollow/(?P<to_user_id>\d+)/$',
+        view=relationship_views.unfollow,
+        name='relationship_unfollow'),
 )
