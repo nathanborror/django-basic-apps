@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.contrib.auth.models import User
+from django.contrib.sitemaps import ping_google
+from django.conf import settings
 from tagging.fields import TagField
 from basic.blog.managers import PublicManager
 
@@ -64,6 +66,14 @@ class Post(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
+
+    def save(self, *args, **kwargs):
+        super(Post, self).save(*args, **kwargs)
+        if getattr(settings, 'PING_GOOGLE', False):
+            try:
+                ping_google()
+            except:
+                pass
 
     @permalink
     def get_absolute_url(self):
