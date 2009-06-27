@@ -101,7 +101,7 @@ class BlogRoll(models.Model):
     
     name = models.CharField(max_length=100)
     url = models.URLField(verify_exists=False)
-    sort_order =  models.PositiveIntegrerField(default=0)
+    sort_order =  models.PositiveIntegerField(default=0)
     
     def __unicode__(self):
         return self.name
