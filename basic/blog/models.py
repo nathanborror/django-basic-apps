@@ -64,6 +64,11 @@ class Post(models.Model):
         list_filter   = ('publish', 'categories', 'status')
         search_fields = ('title', 'body')
 
+    class ProxyMeta:
+        title = 'title'
+        description = 'description'
+        tags = 'tags'
+
     def __unicode__(self):
         return u'%s' % self.title
 
@@ -89,3 +94,17 @@ class Post(models.Model):
     
     def get_next_post(self):
         return self.get_next_by_publish(status__gte=2)
+
+
+class BlogRoll(models.Model):
+    '''Other blogs you follow.'''
+    
+    name = models.CharField(max_length=100)
+    url = models.URLField(verify_exists=False)
+    sort_order =  models.PositiveIntegrerField(default=0)
+    
+    def __unicode__(self):
+        return self.name
+        
+    class Meta:
+        ordering = ('sort_order','name',)
