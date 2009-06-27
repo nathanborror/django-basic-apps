@@ -66,7 +66,7 @@ class Post(models.Model):
 
     class ProxyMeta:
         title = 'title'
-        description = 'description'
+        description = 'body'
         tags = 'tags'
 
     def __unicode__(self):
