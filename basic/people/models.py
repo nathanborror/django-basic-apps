@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.db.models import permalink
 from django.contrib.auth.models import User
+from tagging.fields import TagField
 
 import datetime
 import dateutil
@@ -80,7 +81,9 @@ class Quote(models.Model):
     person            = models.ForeignKey(Person)
     quote             = models.TextField(_('quote'))
     source            = models.CharField(_('source'), blank=True, max_length=255)
-
+    title = models.CharField(max_length=100, blank=False, null=False)
+    tags = TagField()
+    
     class Meta:
         verbose_name = 'quote'
         verbose_name_plural = 'quotes'
@@ -90,9 +93,14 @@ class Quote(models.Model):
         list_display = ('person','quote')
         list_filter = ('person',)
         search_fields = ('quote',)
+        
+    class ProxyMeta:
+        title = 'title'
+        description = 'quote'
+        tags = 'tags'
 
     def __unicode__(self):
-        return u'%s' % self.quote
+        return u'%s' % self.title
 
     def get_absolute_url(self):
         return self.person.get_absolute_url()
