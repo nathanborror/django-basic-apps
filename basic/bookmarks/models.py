@@ -5,6 +5,7 @@ from tagging.fields import TagField
 
 class Bookmark(models.Model):
   """ Simple model for storing bookmarks """
+  title = models.CharField(max_length=100, blank=True, null=True)
   url             = models.URLField(_('url'), unique=True)
   description     = models.TextField(_('description'), )
   extended        = models.TextField(_('extended'), blank=True)
@@ -20,6 +21,11 @@ class Bookmark(models.Model):
   class Admin:
     list_display = ('url', 'description')
     search_fields = ('url', 'description', 'extended')
+
+  class ProxyMeta:
+    title = 'title'
+    description = 'description'
+    tags = 'tags'
 
   def __unicode__(self):
     return self.url
