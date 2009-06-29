@@ -1,6 +1,6 @@
 from django.contrib import admin
 from basic.media.models import *
-
+from basic.media.forms import PhotoUploadForm
 
 class AudioSetAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
@@ -19,10 +19,10 @@ class PhotoSetAdmin(admin.ModelAdmin):
 admin.site.register(PhotoSet, PhotoSetAdmin)
 
 class PhotoAdmin(admin.ModelAdmin):
+    form = PhotoUploadForm
     prepopulated_fields = {'slug': ('title',)}
 
 admin.site.register(Photo, PhotoAdmin)
-
 
 class VideoSetAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}

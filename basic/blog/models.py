@@ -68,6 +68,7 @@ class Post(models.Model):
         title = 'title'
         description = 'body'
         tags = 'tags'
+        pub_date = 'publish'
 
     def __unicode__(self):
         return u'%s' % self.title
