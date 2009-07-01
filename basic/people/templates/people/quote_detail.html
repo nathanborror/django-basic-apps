@@ -12,7 +12,7 @@
 {% block content %}
  
   <blockquote class="quote">
-    {{ object.quote:"safe" }}
+    {{ object.quote|"safe" }}
     <p class="source">&mdash; {{ object.source }}<p>
   </blockquote>
 
