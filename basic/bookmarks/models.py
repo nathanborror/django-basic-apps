@@ -29,3 +29,6 @@ class Bookmark(models.Model):
 
   def __unicode__(self):
     return self.url
+
+  def get_absolute_url(self):
+      return self.url

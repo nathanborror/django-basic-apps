@@ -22,4 +22,8 @@ urlpatterns = patterns('',
   url(r'^quotes/(?P<slug>[-\w]+)/$',
     view=people_views.person_quote_list,
     name='person_quote_list'),
+    
+  url(r'^quote/(?P<slug>[-\w]+)/$',
+      view=people_views.quote_detail,
+      name='quote_detail'),
 )

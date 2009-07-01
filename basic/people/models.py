@@ -82,6 +82,7 @@ class Quote(models.Model):
     quote             = models.TextField(_('quote'))
     source            = models.CharField(_('source'), blank=True, max_length=255)
     title = models.CharField(max_length=100, blank=False, null=False)
+    slug = models.SlugField(_('slug'), unique=True)
     tags = TagField()
     
     class Meta:
@@ -102,8 +103,9 @@ class Quote(models.Model):
     def __unicode__(self):
         return u'%s' % self.title
 
+    @permalink
     def get_absolute_url(self):
-        return self.person.get_absolute_url()
+        return ('quote_detail', None, {'slug': self.slug})
 
 
 class Conversation(models.Model):
