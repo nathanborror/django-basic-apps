@@ -84,6 +84,7 @@ class Quote(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
     slug = models.SlugField(_('slug'), unique=True)
     tags = TagField()
+    publish         = models.DateTimeField(_('publish'), default=datetime.datetime.now)
     
     class Meta:
         verbose_name = 'quote'
