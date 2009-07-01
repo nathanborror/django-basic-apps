@@ -6,6 +6,7 @@ from tagging.fields import TagField
 class Bookmark(models.Model):
   """ Simple model for storing bookmarks """
   title = models.CharField(max_length=100, blank=True, null=True)
+  slug = models.SlugField(_('slug'), unique=True)
   url             = models.URLField(_('url'), unique=True)
   description     = models.TextField(_('description'), )
   extended        = models.TextField(_('extended'), blank=True)
