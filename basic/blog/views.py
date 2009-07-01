@@ -5,6 +5,7 @@ from django.views.generic import date_based, list_detail
 from django.db.models import Q
 from django.conf import settings
 from basic.blog.models import *
+from tagging import Tag, TaggedItem
 
 import datetime
 import re
