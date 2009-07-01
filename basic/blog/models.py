@@ -7,6 +7,7 @@ from django.conf import settings
 from tagging.fields import TagField
 from basic.blog.managers import PublicManager
 
+import datetime
 import tagging
 
 
