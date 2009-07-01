@@ -122,7 +122,7 @@ def tag_detail(request, slug, template_name = 'blog/tag_detail.html', **kwargs):
         tag
             Given tag.
     """
-    tag = get_object_or_404(Tag, slug__iexact=slug)
+    tag = get_object_or_404(Tag, name__iexact=slug)
     
     return list_detail.object_list(
         request,
