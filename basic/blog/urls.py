@@ -27,6 +27,10 @@ urlpatterns = patterns('',
         view=blog_views.category_list,
         name='blog_category_list'),
 
+    url(r'^tags/(?P<slug>[-\w]+)/$',
+        view=blog_views.tag_detail,
+        name='blog_tag_detail'),
+
     url (r'^search/$',
         view=blog_views.search,
         name='blog_search'),
