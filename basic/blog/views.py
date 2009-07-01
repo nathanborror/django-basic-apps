@@ -108,6 +108,28 @@ def category_detail(request, slug, template_name = 'blog/category_detail.html', 
         template_name = template_name,
         **kwargs
     )
+    
+
+def tag_detail(request, slug, template_name = 'blog/tag_detail.html', **kwargs):
+    """
+    Tag detail
+
+    Template: ``blog/tag_detail.html``
+    Context:
+        object_list
+            List of posts specific to the given tag.
+        tag
+            Given tag.
+    """
+    tag = get_object_or_404(Tag, slug__iexact=slug)
+    
+    return list_detail.object_list(
+        request,
+        queryset = TaggedItem.objects.get_by_model(Post,tag).filter(status=2),
+        extra_context = {'tag': tag},
+        template_name = template_name,
+        **kwargs
+    )
 
 
 # Stop Words courtesy of http://www.dcs.gla.ac.uk/idom/ir_resources/linguistic_utils/stop_words
