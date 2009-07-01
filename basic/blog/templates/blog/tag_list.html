@@ -11,7 +11,6 @@
 
 
 {% block content %}
-  {% load markup %}
   <ul class="link_list">
     {% for category in object_list %}
     <li><a href="{{ category.get_absolute_url }}">{{ category }}</a></li>
