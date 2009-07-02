@@ -42,8 +42,8 @@ class Post(models.Model):
     title           = models.CharField(_('title'), max_length=200)
     slug            = models.SlugField(_('slug'), unique_for_date='publish')
     author          = models.ForeignKey(User, blank=True, null=True)
-    body            = models.TextField(_('body'))
-    tease           = models.TextField(_('tease'), blank=True)
+    body            = models.TextField(_('body'), help_text='Use raw HTML.')
+    tease           = models.TextField(_('tease'), blank=True, help_text='Use plain text (Only style tags allowed).')
     status          = models.IntegerField(_('status'), choices=STATUS_CHOICES, default=2)
     allow_comments  = models.BooleanField(_('allow comments'), default=True)
     publish         = models.DateTimeField(_('publish'), default=datetime.datetime.now)
@@ -70,6 +70,7 @@ class Post(models.Model):
         description = 'body'
         tags = 'tags'
         pub_date = 'publish'
+        active = {'status':2}
 
     def __unicode__(self):
         return u'%s' % self.title
