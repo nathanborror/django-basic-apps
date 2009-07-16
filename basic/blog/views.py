@@ -60,16 +60,33 @@ post_archive_day.__doc__ = date_based.archive_day.__doc__
 
 
 def post_detail(request, slug, year, month, day, **kwargs):
-    return date_based.object_detail(
-        request,
-        year = year,
-        month = month,
-        day = day,
-        date_field = 'publish',
-        slug = slug,
-        queryset = Post.objects.published(),
-        **kwargs
-    )
+    '''
+    Displays post detail. If user is superuser, view will display 
+    unpublished post detail for previewing purposes.
+    
+    '''
+    if request.user.is_superuser:
+        return date_based.object_detail(
+            request,
+            year = year,
+            month = month,
+            day = day,
+            date_field = 'publish',
+            slug = slug,
+            queryset = Post.objects.all(),
+            **kwargs
+        )
+    else:
+        return date_based.object_detail(
+            request,
+            year = year,
+            month = month,
+            day = day,
+            date_field = 'publish',
+            slug = slug,
+            queryset = Post.objects.published(),
+            **kwargs
+        )
 post_detail.__doc__ = date_based.object_detail.__doc__
 
 
