@@ -65,28 +65,23 @@ def post_detail(request, slug, year, month, day, **kwargs):
     unpublished post detail for previewing purposes.
     
     '''
+    
+    posts = None
     if request.user.is_superuser:
-        return date_based.object_detail(
-            request,
-            year = year,
-            month = month,
-            day = day,
-            date_field = 'publish',
-            slug = slug,
-            queryset = Post.objects.all(),
-            **kwargs
-        )
+        posts = Post.objects.all()
     else:
-        return date_based.object_detail(
-            request,
-            year = year,
-            month = month,
-            day = day,
-            date_field = 'publish',
-            slug = slug,
-            queryset = Post.objects.published(),
-            **kwargs
-        )
+        posts = Posts.objects.published()
+        
+    return date_based.object_detail(
+        request,
+        year = year,
+        month = month,
+        day = day,
+        date_field = 'publish',
+        slug = slug,
+        queryset = posts,
+        **kwargs
+    )
 post_detail.__doc__ = date_based.object_detail.__doc__
 
 
