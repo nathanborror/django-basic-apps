@@ -70,7 +70,7 @@ def post_detail(request, slug, year, month, day, **kwargs):
     if request.user.is_superuser:
         posts = Post.objects.all()
     else:
-        posts = Posts.objects.published()
+        posts = Post.objects.published()
         
     return date_based.object_detail(
         request,
