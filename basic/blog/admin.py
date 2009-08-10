@@ -31,7 +31,7 @@ class SettingsAdmin(admin.ModelAdmin):
     fieldsets = (
             (None, {
                 'fields': ('site', 'author_name', 'copyright', 'about',
-                        'rss_url', 'email_subscribe_url', 'page_size',
+                        'rss_url', 'twitter_url', 'email_subscribe_url', 'page_size',
                         'ping_google',)
             }),
             ('Meta options', {
@@ -41,6 +41,11 @@ class SettingsAdmin(admin.ModelAdmin):
 
         )
 
+class BlogRollAdmin(admin.ModelAdmin):
+
+    list_display = ('name', 'url', 'sort_order', )
+    list_editable = ('sort_order',)
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Settings, SettingsAdmin)
-admin.site.register(BlogRoll)
+admin.site.register(BlogRoll, BlogRollAdmin)

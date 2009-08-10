@@ -195,16 +195,24 @@ class Settings(models.Model):
 
 
 class BlogRoll(models.Model):
-    '''Other blogs you follow.'''
+    '''
+    
+    Other blogs you follow.
+    
+    '''
     
     name = models.CharField(max_length=100)
     url = models.URLField(verify_exists=False)
     sort_order =  models.PositiveIntegerField(default=0)
     
-    def __unicode__(self):
-        return self.name
-        
     class Meta:
-        ordering = ('sort_order','name',)
+        ordering = ('sort_order', 'name',)
         verbose_name = _('blog roll')
         verbose_name_plural = _('blog roll')
+
+    def __unicode__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+		return self.url
+

@@ -6,6 +6,7 @@ import re
 
 Post = models.get_model('blog', 'post')
 Category = models.get_model('blog', 'category')
+BlogRoll = models.get_model('blog', 'blogroll')
 
 register = template.Library()
 
@@ -101,3 +102,36 @@ def get_links(value):
         if settings.DEBUG:
             raise template.TemplateSyntaxError, "Error in 'get_links' filter: BeautifulSoup isn't installed."
     return value
+
+
+class BlogRolls(template.Node):
+    def __init__(self, var_name):
+        self.var_name = var_name
+
+    def render(self, context):
+        blogrolls = BlogRoll.objects.all()
+        context[self.var_name] = blogrolls
+        return ''
+            
+@register.tag
+def get_blogroll(parser, token):
+    """
+    Gets all blogroll links.
+
+    Syntax::
+
+        {% get_blogroll as [var_name] %}
+
+    Example usage::
+
+        {% get_blogroll as blogroll_list %}
+    """
+    try:
+        tag_name, arg = token.contents.split(None, 1)
+    except ValueError:
+        raise template.TemplateSyntaxError, "%s tag requires arguments" % token.contents.split()[0]
+    m = re.search(r'as (\w+)', arg)
+    if not m:
+        raise template.TemplateSyntaxError, "%s tag had invalid arguments" % tag_name
+    var_name = m.groups()[0]
+    return BlogRolls(var_name)
