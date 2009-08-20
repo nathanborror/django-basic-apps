@@ -161,6 +161,7 @@ class Settings(models.Model):
                 verify_exists=False, blank=True, null=True)
     page_size = models.PositiveIntegerField(_('page size'), default=20)
     ping_google = models.BooleanField(_('ping google'), default=False)
+    disqus_shortname = models.CharField(_('disqus shortname'), max_length=255, blank=True, null=True)
     
     meta_keywords = models.TextField(_('meta keywords'), blank=True, null=True)
     meta_description = models.TextField(_('meta description'), blank=True, null=True)
