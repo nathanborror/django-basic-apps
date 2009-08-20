@@ -32,7 +32,7 @@ class SettingsAdmin(admin.ModelAdmin):
             (None, {
                 'fields': ('site', 'author_name', 'copyright', 'about',
                         'rss_url', 'twitter_url', 'email_subscribe_url', 'page_size',
-                        'ping_google',)
+                        'ping_google', 'disqus_shortname')
             }),
             ('Meta options', {
                 'classes': ('collapse',),
