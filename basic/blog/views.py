@@ -11,11 +11,14 @@ import datetime
 import re
 
 
-def post_list(request, page=0, **kwargs):
+def post_list(request, page=0, paginate_by=20, **kwargs):
+    
+    page_size = getattr(settings,'BLOG_PAGESIZE', paginate_by),
+    
     return list_detail.object_list(
         request,
         queryset = Post.objects.published(),
-        paginate_by = getattr(settings,'BLOG_PAGESIZE',20),
+        paginate_by = page_size,
         page = page,
         **kwargs
     )
