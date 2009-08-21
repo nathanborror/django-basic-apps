@@ -17,7 +17,6 @@ Dependancies
 * Markdown (http://www.djangoproject.com/documentation/add_ons/#markup)
 * BeautifulSoup (http://www.crummy.com/software/BeautifulSoup/) is required to use the blog and, subsequently, the inlines app.
 
-* Django-Compressor (http://github.com/mintchaos/django_compressor/tree/master)
 * Django-Markup (http://github.com/bartTC/django-markup/tree/master)
 
 Inlines
