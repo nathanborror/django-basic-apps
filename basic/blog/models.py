@@ -49,7 +49,7 @@ class Post(models.Model):
     slug            = models.SlugField(_('slug'), unique_for_date='publish')
     author          = models.ForeignKey(User, blank=True, null=True)
 
-    markup = MarkupField(default='restructuredtext')
+    markup          = MarkupField(default='markdown')
     body            = models.TextField(_('body'), )
     tease           = models.TextField(_('tease'), blank=True, help_text=_('Concise text suggested. Does not appear in RSS feed.'))
 
