@@ -10,9 +10,7 @@
 {% endblock %}
 
 
-{% block content %}
-  {% load markup %}
-  
+{% block content %}  
   <ul class="link_list">
     {% for month in date_list %}
     <li><a href="{% url blog_index %}{{ year }}/{{ month|date:"b" }}/">{{ month|date:"F" }}</a></li>

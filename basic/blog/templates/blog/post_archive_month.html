@@ -16,7 +16,7 @@
     <div>
       <h3 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
       <p class="date">{{ post.publish|date:"Y F d" }}</p>
-      <p class="tease">{{ post.tease }}</p>
+      <p class="tease">{{ post.tease_markup }}</p>
     </div>
     {% endfor %}
   </div>
