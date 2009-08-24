@@ -21,7 +21,7 @@ class PostAdmin(admin.ModelAdmin):
             }),
             ('Converted markup', {
                 'classes': ('collapse',),
-                'fields': ('body_markup', 'tease_markup', ),
+                'fields': ('body_markup',),
             }),
 
         )

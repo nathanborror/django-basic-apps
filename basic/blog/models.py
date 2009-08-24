@@ -54,7 +54,6 @@ class Post(models.Model):
     tease           = models.TextField(_('tease'), blank=True, help_text=_('Concise text suggested. Does not appear in RSS feed.'))
 
     body_markup   = models.TextField(editable=True, blank=True, null=True)
-    tease_markup   = models.TextField(editable=True, blank=True, null=True)
     
     status          = models.IntegerField(_('status'), choices=STATUS_CHOICES, default=2)
     allow_comments  = models.BooleanField(_('allow comments'), default=True)
@@ -89,9 +88,7 @@ class Post(models.Model):
             
     def save(self, *args, **kwargs):
         body_markup = mark_safe(formatter(self.body, filter_name=self.markup))
-        tease_markup = mark_safe(formatter(self.tease, filter_name=self.markup))
         self.body_markup = body_markup
-        self.tease_markup = tease_markup
         super(Post, self).save(*args, **kwargs)
 
         blog_settings = Settings.get_current()        
