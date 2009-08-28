@@ -20,7 +20,7 @@ def blog_settings(request):
     """
     
     site_id = settings.SITE_ID   
-    key = create_cache_key(Settings, field_name='pk', field_value=site_id)
+    key = create_cache_key(Settings, field='pk', field_value=site_id)
     blog_settings = cache.get(key, None)
     if blog_settings is None:
         blog_settings = Settings.get_current()
