@@ -180,13 +180,13 @@ class Settings(models.Model):
 
         #update cache with new changes
         site_id = settings.SITE_ID  
-        key = create_cache_key(Settings, field_name='pk', field_value=site_id)
+        key = create_cache_key(Settings, field='pk', field_value=site_id)
         cache.set(key, self)
 
     @staticmethod
     def get_current():
         site = Site.objects.get_current()
-        key = create_cache_key(Settings, field_name='pk', field_value=site.id)
+        key = create_cache_key(Settings, field='pk', field_value=site.id)
         blog_settings = cache.get(key, None)
         if blog_settings is None:
             try:
