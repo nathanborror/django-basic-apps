@@ -15,7 +15,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.core.cache import cache
 from django.utils.text import truncate_words
-
+from sugar.cache.utils import create_cache_key
 
 class Category(models.Model):
     """Category model."""
@@ -179,7 +179,6 @@ class Settings(models.Model):
         super(Settings, self).save(*args, **kwargs)
 
         #update cache with new changes
-        from sugar.cache.utils import create_cache_key
         site_id = settings.SITE_ID  
         key = create_cache_key(Settings, field_name='pk', field_value=site_id)
         cache.set(key, self)
@@ -187,7 +186,7 @@ class Settings(models.Model):
     @staticmethod
     def get_current():
         site = Site.objects.get_current()
-        key = 'basic.blog.settings:%s' % site.id
+        key = create_cache_key(Settings, field_name='pk', field_value=site_id)
         blog_settings = cache.get(key, None)
         if blog_settings is None:
             try:
