@@ -178,6 +178,12 @@ class Settings(models.Model):
         self.site_name = self.site.name
         super(Settings, self).save(*args, **kwargs)
 
+        #update cache with new changes
+        from sugar.cache.utils import create_cache_key
+        site_id = settings.SITE_ID  
+        key = create_cache_key(Settings, field_name='pk', field_value=site_id)
+        cache.set(key, self)
+
     @staticmethod
     def get_current():
         site = Site.objects.get_current()

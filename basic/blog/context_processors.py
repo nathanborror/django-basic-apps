@@ -3,6 +3,7 @@ from basic.blog.models import Category
 from django.core.cache import cache
 from basic.blog.models import Settings
 from basic.elsewhere.models import SocialNetworkProfile
+from sugar.cache.utils import create_cache_key
 
 def blog_settings(request):
     """
@@ -18,8 +19,8 @@ def blog_settings(request):
         )
     """
     
-    site_id = settings.SITE_ID    
-    key = 'basic.blog.settings:%s' % site_id
+    site_id = settings.SITE_ID   
+    key = create_cache_key(Settings, field_name='pk', field_value=site_id)
     blog_settings = cache.get(key, None)
     if blog_settings is None:
         blog_settings = Settings.get_current()
