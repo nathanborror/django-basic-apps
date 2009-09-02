@@ -96,11 +96,6 @@ class Quote(models.Model):
         list_filter = ('person',)
         search_fields = ('quote',)
         
-    class ProxyMeta:
-        title = 'title'
-        description = 'quote'
-        tags = 'tags'
-
     def __unicode__(self):
         return u'%s' % self.title
 
