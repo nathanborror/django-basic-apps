@@ -54,7 +54,7 @@ class Post(models.Model):
     tease           = models.TextField(_('tease'), blank=True, help_text=_('Concise text suggested. Does not appear in RSS feed.'))
 
     body_markup   = models.TextField(editable=True, blank=True, null=True)
-    
+
     status          = models.IntegerField(_('status'), choices=STATUS_CHOICES, default=2)
     allow_comments  = models.BooleanField(_('allow comments'), default=True)
     publish         = models.DateTimeField(_('publish'), default=datetime.datetime.now)
@@ -85,18 +85,17 @@ class Post(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
-            
+
     def save(self, *args, **kwargs):
         body_markup = mark_safe(formatter(self.body, filter_name=self.markup))
         self.body_markup = body_markup
         super(Post, self).save(*args, **kwargs)
 
-        blog_settings = Settings.get_current()        
-        
+        blog_settings = Settings.get_current()
+
         if blog_settings is None:
             return
-        
-        if blog_settings.ping_google:
+        elif blog_settings.ping_google:
             try:
                 ping_google()
             except:
@@ -110,10 +109,10 @@ class Post(models.Model):
             'day': self.publish.day,
             'slug': self.slug
         })
-    
+
     def get_previous_post(self):
         return self.get_previous_by_publish(status__gte=2)
-    
+
     def get_next_post(self):
         return self.get_next_by_publish(status__gte=2)
 
@@ -134,59 +133,54 @@ class Post(models.Model):
 
 class Settings(models.Model):
     '''
-    Global settings for the blog. 
-    
+    Global settings for the blog.
+
     The class name is plural because "Setting" singular implies one and this is a collection of settings.
-    
+
     Possible: dynamic settings could be designed at some point to allow the user to add settings as they wish.
     '''
 
     site = models.ForeignKey(Site, unique=True)
-    
+
     #denormalized to reduce queries
     site_name = models.CharField(max_length=50, editable=False)
-    author_name = models.CharField(_('author name'), max_length=255, blank=True, 
+    author_name = models.CharField(_('author name'), max_length=255, blank=True,
                 null=True)
     copyright = models.CharField(_('copyright'), max_length=255, blank=True, null=True)
-    about = models.TextField(_('about'), help_text=_('Accepts RAW html. By default, appears in right rail.'), 
+    about = models.TextField(_('about'), help_text=_('Accepts RAW html. By default, appears in right rail.'),
                 blank=True, null=True)
-                                    
+
     twitter_url = models.URLField(_('twitter url'), verify_exists=False, blank=True, null=True)
     rss_url = models.URLField(_('rss url'), verify_exists=False, blank=True, null=True,
                 help_text=_('The location of your RSS feed. Often used to wire up feedburner.'))
-    email_subscribe_url = models.URLField(_('subscribe via email url'), 
+    email_subscribe_url = models.URLField(_('subscribe via email url'),
                 verify_exists=False, blank=True, null=True)
     page_size = models.PositiveIntegerField(_('page size'), default=20)
     ping_google = models.BooleanField(_('ping google'), default=False)
     disqus_shortname = models.CharField(_('disqus shortname'), max_length=255, blank=True, null=True)
-    
+
     meta_keywords = models.TextField(_('meta keywords'), blank=True, null=True)
     meta_description = models.TextField(_('meta description'), blank=True, null=True)
-        
+
     class Meta:
         verbose_name = _('settings')
         verbose_name_plural = _('settings')
-        
+
     def __unicode__(self):
         return "%s-settings" % self.site.name
 
     def delete(self, *args, **kwargs):
         if settings.SITE_ID != self.site.id:
             super(Settings, self).delete(*args, **kwargs)
-    
-    def save(self, *args, **kwargs):        
+
+    def save(self, *args, **kwargs):
         self.site_name = self.site.name
         super(Settings, self).save(*args, **kwargs)
-
-        #update cache with new changes
-        site_id = settings.SITE_ID  
-        key = create_cache_key(Settings, field='pk', field_value=site_id)
-        cache.set(key, self)
 
     @staticmethod
     def get_current():
         site = Site.objects.get_current()
-        key = create_cache_key(Settings, field='pk', field_value=site.id)
+        key = create_cache_key(Settings, field='site__id', field_value=site.id)
         blog_settings = cache.get(key, None)
         if blog_settings is None:
             try:
@@ -199,15 +193,15 @@ class Settings(models.Model):
 
 class BlogRoll(models.Model):
     '''
-    
+
     Other blogs you follow.
-    
+
     '''
-    
+
     name = models.CharField(max_length=100)
     url = models.URLField(verify_exists=False)
     sort_order =  models.PositiveIntegerField(default=0)
-    
+
     class Meta:
         ordering = ('sort_order', 'name',)
         verbose_name = _('blog roll')
@@ -215,7 +209,7 @@ class BlogRoll(models.Model):
 
     def __unicode__(self):
         return self.name
-    
+
     def get_absolute_url(self):
-		return self.url
+        return self.url
 
