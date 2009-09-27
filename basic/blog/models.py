@@ -28,9 +28,6 @@ class Category(models.Model):
         db_table = 'blog_categories'
         ordering = ('title',)
 
-    class Admin:
-        pass
-
     def __unicode__(self):
         return u'%s' % self.title
 
@@ -70,18 +67,6 @@ class Post(models.Model):
         db_table  = 'blog_posts'
         ordering  = ('-publish',)
         get_latest_by = 'publish'
-
-    class Admin:
-        list_display  = ('title', 'publish', 'status')
-        list_filter   = ('publish', 'categories', 'status')
-        search_fields = ('title', 'body')
-
-    class ProxyMeta:
-        title = 'title'
-        description = 'body_markup'
-        tags = 'tags'
-        pub_date = 'publish'
-        active = {'status':2}
 
     def __unicode__(self):
         return u'%s' % self.title

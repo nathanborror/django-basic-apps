@@ -19,15 +19,6 @@ class Bookmark(models.Model):
     verbose_name_plural = _('bookmarks')
     db_table = "bookmarks"
 
-  class Admin:
-    list_display = ('url', 'description')
-    search_fields = ('url', 'description', 'extended')
-
-  class ProxyMeta:
-    title = 'title'
-    description = 'description'
-    tags = 'tags'
-
   def __unicode__(self):
     return self.url
 

@@ -10,8 +10,5 @@ class InlineType(models.Model):
     class Meta:
         db_table = 'inline_types'
 
-    class Admin:
-        pass
-
     def __unicode__(self):
         return self.title

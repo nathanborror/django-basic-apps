@@ -14,9 +14,6 @@ class Genre(models.Model):
     db_table = 'book_genres'
     ordering = ('title',)
 
-  class Admin:
-    pass
-
   def __unicode__(self):
     return '%s' % self.title
   
@@ -35,9 +32,6 @@ class Publisher(models.Model):
   class Meta:
     db_table = 'book_publishers'
     ordering = ('title',)
-  
-  class Admin:
-    pass
 
   def __unicode__(self):
     return '%s' % self.full_title
@@ -72,9 +66,6 @@ class Book(models.Model):
   class Meta:
     db_table = 'books'
     ordering = ('title',)
-  
-  class Admin:
-    list_display  = ('title', 'pages')
     
   def __unicode__(self):
     return '%s' % self.full_title
@@ -111,10 +102,6 @@ class Highlight(models.Model):
   class Meta:
     db_table = 'book_highlights'
   
-  class Admin:
-    list_display  = ('book', 'highlight')
-    list_filter   = ('book',)
-  
   def __unicode__(self):
     return '%s' % self.highlight
   
@@ -133,9 +120,6 @@ class Page(models.Model):
   class Meta:
     db_table = 'book_read_pages'
     ordering = ('-created',)
-
-  class Admin:
-    list_display = ('book', 'current_page')
 
   def __unicode__(self):
     return '%s' % self.current_page

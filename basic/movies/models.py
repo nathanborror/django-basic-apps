@@ -13,9 +13,6 @@ class Genre(models.Model):
     db_table = 'movie_genres'
     ordering = ('title',)
 
-  class Admin:
-    pass
-
   def __unicode__(self):
     return '%s' % self.title
   
@@ -34,9 +31,6 @@ class Studio(models.Model):
   class Meta:
     db_table = 'movie_studios'
     ordering = ('title',)
-
-  class Admin:
-    pass
 
   def __unicode__(self):
     return '%s' % self.full_title
@@ -67,9 +61,6 @@ class Movie(models.Model):
   class Meta:
     db_table = 'movies'
     ordering = ('title',)
-
-  class Admin:
-    pass
 
   def __unicode__(self):
     return '%s' % self.full_title

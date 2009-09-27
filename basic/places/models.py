@@ -17,9 +17,6 @@ class PlaceType(models.Model):
         verbose_name_plural = _('place types')
         db_table = 'place_types'
 
-    class Admin:
-        pass
-
     def __unicode__(self):
         return u'%s' % self.title
 
@@ -40,9 +37,6 @@ class City(models.Model):
         db_table = 'place_cities'
         unique_together = (('city', 'state',),)
         ordering = ('state', 'city',)
-
-    class Admin:
-       pass
 
     def __unicode__(self):
         return u'%s, %s' % (self.city, self.state)
@@ -66,11 +60,6 @@ class Point(models.Model):
         verbose_name_plural = _('points')
         db_table = 'place_points'
         ordering = ('address',)
-
-    class Admin:
-        list_display  = ('address', 'city', 'zip', 'latitude', 'longitude')
-        list_filter   = ('city',)
-        search_fields = ('address',)
 
     def __unicode__(self):
         return u'%s' % self.address
@@ -103,11 +92,6 @@ class Place(models.Model):
         verbose_name_plural = _('places')
         db_table = 'places'
         ordering = ('title',)
-
-    class Admin:
-        list_display = ('title', 'point', 'city', 'status')
-        list_filter = ('status', 'place_types')
-        search_fields = ('title',)
 
     def __unicode__(self):
         return u'%s' % self.full_title

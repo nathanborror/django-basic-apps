@@ -18,9 +18,6 @@ class AudioSet(models.Model):
   class Meta:
     db_table = 'media_audio_sets'
   
-  class Admin:
-    pass
-  
   def __unicode__(self):
     return '%s' % self.title
 
@@ -44,9 +41,6 @@ class Audio(models.Model):
     db_table = 'media_audio'
     verbose_name_plural = 'audios'
 
-  class Admin:
-    pass
-
   def __unicode__(self):
     return '%s' % self.title
 
@@ -67,9 +61,6 @@ class PhotoSet(models.Model):
   
   class Meta:
     db_table = 'media_photo_sets'
-  
-  class Admin:
-    pass
   
   def __unicode__(self):
     return '%s' % self.title
@@ -111,9 +102,6 @@ class Photo(models.Model):
   class Meta:
     db_table = 'media_photos'
   
-  class Admin:
-    pass
-  
   def __unicode__(self):
     return '%s' % self.title
   
@@ -138,9 +126,6 @@ class VideoSet(models.Model):
   class Meta:
     db_table = 'media_video_sets'
   
-  class Admin:
-    pass
-  
   def __unicode__(self):
     return '%s' % self.title
 
@@ -162,9 +147,6 @@ class Video(models.Model):
 
   class Meta:
     db_table = 'media_videos'
-
-  class Admin:
-    pass
 
   def __unicode__(self):
     return '%s' % self.title

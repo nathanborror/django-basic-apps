@@ -13,9 +13,6 @@ class Genre(models.Model):
     db_table = 'music_genres'
     ordering = ('title',)
 
-  class Admin:
-    pass
-
   def __unicode__(self):
     return '%s' % self.title
   
@@ -34,9 +31,6 @@ class Label(models.Model):
   class Meta:
     db_table = 'music_labels'
     ordering = ('title',)
-
-  class Admin:
-    pass
 
   def __unicode__(self):
     return '%s' % self.full_title
@@ -61,9 +55,6 @@ class Band(models.Model):
   class Meta:
     db_table = 'music_bands'
     ordering = ('title',)
-
-  class Admin:
-    pass
 
   def __unicode__(self):
     return '%s' % self.full_title
@@ -96,9 +87,6 @@ class Album(models.Model):
   class Meta:
     db_table = 'music_albums'
     ordering = ('title',)
-
-  class Admin:
-    list_display  = ('title', 'band',)
 
   def __unicode__(self):
     return '%s' % self.full_title
@@ -134,9 +122,6 @@ class Track(models.Model):
   class Meta:
     db_table = 'music_tracks'
     ordering = ('title',)
-  
-  class Admin:
-    pass
   
   def __unicode__(self):
     return '%s' % self.title

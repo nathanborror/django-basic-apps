@@ -20,9 +20,6 @@ class PersonType(models.Model):
         db_table = 'people_types'
         ordering = ('title',)
 
-    class Admin:
-        pass
-
     def __unicode__(self):
         return '%s' % self.title
 
@@ -55,10 +52,6 @@ class Person(models.Model):
         db_table = 'people'
         ordering = ('last_name', 'first_name',)
 
-    class Admin:
-        list_filter = ('person_types',)
-        search_fields = ('first_name', 'last_name')
-
     def __unicode__(self):
         return u'%s' % self.full_name
 
@@ -90,11 +83,6 @@ class Quote(models.Model):
         verbose_name = 'quote'
         verbose_name_plural = 'quotes'
         db_table = 'people_quotes'
-
-    class Admin:
-        list_display = ('person','quote')
-        list_filter = ('person',)
-        search_fields = ('quote',)
         
     def __unicode__(self):
         return u'%s' % self.title
@@ -107,9 +95,6 @@ class Quote(models.Model):
 class Conversation(models.Model):
     """A conversation between two or many people."""
     title = models.CharField(blank=True, max_length=200)
-
-    class Admin:
-        pass
 
     def __unicode__(self):
         return self.title
