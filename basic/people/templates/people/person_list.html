@@ -11,8 +11,8 @@
 
 {% block content %}
   <ul class="link_list">
-  {% for person in object_list %}
+    {% for person in object_list %}
     <li><a href="{{ person.get_absolute_url }}">{{ person.full_name }}</a></li>
-  {% endfor %}
+    {% endfor %}
   </ul>
 {% endblock %}

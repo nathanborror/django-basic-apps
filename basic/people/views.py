@@ -56,11 +56,11 @@ def person_quote_list(request, slug, template_name='people/person_quote_list.htm
 person_quote_list.__doc__ = list_detail.object_list.__doc__
 
 
-def quote_detail(request, slug, template_name='people/quote_detail.html', **kwargs):
+def quote_detail(request, quote_id, template_name='people/quote_detail.html', **kwargs):
     return list_detail.object_detail(
         request,
         queryset=Quote.objects.all(),
-        slug=slug,
+        object_id=quote_id,
         **kwargs
     )
 quote_detail.__doc__ = list_detail.object_detail.__doc__

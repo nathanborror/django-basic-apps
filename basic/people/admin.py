@@ -18,7 +18,6 @@ class QuoteAdmin(admin.ModelAdmin):
     list_display = ('person','quote')
     list_filter = ('person',)
     search_fields = ('quote',)
-    prepopulated_fields = {'slug': ('title',)}
 admin.site.register(Quote, QuoteAdmin)
 
 

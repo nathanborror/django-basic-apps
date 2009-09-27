@@ -5,8 +5,10 @@
 
 
 {% block content_title %}
-  <h2>{{ object.full_name }}
-  <em>{% for type in object.person_types.all %}<a href="{{ type.get_absolute_url }}">{{ type.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</em></h2>
+  <h2>
+    {{ object.full_name }}
+    <em>{% for type in object.person_types.all %}<a href="{{ type.get_absolute_url }}">{{ type.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</em>
+  </h2>
 {% endblock %}
 
 

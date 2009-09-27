@@ -22,7 +22,7 @@ urlpatterns = patterns('basic.people.views',
         view='person_quote_list',
         name='person_quote_list'
     ),
-    url(r'^quote/(?P<slug>[-\w]+)/$',
+    url(r'^quote/(?P<quote_id>\d+)/$',
         view='quote_detail',
         name='quote_detail'
     ),

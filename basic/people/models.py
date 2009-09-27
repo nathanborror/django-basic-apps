@@ -74,10 +74,6 @@ class Quote(models.Model):
     person = models.ForeignKey(Person)
     quote = models.TextField(_('quote'))
     source = models.CharField(_('source'), blank=True, max_length=255)
-    title = models.CharField(max_length=100, blank=False, null=False)
-    slug = models.SlugField(_('slug'), unique=True)
-    tags = TagField()
-    publish = models.DateTimeField(_('publish'), default=datetime.datetime.now)
 
     class Meta:
         verbose_name = 'quote'
@@ -85,11 +81,11 @@ class Quote(models.Model):
         db_table = 'people_quotes'
 
     def __unicode__(self):
-        return u'%s' % self.title
+        return u'%s' % self.quote
 
     @permalink
     def get_absolute_url(self):
-        return ('quote_detail', None, {'slug': self.slug})
+        return ('quote_detail', None, {'quote_id': self.pk})
 
 
 class Conversation(models.Model):
