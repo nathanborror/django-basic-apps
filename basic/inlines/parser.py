@@ -24,7 +24,10 @@ def inlines(value, return_list=False):
     else:
         for inline in content.findAll('inline'):
             rendered_inline = render_inline(inline)
-            inline.replaceWith(render_to_string(rendered_inline['template'], rendered_inline['context']))
+            if rendered_inline:
+                inline.replaceWith(render_to_string(rendered_inline['template'], rendered_inline['context']))
+            else:
+                inline.replaceWith('')
         return mark_safe(content)
 
 
