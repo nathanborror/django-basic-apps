@@ -34,17 +34,17 @@ class Person(models.Model):
         (1, 'Male'),
         (2, 'Female'),
     )
-    first_name        = models.CharField(_('first name'), blank=True, max_length=100)
-    middle_name       = models.CharField(_('middle name'), blank=True, max_length=100)
-    last_name         = models.CharField(_('last name'), blank=True, max_length=100)
-    slug              = models.SlugField(_('slug'), unique=True)
-    user              = models.ForeignKey(User, blank=True, null=True, help_text='If the person is an existing user of your site.')
-    gender            = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICES, blank=True, null=True)
-    mugshot           = models.FileField(_('mugshot'), upload_to='mugshots', blank=True)
-    mugshot_credit    = models.CharField(_('mugshot credit'), blank=True, max_length=200)
-    birth_date        = models.DateField(_('birth date'), blank=True, null=True)
-    person_types      = models.ManyToManyField(PersonType, blank=True)
-    website           = models.URLField(_('website'), blank=True, verify_exists=True)
+    first_name = models.CharField(_('first name'), blank=True, max_length=100)
+    middle_name = models.CharField(_('middle name'), blank=True, max_length=100)
+    last_name = models.CharField(_('last name'), blank=True, max_length=100)
+    slug = models.SlugField(_('slug'), unique=True)
+    user = models.ForeignKey(User, blank=True, null=True, help_text='If the person is an existing user of your site.')
+    gender = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICES, blank=True, null=True)
+    mugshot = models.FileField(_('mugshot'), upload_to='mugshots', blank=True)
+    mugshot_credit = models.CharField(_('mugshot credit'), blank=True, max_length=200)
+    birth_date = models.DateField(_('birth date'), blank=True, null=True)
+    person_types = models.ManyToManyField(PersonType, blank=True)
+    website = models.URLField(_('website'), blank=True, verify_exists=True)
 
     class Meta:
         verbose_name = _('person')
@@ -71,19 +71,19 @@ class Person(models.Model):
 
 class Quote(models.Model):
     """Quote model."""
-    person            = models.ForeignKey(Person)
-    quote             = models.TextField(_('quote'))
-    source            = models.CharField(_('source'), blank=True, max_length=255)
+    person = models.ForeignKey(Person)
+    quote = models.TextField(_('quote'))
+    source = models.CharField(_('source'), blank=True, max_length=255)
     title = models.CharField(max_length=100, blank=False, null=False)
     slug = models.SlugField(_('slug'), unique=True)
     tags = TagField()
-    publish         = models.DateTimeField(_('publish'), default=datetime.datetime.now)
-    
+    publish = models.DateTimeField(_('publish'), default=datetime.datetime.now)
+
     class Meta:
         verbose_name = 'quote'
         verbose_name_plural = 'quotes'
         db_table = 'people_quotes'
-        
+
     def __unicode__(self):
         return u'%s' % self.title
 

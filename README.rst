@@ -13,8 +13,6 @@ Dependancies
 
 * Basic Inlines are required to use the Blog app
 * Django Comments (http://www.djangoproject.com/documentation/add_ons/#comments) are required for the blog app
-* Django-Markup (http://github.com/bartTC/django-markup/tree/master) for the blog app
-* Django-Sugar (http://github.com/montylounge/django-sugar/tree/master) for the blog app
 * Django Tagging (http://code.google.com/p/django-tagging)
 * Markdown (http://www.djangoproject.com/documentation/add_ons/#markup)
 * BeautifulSoup (http://www.crummy.com/software/BeautifulSoup/) is required to use the blog and, subsequently, the inlines app.

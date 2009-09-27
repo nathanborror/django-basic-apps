@@ -1,6 +1,7 @@
+import re
+
 from django import template
 from basic.events.models import Event, EventTime
-import re
 
 register = template.Library()
 

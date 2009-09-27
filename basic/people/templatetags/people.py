@@ -1,8 +1,8 @@
+import re
+
 from django import template
 from django.db import models
 from django.utils.safestring import mark_safe
-
-import re
 
 Person = models.get_model('people', 'person')
 

@@ -9,5 +9,5 @@ class BlogSitemap(Sitemap):
     def items(self):
         return Post.objects.published()
 
-        def lastmod(self, obj):
-            return obj.publish
+    def lastmod(self, obj):
+        return obj.publish

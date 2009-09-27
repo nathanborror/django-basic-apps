@@ -1,3 +1,6 @@
+import datetime
+import re
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import Http404
@@ -7,19 +10,14 @@ from django.conf import settings
 from basic.blog.models import *
 from tagging.models import Tag, TaggedItem
 
-import datetime
-import re
-
 
 def post_list(request, page=0, paginate_by=20, **kwargs):
-    
     page_size = getattr(settings,'BLOG_PAGESIZE', paginate_by),
-    
     return list_detail.object_list(
         request,
-        queryset = Post.objects.published(),
-        paginate_by = page_size,
-        page = page,
+        queryset=Post.objects.published(),
+        paginate_by=page_size,
+        page=page,
         **kwargs
     )
 post_list.__doc__ = list_detail.object_list.__doc__
@@ -28,10 +26,10 @@ post_list.__doc__ = list_detail.object_list.__doc__
 def post_archive_year(request, year, **kwargs):
     return date_based.archive_year(
         request,
-        year = year,
-        date_field = 'publish',
-        queryset = Post.objects.published(),
-        make_object_list = True,
+        year=year,
+        date_field='publish',
+        queryset=Post.objects.published(),
+        make_object_list=True,
         **kwargs
     )
 post_archive_year.__doc__ = date_based.archive_year.__doc__
@@ -40,10 +38,10 @@ post_archive_year.__doc__ = date_based.archive_year.__doc__
 def post_archive_month(request, year, month, **kwargs):
     return date_based.archive_month(
         request,
-        year = year,
-        month = month,
-        date_field = 'publish',
-        queryset = Post.objects.published(),
+        year=year,
+        month=month,
+        date_field='publish',
+        queryset=Post.objects.published(),
         **kwargs
     )
 post_archive_month.__doc__ = date_based.archive_month.__doc__
@@ -52,37 +50,34 @@ post_archive_month.__doc__ = date_based.archive_month.__doc__
 def post_archive_day(request, year, month, day, **kwargs):
     return date_based.archive_day(
         request,
-        year = year,
-        month = month,
-        day = day,
-        date_field = 'publish',
-        queryset = Post.objects.published(),
+        year=year,
+        month=month,
+        day=day,
+        date_field='publish',
+        queryset=Post.objects.published(),
         **kwargs
     )
 post_archive_day.__doc__ = date_based.archive_day.__doc__
 
 
 def post_detail(request, slug, year, month, day, **kwargs):
-    '''
+    """
     Displays post detail. If user is superuser, view will display 
     unpublished post detail for previewing purposes.
-    
-    '''
-    
+    """
     posts = None
     if request.user.is_superuser:
         posts = Post.objects.all()
     else:
         posts = Post.objects.published()
-        
     return date_based.object_detail(
         request,
-        year = year,
-        month = month,
-        day = day,
-        date_field = 'publish',
-        slug = slug,
-        queryset = posts,
+        year=year,
+        month=month,
+        day=day,
+        date_field='publish',
+        slug=slug,
+        queryset=posts,
         **kwargs
     )
 post_detail.__doc__ = date_based.object_detail.__doc__
@@ -99,10 +94,11 @@ def category_list(request, template_name = 'blog/category_list.html', **kwargs):
     """
     return list_detail.object_list(
         request,
-        queryset = Category.objects.all(),
-        template_name = template_name,
+        queryset=Category.objects.all(),
+        template_name=template_name,
         **kwargs
     )
+
 
 def category_detail(request, slug, template_name = 'blog/category_detail.html', **kwargs):
     """
@@ -119,12 +115,12 @@ def category_detail(request, slug, template_name = 'blog/category_detail.html', 
 
     return list_detail.object_list(
         request,
-        queryset = category.post_set.published(),
-        extra_context = {'category': category},
-        template_name = template_name,
+        queryset=category.post_set.published(),
+        extra_context={'category': category},
+        template_name=template_name,
         **kwargs
     )
-    
+
 
 def tag_detail(request, slug, template_name = 'blog/tag_detail.html', **kwargs):
     """
@@ -138,12 +134,12 @@ def tag_detail(request, slug, template_name = 'blog/tag_detail.html', **kwargs):
             Given tag.
     """
     tag = get_object_or_404(Tag, name__iexact=slug)
-    
+
     return list_detail.object_list(
         request,
-        queryset = TaggedItem.objects.get_by_model(Post,tag).filter(status=2),
-        extra_context = {'tag': tag},
-        template_name = template_name,
+        queryset=TaggedItem.objects.get_by_model(Post,tag).filter(status=2),
+        extra_context={'tag': tag},
+        template_name=template_name,
         **kwargs
     )
 

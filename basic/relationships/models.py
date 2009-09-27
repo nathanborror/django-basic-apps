@@ -39,11 +39,11 @@ class RelationshipManager(models.Manager):
 
 
 class Relationship(models.Model):
-    """ Relationship model """
-    from_user       = models.ForeignKey(User, related_name='from_users')
-    to_user         = models.ForeignKey(User, related_name='to_users')
-    created         = models.DateTimeField(auto_now_add=True)
-    objects         = RelationshipManager()
+    """Relationship model"""
+    from_user = models.ForeignKey(User, related_name='from_users')
+    to_user = models.ForeignKey(User, related_name='to_users')
+    created = models.DateTimeField(auto_now_add=True)
+    objects = RelationshipManager()
 
     class Meta:
         unique_together = (('from_user', 'to_user'),)

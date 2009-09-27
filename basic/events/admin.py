@@ -13,5 +13,4 @@ class EventAdmin(admin.ModelAdmin):
     inlines = [
         EventTimeInline
     ]
-
 admin.site.register(Event, EventAdmin)

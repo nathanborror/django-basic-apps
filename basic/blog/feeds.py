@@ -26,7 +26,7 @@ class BlogPostsFeed(Feed):
 class BlogPostsByCategory(Feed):
     _site = Site.objects.get_current()
     title = '%s posts category feed' % _site.name
-    
+
     def get_object(self, bits):
         if len(bits) != 1:
             raise ObjectDoesNotExist
@@ -39,7 +39,7 @@ class BlogPostsByCategory(Feed):
 
     def description(self, obj):
         return "Posts recently categorized as %s" % obj.title
-    
+
     def items(self, obj):
         return obj.post_set.published()[:10]
 
@@ -57,4 +57,3 @@ class CommentsFeed(Feed):
 
     def item_pubdate(self, obj):
         return obj.submit_date
-

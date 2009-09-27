@@ -12,8 +12,8 @@ from basic.profiles.forms import *
 def profile_list(request):
     return list_detail.object_list(
         request,
-        queryset = Profile.objects.all(),
-        paginate_by = 20,
+        queryset=Profile.objects.all(),
+        paginate_by=20,
     )
 profile_list.__doc__ = list_detail.object_list.__doc__
 
@@ -23,11 +23,10 @@ def profile_detail(request, username):
         user = User.objects.get(username__iexact=username)
     except User.DoesNotExist:
         raise Http404
-  
     profile = Profile.objects.get(user=user)
     context = { 'object':profile }
     return render_to_response('profiles/profile_detail.html', context, context_instance=RequestContext(request))
- 
+
 
 @login_required
 def profile_edit(request, template_name='profiles/profile_form.html'):
@@ -48,7 +47,7 @@ def profile_edit(request, template_name='profiles/profile_form.html'):
             return HttpResponseRedirect(reverse('profile_detail', kwargs={'username': request.user.username}))
         else:
             context = {
-                'profile_form': profile_form, 
+                'profile_form': profile_form,
                 'user_form': user_form,
                 'service_formset': service_formset,
                 'link_formset': link_formset
@@ -58,7 +57,7 @@ def profile_edit(request, template_name='profiles/profile_form.html'):
         service_formset = ServiceFormSet(instance=profile)
         link_formset = LinkFormSet(instance=profile)
         context = {
-            'profile_form': ProfileForm(instance=profile), 
+            'profile_form': ProfileForm(instance=profile),
             'user_form': UserForm(instance=request.user),
             'service_formset': service_formset,
             'link_formset': link_formset

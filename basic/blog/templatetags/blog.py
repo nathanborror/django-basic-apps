@@ -1,8 +1,8 @@
+import re
+
 from django import template
 from django.conf import settings
 from django.db import models
-
-import re
 
 Post = models.get_model('blog', 'post')
 Category = models.get_model('blog', 'category')
@@ -23,6 +23,7 @@ class LatestPosts(template.Node):
         else:
             context[self.var_name] = posts
         return ''
+
 
 @register.tag
 def get_latest_posts(parser, token):
@@ -56,6 +57,7 @@ class BlogCategories(template.Node):
         categories = Category.objects.all()
         context[self.var_name] = categories
         return ''
+
 
 @register.tag
 def get_blog_categories(parser, token):
@@ -112,7 +114,8 @@ class BlogRolls(template.Node):
         blogrolls = BlogRoll.objects.all()
         context[self.var_name] = blogrolls
         return ''
-            
+
+
 @register.tag
 def get_blogroll(parser, token):
     """

@@ -4,6 +4,7 @@ from basic.blog.models import Post
 
 register = template.Library()
 
+
 class PostArchive(template.Node):
     def __init__(self, var_name):
         self.var_name = var_name
@@ -13,6 +14,7 @@ class PostArchive(template.Node):
         if dates:
             context[self.var_name] = dates
         return ''
+
 
 @register.tag
 def get_post_archive(parser, token):

@@ -1,29 +1,29 @@
 from django.conf.urls.defaults import *
-from basic.places import views as place_views
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns('basic.places.views',
     url(r'^cities/(?P<slug>[-\w]+)/$',
-        view=place_views.city_detail,
-        name='place_city_detail'),
-
+        view='city_detail',
+        name='place_city_detail'
+    ),
     url(r'^cities/$',
-        view=place_views.city_list,
-        name='place_city_list'),
-
+        view='city_list',
+        name='place_city_list'
+    ),
     url(r'^types/(?P<slug>[-\w]+)/$',
-        view=place_views.place_type_detail,
-        name='place_type_detail'),
-
+        view='place_type_detail',
+        name='place_type_detail'
+    ),
     url(r'^types/$',
-        view=place_views.place_type_list,
-        name='place_type_list'),
-
+        view='place_type_list',
+        name='place_type_list'
+    ),
     url(r'^(?P<slug>[-\w]+)/$',
-        view=place_views.place_detail,
-        name='place_detail'),
-
+        view='place_detail',
+        name='place_detail'
+    ),
     url(r'^$',
-        view=place_views.place_list,
-        name='place_list'),
+        view='place_list',
+        name='place_list'
+    ),
 )

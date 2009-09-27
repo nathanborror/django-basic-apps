@@ -3,36 +3,32 @@ from basic.media.models import *
 
 
 photo_list = {
-  'queryset': Photo.objects.all(),
+    'queryset': Photo.objects.all(),
 }
 photo_set_list = {
-  'queryset': PhotoSet.objects.all(),
+    'queryset': PhotoSet.objects.all(),
 }
 
 
-urlpatterns = patterns('',
-  url(
-    regex   = '^sets/(?P<slug>[-\w]+)/$',
-    view    = 'django.views.generic.list_detail.object_detail',
-    kwargs  = photo_set_list,
-    name    = 'photo_set_detail',
-  ),
-  url (
-    regex   = '^sets/$',
-    view    = 'django.views.generic.list_detail.object_list',
-    kwargs  = photo_set_list,
-    name    = 'photo_set_list',
-  ),
-  url(
-    regex   = '^(?P<slug>[-\w]+)/$',
-    view    = 'django.views.generic.list_detail.object_detail',
-    kwargs  = photo_list,
-    name    = 'photo_detail',
-  ),
-  url (
-    regex   = '^$',
-    view    = 'django.views.generic.list_detail.object_list',
-    kwargs  = photo_list,
-    name    = 'photo_list',
-  ),
+urlpatterns = patterns('django.views.generic.list_detail',
+    url(r'^sets/(?P<slug>[-\w]+)/$',
+        view='object_detail',
+        kwargs=photo_set_list,
+        name='photo_set_detail',
+    ),
+    url (r'^sets/$',
+        view='object_list',
+        kwargs=photo_set_list,
+        name='photo_set_list',
+    ),
+    url(r'^(?P<slug>[-\w]+)/$',
+        view='object_detail',
+        kwargs=photo_list,
+        name='photo_detail',
+    ),
+    url (r'^$',
+        view='object_list',
+        kwargs=photo_list,
+        name='photo_list',
+    ),
 )

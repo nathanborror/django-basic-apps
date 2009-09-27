@@ -1,7 +1,7 @@
 import os
- 
 from distutils.core import setup
- 
+
+
 def fullsplit(path, result=None):
     """
     Split a pathname into components (the opposite of os.path.join) in a
@@ -15,9 +15,11 @@ def fullsplit(path, result=None):
     if head == path:
         return result
     return fullsplit(head, [tail] + result)
- 
+
+
 package_dir = "basic"
- 
+
+
 packages = []
 for dirpath, dirnames, filenames in os.walk(package_dir):
     # ignore dirnames that start with '.'
@@ -26,7 +28,8 @@ for dirpath, dirnames, filenames in os.walk(package_dir):
             del dirnames[i]
     if "__init__.py" in filenames:
         packages.append(".".join(fullsplit(dirpath)))
- 
+
+
 setup(name='django-basic-apps',
     version='0.6',
     description='Basic Django applications',
