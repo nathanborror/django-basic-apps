@@ -10,21 +10,21 @@ class GetRelationship(template.Node):
         self.from_user = from_user
         self.to_user = to_user
         self.varname = varname
-    
+
     def render(self, context):
         from_user = template.resolve_variable(self.from_user, context)
         to_user = template.resolve_variable(self.to_user, context)
-        
+
         is_following = Relationship.objects.is_following(from_user, to_user)
         context[self.varname] = is_following
-          
+
         return ''
-    
+
 
 def do_get_relationship(parser, token):
     """
     Get relationship between two users.
-    
+
     Example:
         {% get_relationship from_user to_user as relationship %}
     """
