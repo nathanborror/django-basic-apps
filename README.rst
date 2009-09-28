@@ -16,6 +16,7 @@ Dependancies
 * Django Tagging (http://code.google.com/p/django-tagging)
 * Markdown (http://www.djangoproject.com/documentation/add_ons/#markup)
 * BeautifulSoup (http://www.crummy.com/software/BeautifulSoup/) is required to use the blog and, subsequently, the inlines app.
+* Dateutil (http://labix.org/python-dateutil)
 
 Inlines
 =======
