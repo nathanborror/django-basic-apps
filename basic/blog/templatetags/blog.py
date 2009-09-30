@@ -13,12 +13,12 @@ register = template.Library()
 
 class LatestPosts(template.Node):
     def __init__(self, limit, var_name):
-        self.limit = limit
+        self.limit = int(limit)
         self.var_name = var_name
 
     def render(self, context):
-        posts = Post.objects.published()[:int(self.limit)]
-        if posts and (int(self.limit) == 1):
+        posts = Post.objects.published()[:self.limit]
+        if posts and (self.limit == 1):
             context[self.var_name] = posts[0]
         else:
             context[self.var_name] = posts
