@@ -80,7 +80,7 @@ def render_inline(inline):
             context = { 'content_type':"%s.%s" % (app_label, model_name), 'object': obj, 'class': inline_class, 'settings': settings }
         except model.DoesNotExist:
             if settings.DEBUG:
-                raise model.DoesNotExist, "Object matching '%s' does not exist"
+                raise model.DoesNotExist, "%s with pk of '%s' does not exist" % (model_name, inline['id'])
             else:
                 return ''
         except:
