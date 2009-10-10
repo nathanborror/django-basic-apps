@@ -10,4 +10,12 @@ urlpatterns = patterns('basic.relationships.views',
         view='unfollow',
         name='relationship_unfollow'
     ),
+    url(r'^block/(?P<user_id>\d+)/$',
+        view='block',
+        name='relationship_block'
+    ),
+    url(r'^unblock/(?P<user_id>\d+)/$',
+        view='unblock',
+        name='relationship_unblock'
+    ),
 )

@@ -11,11 +11,14 @@ Relationship = models.get_model('relationships', 'relationship')
 
 
 @login_required
-def follow(request, to_user_id, template_name='relationships/relationship_add_confirm.html', success_template_name='relationships/relationship_add_success.html', mimetype='text/html'):
+def follow(request, to_user_id, 
+            template_name='relationships/relationship_add_confirm.html', 
+            success_template_name='relationships/relationship_add_success.html', 
+            mimetype='text/html'):
     to_user = get_object_or_404(User, pk=to_user_id)
     from_user = request.user
 
-    if request.is_ajax() or request.POST:
+    if request.method == 'POST':
         relationship, created = Relationship.objects.get_or_create(from_user=from_user, to_user=to_user)
 
         if request.is_ajax():
@@ -39,11 +42,14 @@ def follow(request, to_user_id, template_name='relationships/relationship_add_co
 
 
 @login_required
-def unfollow(request, to_user_id, template_name='relationships/relationship_delete_confirm.html', success_template_name='relationships/relationship_delete_success.html', mimetype='text/html'):
+def unfollow(request, to_user_id, 
+            template_name='relationships/relationship_delete_confirm.html', 
+            success_template_name='relationships/relationship_delete_success.html', 
+            mimetype='text/html'):
     to_user = get_object_or_404(User, pk=to_user_id)
     from_user = request.user
 
-    if request.is_ajax() or request.POST:
+    if request.method == 'POST':
         relationship = get_object_or_404(Relationship, to_user=to_user, from_user=from_user)
         relationship.delete()
 
@@ -64,4 +70,49 @@ def unfollow(request, to_user_id, template_name='relationships/relationship_dele
             template_name = success_template_name
 
     context = {'to_user': to_user}
+    return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
+
+
+@login_required
+def block(request, user_id, 
+            template_name='relationships/block_confirm.html', 
+            success_template_name='relationships/block_success.html', 
+            mimetype='text/html'):
+    user_to_block = get_object_or_404(User, pk=user_id)
+    user = request.user
+
+    if request.method == 'POST':
+        relationship, created = Relationship.objects.get_or_create(to_user=user_to_block, from_user=user)
+        relationship.is_blocked = True
+        relationship.save()
+
+        if request.is_ajax():
+            response = {'success': 'Success'}
+            return HttpResponse(json.dumps(response), mimetype="application/json")
+        else:
+            template_name = success_template_name
+
+    context = {'user': user, 'user_to_block': user_to_block}
+    return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
+
+
+@login_required
+def unblock(request, user_id, 
+            template_name='relationships/block_delete_confirm.html', 
+            success_template_name='relationships/block_delete_success.html', 
+            mimetype='text/html'):
+    user_to_block = get_object_or_404(User, pk=user_id)
+    user = request.user
+
+    if request.method == 'POST':
+        relationship = get_object_or_404(Relationship, to_user=user_to_block, from_user=user, is_blocked=True)
+        relationship.delete()
+
+        if request.is_ajax():
+            response = {'success': 'Success'}
+            return HttpResponse(json.dumps(response), mimetype="application/json")
+        else:
+            template_name = success_template_name
+
+    context = {'user': user, 'user_to_block': user_to_block}
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
