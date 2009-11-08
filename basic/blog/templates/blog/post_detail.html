@@ -13,21 +13,21 @@
     <a class="previous" href="{{ object.get_previous_post.get_absolute_url }}">&laquo; {{ object.get_previous_post }}</a>
     {% endif %}
     {% if object.get_next_by_publish %}
-    | <a class="next" href="{{ object.get_next_post.get_absolute_url }}">{{ object.get_next_post }} &raquo;</a> 
+    | <a class="next" href="{{ object.get_next_post.get_absolute_url }}">{{ object.get_next_post }} &raquo;</a>
     {% endif %}
   </p>
 {% endblock %}
 
 
 {% block content %}
-  {% load blog comments tagging_tags inlines %}
-  
+  {% load blog comments tagging_tags inlines markup %}
+
   <p class="date">{{ object.publish|date:"j F Y" }}</p>
-  
+
   <div class="body">
     {{ object.body_markup|render_inlines|safe }}
   </div>
-  
+
   {% tags_for_object object as tag_list %}
   {% if tag_list %}
   <p class="inline_tag_list"><strong>Related tags:</strong>
@@ -36,7 +36,7 @@
     {% endfor %}
   </p>
   {% endif %}
-  
+
   {% get_comment_list for object as comment_list %}
   {% if comment_list %}
   <div id="comments">
@@ -46,7 +46,7 @@
       {% if comment.is_public %}
       <div class="comment">
         <h5 class="name">
-          <a name="c{{ comment.id }}" href="{{ comment.get_absolute_url }}" title="Permalink to {{ comment.person_name }}'s comment" class="count">{{ forloop.counter }}</a> 
+          <a name="c{{ comment.id }}" href="{{ comment.get_absolute_url }}" title="Permalink to {{ comment.person_name }}'s comment" class="count">{{ forloop.counter }}</a>
           {% if comment.user_url %}<a href="{{ comment.user_url }}">{{ comment.user_name }}</a>{% else %}{{ comment.user_name }}{% endif %} says...
         </h5>
         {{ comment.comment|urlizetrunc:"60"|markdown:"safe" }}
