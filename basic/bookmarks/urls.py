@@ -18,7 +18,7 @@ urlpatterns = patterns('basic.bookmarks.views',
         name='bookmark_archive_year',
     ),
     url(r'^$',
-        view='bookmark_index',
+        view='bookmark_list',
         name='bookmark_index',
     ),
 )
