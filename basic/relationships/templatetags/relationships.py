@@ -5,6 +5,64 @@ Relationship = models.get_model('relationships', 'relationship')
 register = template.Library()
 
 
+# Expose RelationshipManager functionality as template filters.
+
+def blockers(user):
+    """Returns list of people blocking user."""
+    try:
+        return Relationship.objects.get_blockers_for_user(user)
+    except AttributeError:
+        return []
+register.filter('blockers', blockers)
+
+def friends(user):
+    """Returns people user is following sans people blocking user."""
+    try:
+        return Relationship.objects.get_friends_for_user(user)
+    except AttributeError:
+        return []
+register.filter('friends', friends)
+
+def followers(user):
+    """Returns people following user."""
+    try:
+        return Relationship.objects.get_followers_for_user(user)
+    except AttributeError:
+        pass
+register.filter('followers', followers)
+
+def fans(user):
+    """Returns people following user but user isn't following."""
+    try:
+        return Relationship.objects.get_fans_for_user(user)
+    except AttributeError:
+        pass
+register.filter('fans', fans)
+
+# Comparing two users.
+
+def follows(from_user, to_user):
+    """Returns ``True`` if the first user follows the second, ``False`` otherwise.  Example: {% if user|follows:person %}{% endif %}"""
+    try:
+        relationship = Relationship.objects.get_relationship(from_user, to_user)
+        if relationship and not relationship.is_blocked:
+            return True
+        else:
+            return False
+    except AttributeError:
+        return False
+register.filter('follows', follows)
+
+def get_relationship(from_user, to_user):
+    """Get relationship between two users."""
+    try:
+        return Relationship.objects.get_relationship(from_user, to_user)
+    except AttributeError:
+        return None
+register.filter('get_relationship', get_relationship)
+
+# get_relationship templatetag.
+
 class GetRelationship(template.Node):
     def __init__(self, from_user, to_user, varname='relationship'):
         self.from_user = from_user
