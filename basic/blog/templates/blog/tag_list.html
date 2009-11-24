@@ -13,8 +13,8 @@
 
 {% block content %}
   <ul class="link_list">
-    {% for category in object_list %}
-    <li><a href="{{ category.get_absolute_url }}" title="{% trans "View posts tagged" %} {{ category }}">{{ category }}</a></li>
+    {% for tag in object_list %}
+    <li><a href="{{ tag.get_absolute_url }}" title="{% trans "View posts tagged" %} {{ tag }}">{{ tag }}</a></li>
     {% endfor %}
   </ul>
 {% endblock %}
