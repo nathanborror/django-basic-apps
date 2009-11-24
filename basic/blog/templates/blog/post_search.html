@@ -30,7 +30,7 @@
       <h3 class="title"><a href="{{ post.get_absolute_url }}" title="{% trans "View this post" %}">{{ post.title }}</a></h3>
       <p class="date">{{ post.publish|date:"Y F d" }}</p>
       <p class="tease">{{ post.tease|safe }}</p>
-      <p class="comments">{% if comment_count %}{{ comment_count }} {% blocktrans with comment_count|pluralize as pluralize %}{% trans "comment" %}{{ pluralize }}{% endblocktrans %}{% endif %}</p>
+      <p class="comments">{% if comment_count %}{{ comment_count }} {% blocktrans with comment_count|pluralize as pluralize %}comment{{ pluralize }}{% endblocktrans %}{% endif %}</p>
     </div>
     {% endfor %}
   </div>
