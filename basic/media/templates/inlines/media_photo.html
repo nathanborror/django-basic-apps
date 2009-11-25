@@ -1,0 +1,27 @@
+{# The reason that we did not indent this code is because if we did, Markdown would treat it as code rather than HTML. #}
+
+{% load i18n %}
+
+{% if object %}
+
+<div{% if class %} class="{{ class }}"{% endif %}>
+    <p class="photo">
+        <a href="{% url photo_detail object.slug %}" title="{% trans "View the full image" %}"><img src="{{ settings.MEDIA_URL }}{{ object.photo }}" alt="{{ object }}" /></a>
+    </p>
+    {% if object.taken_by %}<p class="taken_by">{% trans "By" %} {{ object.taken_by }}</p>{% endif %}
+    {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
+</div>
+
+{% else %}
+
+<div{% if class %} class="{{ class }}"{% endif %}>
+    {% for object in object_list %}    
+        <p class="photo">
+            <a href="{% url photo_detail object.slug %}" title="{% trans "View the full image" %}"><img src="{{ settings.MEDIA_URL }}{{ object.photo }}" alt="{{ object }}" /></a>
+        </p>
+        {% if object.taken_by %}<p class="taken_by">{% trans "By" %} {{ object.taken_by }}</p>{% endif %}
+        {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
+    {% endfor %}
+</div>
+
+{% endif %}
