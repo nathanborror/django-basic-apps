@@ -7,40 +7,41 @@ register = template.Library()
 
 # Expose RelationshipManager functionality as template filters.
 
+@register.filter
 def blockers(user):
     """Returns list of people blocking user."""
     try:
         return Relationship.objects.get_blockers_for_user(user)
     except AttributeError:
         return []
-register.filter('blockers', blockers)
 
+@register.filter
 def friends(user):
     """Returns people user is following sans people blocking user."""
     try:
         return Relationship.objects.get_friends_for_user(user)
     except AttributeError:
         return []
-register.filter('friends', friends)
 
+@register.filter
 def followers(user):
     """Returns people following user."""
     try:
         return Relationship.objects.get_followers_for_user(user)
     except AttributeError:
         pass
-register.filter('followers', followers)
 
+@register.filter
 def fans(user):
     """Returns people following user but user isn't following."""
     try:
         return Relationship.objects.get_fans_for_user(user)
     except AttributeError:
         pass
-register.filter('fans', fans)
 
 # Comparing two users.
 
+@register.filter
 def follows(from_user, to_user):
     """Returns ``True`` if the first user follows the second, ``False`` otherwise.  Example: {% if user|follows:person %}{% endif %}"""
     try:
@@ -51,15 +52,14 @@ def follows(from_user, to_user):
             return False
     except AttributeError:
         return False
-register.filter('follows', follows)
 
+@register.filter
 def get_relationship(from_user, to_user):
     """Get relationship between two users."""
     try:
         return Relationship.objects.get_relationship(from_user, to_user)
     except AttributeError:
         return None
-register.filter('get_relationship', get_relationship)
 
 # get_relationship templatetag.
 
@@ -77,7 +77,6 @@ class GetRelationship(template.Node):
         context[self.varname] = relationship
 
         return ''
-
 
 def do_get_relationship(parser, token):
     """
