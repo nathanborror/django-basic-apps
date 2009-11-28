@@ -15,6 +15,14 @@ def follow(request, to_user_id,
             template_name='relationships/relationship_add_confirm.html', 
             success_template_name='relationships/relationship_add_success.html', 
             mimetype='text/html'):
+    """
+    Allows a user to follow another user.
+    
+    Templates: ``relationships/relationship_add_confirm.html`` and ``relationships/relationship_add_success.html``
+    Context:
+        to_user
+            User object
+    """
     to_user = get_object_or_404(User, pk=to_user_id)
     from_user = request.user
 
@@ -46,6 +54,14 @@ def unfollow(request, to_user_id,
             template_name='relationships/relationship_delete_confirm.html', 
             success_template_name='relationships/relationship_delete_success.html', 
             mimetype='text/html'):
+    """
+    Allows a user to stop following another user.
+
+    Templates: ``relationships/relationship_delete_confirm.html`` and ``relationships/relationship_delete_success.html``
+    Context:
+        to_user
+            User object
+    """
     to_user = get_object_or_404(User, pk=to_user_id)
     from_user = request.user
 
@@ -78,6 +94,14 @@ def block(request, user_id,
             template_name='relationships/block_confirm.html', 
             success_template_name='relationships/block_success.html', 
             mimetype='text/html'):
+    """
+    Allows a user to block another user.
+
+    Templates: ``relationships/block_confirm.html`` and ``relationships/block_success.html``
+    Context:
+        user_to_block
+            User object
+    """
     user_to_block = get_object_or_404(User, pk=user_id)
     user = request.user
 
@@ -92,7 +116,7 @@ def block(request, user_id,
         else:
             template_name = success_template_name
 
-    context = {'user': user, 'user_to_block': user_to_block}
+    context = {'user_to_block': user_to_block}
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
 
 
@@ -101,6 +125,14 @@ def unblock(request, user_id,
             template_name='relationships/block_delete_confirm.html', 
             success_template_name='relationships/block_delete_success.html', 
             mimetype='text/html'):
+    """
+    Allows a user to stop blocking another user.
+
+    Templates: ``relationships/block_delete_confirm.html`` and ``relationships/block_delete_success.html``
+    Context:
+        user_to_block
+            User object
+    """
     user_to_block = get_object_or_404(User, pk=user_id)
     user = request.user
 
@@ -114,5 +146,5 @@ def unblock(request, user_id,
         else:
             template_name = success_template_name
 
-    context = {'user': user, 'user_to_block': user_to_block}
+    context = {'user_to_block': user_to_block}
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
