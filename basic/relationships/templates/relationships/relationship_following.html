@@ -1,0 +1,34 @@
+{% extends "relationships/base_relationships.html" %}
+
+
+{% block title %}{{ block.super }} | Following{% endblock %}
+{% block body_class %}{{ block.super }} relationship_following{% endblock %}
+
+
+{% block content_title %}
+  <h2>Following</h2>
+{% endblock %}
+
+
+{% block content %}
+<ul>
+    {% for following in page.object_list %}
+        <li>
+            {{ following.username }} -
+            <a href="{% url relationship_unfollow to_user_id=following.id %}">Unfollow</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if page.has_other_pages %}
+  <p class="pagination">
+    {% if page.has_previous %}
+    <a class="older" href="?page={{ page.previous_page_number }}">Previous</a>
+    {% endif %}
+    {% if page.has_next and page.has_previous %} | {% endif %}
+    {% if page.has_next %}
+    <a class="newer" href="?page={{ page.next_page_number }}">Next</a>
+    {% endif %}
+  </p>
+{% endif %}
+{% endblock %}

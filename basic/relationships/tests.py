@@ -60,3 +60,35 @@ class RelationshipTestCase(TestCase):
 
         friends = Relationship.objects.get_friends_for_user(self.user2)
         self.assertEqual(len(friends), 0)
+    
+    def test_following(self):
+        kwargs = {'user_id': self.user1.pk}
+        
+        # Test with no relations.
+        response = self.client.get(reverse('relationship_following', kwargs=kwargs))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([following.id for following in response.context['page'].object_list], [])
+        
+        # Setup a relationship.
+        Relationship.objects.create(from_user=self.user1, to_user=self.user2)
+        
+        # Test the relationship.
+        response = self.client.get(reverse('relationship_following', kwargs=kwargs))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([following.id for following in response.context['page'].object_list], [self.user2.pk])
+    
+    def test_followers(self):
+        kwargs = {'user_id': self.user2.pk}
+        
+        # Test with no relations.
+        response = self.client.get(reverse('relationship_followers', kwargs=kwargs))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([following.id for following in response.context['page'].object_list], [])
+        
+        # Setup a relationship.
+        Relationship.objects.create(from_user=self.user1, to_user=self.user2)
+        
+        # Test the relationship.
+        response = self.client.get(reverse('relationship_followers', kwargs=kwargs))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([following.id for following in response.context['page'].object_list], [self.user1.pk])

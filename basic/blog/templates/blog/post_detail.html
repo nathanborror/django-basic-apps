@@ -1,5 +1,6 @@
 {% extends "blog/base_blog.html" %}
 
+{% load i18n %}
 
 {% block title %}{{ object.title }}{% endblock %}
 {% block body_class %}{{ block.super }} post_detail{% endblock %}
@@ -10,10 +11,10 @@
   <h2>{{ object.title }}</h2>
   <p class="other_posts">
     {% if object.get_previous_by_publish %}
-    <a class="previous" href="{{ object.get_previous_post.get_absolute_url }}">&laquo; {{ object.get_previous_post }}</a>
+    <a class="previous" href="{{ object.get_previous_post.get_absolute_url }}" title="{% trans "View previous post" %}">&laquo; {{ object.get_previous_post }}</a>
     {% endif %}
     {% if object.get_next_by_publish %}
-    | <a class="next" href="{{ object.get_next_post.get_absolute_url }}">{{ object.get_next_post }} &raquo;</a>
+    | <a class="next" href="{{ object.get_next_post.get_absolute_url }}" title="{% trans "View next post" %}">{{ object.get_next_post }} &raquo;</a>
     {% endif %}
   </p>
 {% endblock %}
@@ -30,7 +31,7 @@
 
   {% tags_for_object object as tag_list %}
   {% if tag_list %}
-  <p class="inline_tag_list"><strong>Related tags:</strong>
+  <p class="inline_tag_list"><strong>{% trans "Related tags" %}:</strong>
     {% for tag in tag_list %}
     {{ tag }}{% if not forloop.last %}, {% endif %}
     {% endfor %}
@@ -41,16 +42,16 @@
   {% if comment_list %}
   <div id="comments">
     <a name="comments"></a>
-    <h3 class="comments_title">Comments</h3>
+    <h3 class="comments_title">{% trans "Comments" %}</h3>
     {% for comment in comment_list %}
       {% if comment.is_public %}
       <div class="comment">
         <h5 class="name">
-          <a name="c{{ comment.id }}" href="{{ comment.get_absolute_url }}" title="Permalink to {{ comment.person_name }}'s comment" class="count">{{ forloop.counter }}</a>
-          {% if comment.user_url %}<a href="{{ comment.user_url }}">{{ comment.user_name }}</a>{% else %}{{ comment.user_name }}{% endif %} says...
+          <a name="c{{ comment.id }}" href="{{ comment.get_absolute_url }}" title="{% trans "Permalink to" %} {% blocktrans with comment.user_name as user_name %}{{ user_name }}'s{% endblocktrans %} {% trans "comment" %}" class="count">{{ forloop.counter }}</a>
+          {% if comment.user_url %}<a href="{{ comment.user_url }}" title="{% trans "View" %} {% blocktrans with comment.user_name as user_name %}{{ user_name }}'s{% endblocktrans %} {% trans "website" %}">{{ comment.user_name }}</a>{% else %}{{ comment.user_name }}{% endif %} {% trans "says" %}...
         </h5>
         {{ comment.comment|urlizetrunc:"60"|markdown:"safe" }}
-        <p class="date">Posted at {{ comment.submit_date|date:"P" }} on {{ comment.submit_date|date:"F j, Y" }}</p>
+        <p class="date">{% trans "Posted at" %} {{ comment.submit_date|date:"P" }} {% trans "on" %} {{ comment.submit_date|date:"F j, Y" }}</p>
       </div>
       {% endif %}
     {% endfor %}
@@ -60,8 +61,8 @@
     {% render_comment_form for object %}
   {% else %}
     <div id="comment_form">
-      <h3>Comments are closed.</h3>
-      <p>Comments have been close for this post.</p>
+      <h3>{% trans "Comments are closed" %}.</h3>
+      <p>{% trans "Comments have been closed for this post" %}.</p>
     </div>
   {% endif %}
 {% endblock %}
