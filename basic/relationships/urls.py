@@ -2,6 +2,14 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('basic.relationships.views',
+    url(r'^following/(?P<user_id>\d+)/$',
+        view='following',
+        name='relationship_following'
+    ),
+    url(r'^followers/(?P<user_id>\d+)/$',
+        view='followers',
+        name='relationship_followers'
+    ),
     url(r'^follow/(?P<to_user_id>\d+)/$',
         view='follow',
         name='relationship_follow'

@@ -1,13 +1,59 @@
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator, InvalidPage
+from django.db import models
+from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.http import HttpResponse
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.db import models
 from django.utils import simplejson as json
 
 Relationship = models.get_model('relationships', 'relationship')
+
+
+FOLLOWING_PER_PAGE = getattr(settings, 'RELATIONSHIPS_FOLLOWING_PER_PAGE', 20)
+FOLLOWERS_PER_PAGE = getattr(settings, 'RELATIONSHIPS_FOLLOWERS_PER_PAGE', 20)
+
+
+def following(request, user_id,
+              template_name='relationships/relationship_following.html',
+              flat=True):
+    from_user = get_object_or_404(User, pk=user_id)
+    following_ids = Relationship.objects.get_friends_for_user(from_user, flat=flat)
+    following = User.objects.filter(pk__in=following_ids)
+    paginator = Paginator(following, FOLLOWING_PER_PAGE)
+    
+    try:
+        page = paginator.page(int(request.GET.get('page', 1)))
+    except InvalidPage:
+        raise Http404("No such page.")
+    
+    return render_to_response(template_name, {
+        'user': from_user,
+        'page': page,
+        'paginator': paginator,
+    }, context_instance=RequestContext(request))
+
+
+def followers(request, user_id,
+              template_name='relationships/relationship_followers.html',
+              flat=True):
+    to_user = get_object_or_404(User, pk=user_id)
+    followers_ids = Relationship.objects.get_followers_for_user(to_user).values_list('from_user', flat=True)
+    followers = User.objects.filter(pk__in=followers_ids)
+    paginator = Paginator(followers, FOLLOWERS_PER_PAGE)
+    
+    try:
+        page = paginator.page(int(request.GET.get('page', 1)))
+    except InvalidPage:
+        raise Http404("No such page.")
+    
+    return render_to_response(template_name, {
+        'user': to_user,
+        'page': page,
+        'paginator': paginator,
+    }, context_instance=RequestContext(request))
 
 
 @login_required

@@ -1,0 +1,39 @@
+{% extends "relationships/base_relationships.html" %}
+
+
+{% block title %}{{ block.super }} | Followers{% endblock %}
+{% block body_class %}{{ block.super }} relationship_followers{% endblock %}
+
+
+{% block content_title %}
+  <h2>Followers</h2>
+{% endblock %}
+
+
+{% block content %}
+{% load relationships %}
+<ul>
+    {% for follower in page.object_list %}
+        <li>
+            {{ follower.username }} -
+            {% if user|follows:follower %}
+                <a href="{% url relationship_unfollow to_user_id=follower.id %}">Unfollow</a>
+            {% else %}
+                <a href="{% url relationship_follow to_user_id=follower.id %}">Follow</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% if page.has_other_pages %}
+  <p class="pagination">
+    {% if page.has_previous %}
+    <a class="older" href="?page={{ page.previous_page_number }}">Previous</a>
+    {% endif %}
+    {% if page.has_next and page.has_previous %} | {% endif %}
+    {% if page.has_next %}
+    <a class="newer" href="?page={{ page.next_page_number }}">Next</a>
+    {% endif %}
+  </p>
+{% endif %}
+{% endblock %}
