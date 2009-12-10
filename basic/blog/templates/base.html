@@ -6,10 +6,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>{% block title %}{% endblock %}</title>
 </head>
-<body id="{% block body_id %}{% endblock %}">
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
   <div id="body">
     {% block body %}
-      <div>
+      <div class="content_title">
         {% block content_title %}{% endblock %}
       </div>
       <div class="content">
