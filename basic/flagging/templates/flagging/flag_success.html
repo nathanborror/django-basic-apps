@@ -1,0 +1,16 @@
+{% extends "flagging/base_flagging.html" %}
+
+
+{% block content_title %}
+  <h2>Flagging successful</h2>
+{% endblock %}
+
+
+{% block content %}
+  <p>You have successfully flagged "{{ object }}."</p>
+
+  <form action="{% url unflag flag_type_slug=flag_type.slug, object_id=object.id %}" method="post">
+    <h3>Make a mistake?</h3>
+    <p>Would you like to unflag "{{ object }}"? <button type="submit">Indeed</button></p>
+  </form>
+{% endblock %}

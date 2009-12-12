@@ -1,0 +1,15 @@
+{% extends "flagging/base_flagging.html" %}
+
+
+{% block title %}Unflagging successful{% endblock %}
+{% block body_class %}{{ block.super }} unflag_success{% endblock %}
+
+
+{% block content_title %}
+  <h2>Unflagging successful</h2>
+{% endblock %}
+
+
+{% block content %}
+  <p>You have successfully unflagged "{{ object }}."</p>
+{% endblock %}
