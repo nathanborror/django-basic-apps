@@ -17,6 +17,7 @@ Dependancies
 * Markdown (http://www.djangoproject.com/documentation/add_ons/#markup)
 * BeautifulSoup (http://www.crummy.com/software/BeautifulSoup/) is required to use the blog and, subsequently, the inlines app.
 * Dateutil (http://labix.org/python-dateutil)
+* Django Registration for the invitations app
 
 Inlines
 =======
