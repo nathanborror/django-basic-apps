@@ -23,12 +23,12 @@ def following(request, user_id,
     following_ids = Relationship.objects.get_friends_for_user(from_user, flat=flat)
     following = User.objects.filter(pk__in=following_ids)
     paginator = Paginator(following, FOLLOWING_PER_PAGE)
-    
+
     try:
         page = paginator.page(int(request.GET.get('page', 1)))
     except InvalidPage:
         raise Http404("No such page.")
-    
+
     return render_to_response(template_name, {
         'user': from_user,
         'page': page,
@@ -43,12 +43,12 @@ def followers(request, user_id,
     followers_ids = Relationship.objects.get_followers_for_user(to_user).values_list('from_user', flat=True)
     followers = User.objects.filter(pk__in=followers_ids)
     paginator = Paginator(followers, FOLLOWERS_PER_PAGE)
-    
+
     try:
         page = paginator.page(int(request.GET.get('page', 1)))
     except InvalidPage:
         raise Http404("No such page.")
-    
+
     return render_to_response(template_name, {
         'user': to_user,
         'page': page,
@@ -88,8 +88,7 @@ def follow(request, to_user_id,
                 }
             }
             return HttpResponse(json.dumps(response), mimetype="application/json")
-        else:
-            template_name = success_template_name
+        template_name = success_template_name
 
     context = {'to_user': to_user}
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
@@ -128,8 +127,7 @@ def unfollow(request, to_user_id,
                 }
             }
             return HttpResponse(json.dumps(response), mimetype="application/json")
-        else:
-            template_name = success_template_name
+        template_name = success_template_name
 
     context = {'to_user': to_user}
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
