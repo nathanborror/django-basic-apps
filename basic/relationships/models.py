@@ -53,6 +53,15 @@ class RelationshipManager(models.Manager):
             return None
         return relationship
 
+    def blocking(self, from_user, to_user):
+        """Returns True if from_user is blocking to_user."""
+        try:
+            relationship = self.get(from_user=from_user, to_user=to_user)
+            if relationship.is_blocked:
+                return True
+        except:
+            return False
+        return False
 
 class Relationship(models.Model):
     """Relationship model"""
