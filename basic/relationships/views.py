@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage
 from django.db import models
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -71,6 +71,7 @@ def follow(request, username,
     """
     to_user = get_object_or_404(User, username=username)
     from_user = request.user
+    next = request.GET.get('next', None)
 
     if request.method == 'POST':
         relationship, created = Relationship.objects.get_or_create(from_user=from_user, to_user=to_user)
@@ -88,9 +89,14 @@ def follow(request, username,
                 }
             }
             return HttpResponse(json.dumps(response), mimetype="application/json")
+        if next:
+            return HttpResponseRedirect(next)
         template_name = success_template_name
 
-    context = {'to_user': to_user}
+    context = {
+        'to_user': to_user,
+        'next': next
+    }
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
 
 
@@ -109,6 +115,7 @@ def unfollow(request, username,
     """
     to_user = get_object_or_404(User, username=username)
     from_user = request.user
+    next = request.GET.get('next', None)
 
     if request.method == 'POST':
         relationship = get_object_or_404(Relationship, to_user=to_user, from_user=from_user)
@@ -127,9 +134,14 @@ def unfollow(request, username,
                 }
             }
             return HttpResponse(json.dumps(response), mimetype="application/json")
+        if next:
+            return HttpResponseRedirect(next)
         template_name = success_template_name
 
-    context = {'to_user': to_user}
+    context = {
+        'to_user': to_user,
+        'next': next
+    }
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
 
 
@@ -148,6 +160,7 @@ def block(request, username,
     """
     user_to_block = get_object_or_404(User, username=username)
     user = request.user
+    next = request.GET.get('next', None)
 
     if request.method == 'POST':
         relationship, created = Relationship.objects.get_or_create(to_user=user_to_block, from_user=user)
@@ -157,10 +170,14 @@ def block(request, username,
         if request.is_ajax():
             response = {'success': 'Success'}
             return HttpResponse(json.dumps(response), mimetype="application/json")
-        else:
-            template_name = success_template_name
+        if next:
+            return HttpResponseRedirect(next)
+        template_name = success_template_name
 
-    context = {'user_to_block': user_to_block}
+    context = {
+        'user_to_block': user_to_block,
+        'next': next
+    }
     return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
 
 
