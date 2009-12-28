@@ -24,27 +24,27 @@ class RelationshipManager(models.Manager):
             cache.set(cache_key, list(user_list), RELATIONSHIP_CACHE)
         return cache.get(cache_key)
 
-    def get_blockers_for_user(self, user, flat=False, flat_attr='to_user'):
+    def get_blockers_for_user(self, user, flat=False):
         """Returns list of people blocking user."""
         user_list = self.filter(to_user=user, is_blocked=True)
-        return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['BLOCKERS'], flat=flat, flat_attr=flat_attr)
+        return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['BLOCKERS'], flat=flat, flat_attr='from_user')
 
     def get_friends_for_user(self, user, flat=False):
         """Returns people user is following sans people blocking user."""
-        blocked_id_list = self.get_blockers_for_user(user, flat=True, flat_attr='from_user')
+        blocked_id_list = self.get_blockers_for_user(user, flat=True)
         user_list = self.filter(from_user=user, is_blocked=False).exclude(to_user__in=blocked_id_list)
         return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['FRIENDS'], flat=flat)
 
     def get_followers_for_user(self, user, flat=False):
         """Returns people following user."""
         user_list = self.filter(to_user=user, is_blocked=False)
-        return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['FOLLOWERS'], flat=flat)
+        return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['FOLLOWERS'], flat=flat, flat_attr='from_user')
 
     def get_fans_for_user(self, user, flat=False):
         """Returns people following user but user isn't following."""
         friend_id_list = self.get_friends_for_user(user, flat=True)
-        user_list = self.get_followers_for_user(user).exclude(from_user__in=friend_id_list)
-        return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['FANS'], flat=flat)
+        user_list = self.filter(to_user=user, is_blocked=False).exclude(from_user__in=friend_id_list)
+        return self._set_cache(user, user_list, RELATIONSHIP_CACHE_KEYS['FANS'], flat=flat, flat_attr='from_user')
 
     def get_relationship(self, from_user, to_user):
         try:
