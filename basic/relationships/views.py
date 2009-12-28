@@ -30,7 +30,7 @@ def following(request, user_id,
         raise Http404("No such page.")
 
     return render_to_response(template_name, {
-        'user': from_user,
+        'person': from_user,
         'page': page,
         'paginator': paginator,
     }, context_instance=RequestContext(request))
@@ -50,7 +50,7 @@ def followers(request, user_id,
         raise Http404("No such page.")
 
     return render_to_response(template_name, {
-        'user': to_user,
+        'person': to_user,
         'page': page,
         'paginator': paginator,
     }, context_instance=RequestContext(request))

@@ -6,29 +6,29 @@
 
 
 {% block content_title %}
-  <h2>Following</h2>
+  <h2>{{ person.username }}'s Following</h2>
 {% endblock %}
 
 
 {% block content %}
-<ul>
+  <ul>
     {% for following in page.object_list %}
-        <li>
-            {{ following.username }} -
-            <a href="{% url relationship_unfollow to_user_id=following.id %}">Unfollow</a>
-        </li>
+      <li>
+        {{ following.username }} -
+        <a href="{% url relationship_unfollow to_user_id=following.id %}">Unfollow</a>
+      </li>
     {% endfor %}
-</ul>
+  </ul>
 
-{% if page.has_other_pages %}
-  <p class="pagination">
-    {% if page.has_previous %}
-    <a class="older" href="?page={{ page.previous_page_number }}">Previous</a>
-    {% endif %}
-    {% if page.has_next and page.has_previous %} | {% endif %}
-    {% if page.has_next %}
-    <a class="newer" href="?page={{ page.next_page_number }}">Next</a>
-    {% endif %}
-  </p>
-{% endif %}
+  {% if page.has_other_pages %}
+    <p class="pagination">
+      {% if page.has_previous %}
+      <a class="older" href="?page={{ page.previous_page_number }}">Previous</a>
+      {% endif %}
+      {% if page.has_next and page.has_previous %} | {% endif %}
+      {% if page.has_next %}
+      <a class="newer" href="?page={{ page.next_page_number }}">Next</a>
+      {% endif %}
+    </p>
+  {% endif %}
 {% endblock %}
