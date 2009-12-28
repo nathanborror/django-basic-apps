@@ -49,7 +49,7 @@ class RelationshipManager(models.Manager):
     def get_relationship(self, from_user, to_user):
         try:
             relationship = self.get(from_user=from_user, to_user=to_user)
-        except Relationship.DoesNotExist:
+        except:
             return None
         return relationship
 
