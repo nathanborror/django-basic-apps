@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
+from django.conf import settings
 
 
-RELATIONSHIP_CACHE = 60*60*24*7
+RELATIONSHIP_CACHE = getattr(settings, 'RELATIONSHIP_CACHE', 60*60*24*7)
 RELATIONSHIP_CACHE_KEYS = {
     'FRIENDS': 'friends',
     'FOLLOWERS': 'followers',
