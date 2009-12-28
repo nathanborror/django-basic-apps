@@ -73,8 +73,8 @@ class Relationship(models.Model):
             return u'%s is blocking %s' % (self.from_user, self.to_user)
         return u'%s is connected to %s' % (self.from_user, self.to_user)
 
-    def save(self, force_insert=False, force_update=False):
+    def save(self, force_insert=False, force_update=False, **kwargs):
         for key in RELATIONSHIP_CACHE_KEYS:
             cache.delete('user_%s_%s' % (self.from_user.pk, RELATIONSHIP_CACHE_KEYS[key]))
             cache.delete('user_%s_%s_flat' % (self.from_user.pk, RELATIONSHIP_CACHE_KEYS[key]))
-        super(Relationship, self).save(force_insert=force_insert, force_update=force_update)
+        super(Relationship, self).save(force_insert=force_insert, force_update=force_update, **kwargs)
