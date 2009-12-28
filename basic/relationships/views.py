@@ -16,10 +16,10 @@ FOLLOWING_PER_PAGE = getattr(settings, 'RELATIONSHIPS_FOLLOWING_PER_PAGE', 20)
 FOLLOWERS_PER_PAGE = getattr(settings, 'RELATIONSHIPS_FOLLOWERS_PER_PAGE', 20)
 
 
-def following(request, user_id,
+def following(request, username,
               template_name='relationships/relationship_following.html',
               flat=True):
-    from_user = get_object_or_404(User, pk=user_id)
+    from_user = get_object_or_404(User, username=username)
     following_ids = Relationship.objects.get_friends_for_user(from_user, flat=flat)
     following = User.objects.filter(pk__in=following_ids)
     paginator = Paginator(following, FOLLOWING_PER_PAGE)
@@ -36,11 +36,11 @@ def following(request, user_id,
     }, context_instance=RequestContext(request))
 
 
-def followers(request, user_id,
+def followers(request, username,
               template_name='relationships/relationship_followers.html',
               flat=True):
-    to_user = get_object_or_404(User, pk=user_id)
-    followers_ids = Relationship.objects.get_followers_for_user(to_user).values_list('from_user', flat=True)
+    to_user = get_object_or_404(User, username=username)
+    followers_ids = Relationship.objects.get_followers_for_user(to_user, flat=True)
     followers = User.objects.filter(pk__in=followers_ids)
     paginator = Paginator(followers, FOLLOWERS_PER_PAGE)
 
@@ -57,7 +57,7 @@ def followers(request, user_id,
 
 
 @login_required
-def follow(request, to_user_id, 
+def follow(request, username,
             template_name='relationships/relationship_add_confirm.html', 
             success_template_name='relationships/relationship_add_success.html', 
             mimetype='text/html'):
@@ -69,7 +69,7 @@ def follow(request, to_user_id,
         to_user
             User object
     """
-    to_user = get_object_or_404(User, pk=to_user_id)
+    to_user = get_object_or_404(User, username=username)
     from_user = request.user
 
     if request.method == 'POST':
@@ -95,7 +95,7 @@ def follow(request, to_user_id,
 
 
 @login_required
-def unfollow(request, to_user_id, 
+def unfollow(request, username,
             template_name='relationships/relationship_delete_confirm.html', 
             success_template_name='relationships/relationship_delete_success.html', 
             mimetype='text/html'):
@@ -107,7 +107,7 @@ def unfollow(request, to_user_id,
         to_user
             User object
     """
-    to_user = get_object_or_404(User, pk=to_user_id)
+    to_user = get_object_or_404(User, username=username)
     from_user = request.user
 
     if request.method == 'POST':
@@ -134,7 +134,7 @@ def unfollow(request, to_user_id,
 
 
 @login_required
-def block(request, user_id, 
+def block(request, username,
             template_name='relationships/block_confirm.html', 
             success_template_name='relationships/block_success.html', 
             mimetype='text/html'):
@@ -146,7 +146,7 @@ def block(request, user_id,
         user_to_block
             User object
     """
-    user_to_block = get_object_or_404(User, pk=user_id)
+    user_to_block = get_object_or_404(User, username=username)
     user = request.user
 
     if request.method == 'POST':
@@ -165,7 +165,7 @@ def block(request, user_id,
 
 
 @login_required
-def unblock(request, user_id, 
+def unblock(request, username,
             template_name='relationships/block_delete_confirm.html', 
             success_template_name='relationships/block_delete_success.html', 
             mimetype='text/html'):
@@ -177,7 +177,7 @@ def unblock(request, user_id,
         user_to_block
             User object
     """
-    user_to_block = get_object_or_404(User, pk=user_id)
+    user_to_block = get_object_or_404(User, username=username)
     user = request.user
 
     if request.method == 'POST':

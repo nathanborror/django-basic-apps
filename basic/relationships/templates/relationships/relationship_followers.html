@@ -17,9 +17,9 @@
       <li>
         {{ follower.username }} -
         {% if user|follows:follower %}
-          <a href="{% url relationship_unfollow to_user_id=follower.id %}">Unfollow</a>
+          <a href="{% url relationship_unfollow username=follower.username %}">Unfollow</a>
         {% else %}
-          <a href="{% url relationship_follow to_user_id=follower.id %}">Follow</a>
+          <a href="{% url relationship_follow username=follower.username %}">Follow</a>
         {% endif %}
       </li>
     {% endfor %}

@@ -15,7 +15,7 @@
     {% for following in page.object_list %}
       <li>
         {{ following.username }} -
-        <a href="{% url relationship_unfollow to_user_id=following.id %}">Unfollow</a>
+        <a href="{% url relationship_unfollow username=following.username %}">Unfollow</a>
       </li>
     {% endfor %}
   </ul>
