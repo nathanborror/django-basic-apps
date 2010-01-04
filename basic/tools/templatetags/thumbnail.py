@@ -32,12 +32,12 @@ def thumbnail(url, size='200x200'):
     import os
     import urllib
 
-    original_url = url
+    original_url = _get_path_from_url(url)
 
     # First, find the image, either via local file path or http.
     filename = os.path.join(settings.MEDIA_ROOT, url)
 
-    if url.startswith('http://') or url.startswith('https://'):
+    if original_url.startswith('http://') or original_url.startswith('https://'):
         # If it's a remote image, download it and save it locally. This expects a
         # directory called downloaded/ in your MEDIA_ROOT
         download_filename = url.rsplit('/', 1)[1]                                         # Filename of image
@@ -126,4 +126,4 @@ def thumbnail(url, size='200x200'):
             return ''
 
     # And return the URL to the new thumbnailed version.
-    return os.path.join(settings.MEDIA_URL, thumbnail_url)
+    return thumbnail_url
