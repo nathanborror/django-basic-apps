@@ -3,15 +3,6 @@ from django.conf import settings
 register = template.Library()
 
 
-# Useful functions
-def _get_path_from_url(url, root=settings.MEDIA_ROOT, url_root=settings.MEDIA_URL):
-    """ make filesystem path from url """
-    import os
-    if url.startswith(url_root):
-        url = url[len(url_root):]       # strip media root url
-    return settings.MEDIA_ROOT + url
-
-
 # Tags
 @register.filter
 def thumbnail(url, size='200x200'):
@@ -32,47 +23,27 @@ def thumbnail(url, size='200x200'):
     import os
     import urllib
 
-    original_url = _get_path_from_url(url)
-
-    # First, find the image, either via local file path or http.
-    filename = os.path.join(settings.MEDIA_ROOT, url)
-
-    if original_url.startswith('http://') or original_url.startswith('https://'):
-        # If it's a remote image, download it and save it locally. This expects a
-        # directory called downloaded/ in your MEDIA_ROOT
-        download_filename = url.rsplit('/', 1)[1]                                         # Filename of image
-        full_image_path = '%sdownloaded/%s' % (settings.MEDIA_ROOT, download_filename)    # Local filesystem path where image should be saved
-        local_image_url = '%sdownloaded/%s' % (settings.MEDIA_URL, download_filename)     # URL to local copy of image
-
-        if not os.path.exists(full_image_path):
-            unsized_image = urllib.urlretrieve(url)                                         # Fetch original image
-            unsized_image = Image.open(unsized_image[0])                                    # Load the fetched image
-            local_image = unsized_image.save(full_image_path)                               # Save the resized image locally
-
-        url = local_image_url
-        remote_image = True
-    else:
-        # If it's a local image, note it and move on.
-        remote_image = False
+    if url.startswith(settings.MEDIA_URL):
+        url = url[len(settings.MEDIA_URL):]
+    original_url = settings.MEDIA_ROOT + url
 
     # Define the thumbnail's filename, file path, and URL.
     try:
-        basename, format = url.rsplit('.', 1)
+        basename, format = original_url.rsplit('.', 1)
     except ValueError:
-        return os.path.join(settings.MEDIA_URL, url)
+        return os.path.join(settings.MEDIA_URL, original_url)
     thumbnail = basename + '_t' + size + '.' +  format
-    thumbnail_filename = _get_path_from_url(thumbnail)
-    thumbnail_url = thumbnail
+    thumbnail_url = '%s%s' % (settings.MEDIA_URL, thumbnail[len(settings.MEDIA_ROOT):])
 
     # Find out if a thumbnail in this size already exists. If so, we'll not remake it.
-    if not os.path.exists(thumbnail_filename):
+    if not os.path.exists(thumbnail):
         # The thumbnail doesn't already exist. Log a message that we are resizing.
 
         # Open the image.
         try:
-            image = Image.open(_get_path_from_url(url))
+            image = Image.open(original_url)
         except IOError:
-            return os.path.join(settings.MEDIA_URL, url)
+            return url
 
         # Make a copy of the original image so we can access its attributes, even
         # after we've changed some of them.
@@ -121,7 +92,7 @@ def thumbnail(url, size='200x200'):
 
         # Finally, save the image.
         try:
-            image.save(thumbnail_filename, image.format, quality=85)
+            image.save(thumbnail, image.format, quality=85)
         except KeyError:
             return ''
 
