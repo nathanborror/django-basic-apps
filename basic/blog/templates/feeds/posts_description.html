@@ -1,1 +1,2 @@
-{{ obj.body_markup }}
+{% load inlines %}
+{{ obj.body|render_inlines|safe }}
