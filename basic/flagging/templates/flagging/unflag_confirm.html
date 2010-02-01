@@ -11,7 +11,9 @@
 
 
 {% block content %}
-  <form action="{% url unflag flag_type_slug=flag_type.slug, object_id=object.id %}" method="post">
+  {% load flagging %}
+
+  <form action="{% unflag_url for object and flag_type.slug %}" method="post">
     <p>Are you sure you want to unflag "{{ object }}"? <button type="submit">Indeed</button></p>
   </form>
 {% endblock %}

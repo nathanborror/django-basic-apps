@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 
 class FlagType(models.Model):
     """ FlagType model """
-    content_type = models.ForeignKey(ContentType, related_name='item')
-    title = models.CharField(_('title'), blank=True, max_length=255)
+    title = models.CharField(_('title'), blank=False, max_length=255)
     slug = models.SlugField()
     description = models.TextField(_('description'), blank=True)
 
@@ -23,8 +22,10 @@ class FlagType(models.Model):
 
 class Flag(models.Model):
     """ Flag model """
+    content_type = models.ForeignKey(ContentType, related_name='item')
+    object_id = models.IntegerField()
+    object = GenericForeignKey()
     flag_type = models.ForeignKey(FlagType)
-    object_id = models.IntegerField(_('object id'))
     user = models.ForeignKey(User)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
@@ -36,8 +37,3 @@ class Flag(models.Model):
 
     def __unicode__(self):
         return '<Flagged item>'
-
-    @property
-    def object(self):
-        model = self.flag_type.content_type.model_class()
-        return model.objects.get(pk=self.object_id)
