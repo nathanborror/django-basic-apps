@@ -4,7 +4,6 @@ from basic.flagging.models import *
 
 class FlagTypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    list_filter = ('content_type',)
 admin.site.register(FlagType, FlagTypeAdmin)
 
 
