@@ -22,7 +22,7 @@ class RelationshipManager(models.Manager):
             user_list = user_list.values_list(flat_attr, flat=True)
         if not cache.get(cache_key):
             cache.set(cache_key, list(user_list), RELATIONSHIP_CACHE)
-        return cache.get(cache_key)
+        return user_list
 
     def get_blockers_for_user(self, user, flat=False):
         """Returns list of people blocking user."""
