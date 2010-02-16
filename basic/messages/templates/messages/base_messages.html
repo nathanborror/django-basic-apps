@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block title %}Messages{% endblock %}
+{% block body_class %}messages{% endblock %}
+
+
+{% block content_aside %}
+  <h3>Messages</h3>
+  <ul>
+    <li><a href="{% url messages mailbox="inbox" %}">Inbox</a></li>
+    <li><a href="{% url messages mailbox="sent" %}">Sent</a></li>
+    <li><a href="{% url messages mailbox="trash" %}">Trash</a></li>
+    <li><a href="{% url message_create %}">Compose</a></li>
+  </ul>
+{% endblock %}

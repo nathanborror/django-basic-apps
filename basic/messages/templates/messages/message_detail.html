@@ -1,0 +1,18 @@
+{% extends "messages/base_messages.html" %}
+
+
+{% block title %}Message{% endblock %}
+{% block body_class %}{{ block.super }} message_detail{% endblock %}
+
+
+{% block content_title %}
+  <h3>From: {{ message.from_user }}</h3>
+  <h2>Subject: {{ message.subject }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+
+  {{ message.message|markdown }}
+{% endblock %}

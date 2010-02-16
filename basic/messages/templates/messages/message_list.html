@@ -1,0 +1,27 @@
+{% extends "messages/base_messages.html" %}
+
+
+{% block title %}{{ mailbox|title }} messages{% endblock %}
+{% block body_class %}{{ block.super }} message_list{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ mailbox|title }} messages</h2>
+{% endblock %}
+
+
+{% block content %}
+  <ul>
+    {% for message in message_list %}
+      {% if mailbox == 'sent' %}
+        <li><small class="status">{{ message.get_from_status_display }}</small>
+          <a href="{% url message object_id=message.pk, inbox="sent" %}">{{ message.subject }}</a></li>
+      {% else %}
+        <li><small class="status">{{ message.get_to_status_display }}</small>
+          <a href="{% url message object_id=message.pk, inbox="inbox" %}">{{ message.subject }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <p><a href="{% url message_create %}" class="button">Compose message</a></p>
+{% endblock %}
