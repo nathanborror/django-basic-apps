@@ -22,7 +22,7 @@ class FlagType(models.Model):
 
 class Flag(models.Model):
     """ Flag model """
-    content_type = models.ForeignKey(ContentType, related_name='item')
+    content_type = models.ForeignKey(ContentType, related_name='flags')
     object_id = models.IntegerField()
     object = GenericForeignKey()
     flag_type = models.ForeignKey(FlagType)
