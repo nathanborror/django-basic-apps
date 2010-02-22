@@ -1,19 +1,15 @@
 {% extends "flagging/base_flagging.html" %}
 
 
+{% block title %}Flagging successful{% endblock %}
+{% block body_class %}{{ block.super }} flag_success{% endblock %}
+
+
 {% block content_title %}
   <h2>Flagging successful</h2>
 {% endblock %}
 
 
 {% block content %}
-  {% load flagging %}
-
   <p>You have successfully flagged "{{ object }}."</p>
-
-  <form action="{{ object|unflag_url:flag_type.slug }}" method="post">{% csrf_token %}
-    <h3>Make a mistake?</h3>
-    <p>Would you like to unflag "{{ object }}"?</p>
-    <p class="submit"><button type="submit">Indeed</button></p>
-  </form>
 {% endblock %}

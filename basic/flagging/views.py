@@ -38,6 +38,7 @@ def flag(request, slug, app_label, model, object_id,
         template_name = success_template_name
     return render_to_response(template_name, {
         'object': obj,
+        'next': request.GET.get('next', None),
         'flag_type': flag_type
     }, context_instance=RequestContext(request))
 
@@ -72,6 +73,7 @@ def unflag(request, slug, app_label, model, object_id,
         template_name = success_template_name
     return render_to_response(template_name, {
         'object': obj,
+        'next': request.GET.get('next', None),
         'flag_type': flag_type
     }, context_instance=RequestContext(request))
 
