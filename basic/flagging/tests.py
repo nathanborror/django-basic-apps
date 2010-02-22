@@ -20,7 +20,8 @@ class FlaggingTestCase(TestCase):
 
         kwargs = {
             'slug': self.flag_type.slug,
-            'ctype_id': self.ctype.id,
+            'app_label': self.ctype.app_label,
+            'model': self.ctype.model,
             'object_id': self.friend.pk,
         }
         response = self.client.get(reverse('flag', kwargs=kwargs))

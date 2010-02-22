@@ -10,7 +10,8 @@ def flag_url(obj, slug):
     content_type = ContentType.objects.get_for_model(obj)
     return reverse('flag', kwargs={
         'slug': slug,
-        'ctype_id': content_type.pk,
+        'app_label': content_type.app_label,
+        'model': content_type.model,
         'object_id': obj.pk
     })
 
@@ -20,6 +21,7 @@ def unflag_url(obj, slug):
     content_type = ContentType.objects.get_for_model(obj)
     return reverse('unflag', kwargs={
         'slug': slug,
-        'ctype_id': content_type.pk,
+        'app_label': content_type.app_label,
+        'model': content_type.model,
         'object_id': obj.pk
     })

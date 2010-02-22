@@ -9,7 +9,7 @@ from basic.flagging.models import *
 
 
 @login_required
-def flag(request, slug, ctype_id, object_id, 
+def flag(request, slug, app_label, model, object_id, 
         template_name='flagging/flag_confirm.html',
         success_template_name='flagging/flag_success.html'):
     """
@@ -23,7 +23,7 @@ def flag(request, slug, ctype_id, object_id,
             FlagType object
     """
     flag_type = get_object_or_404(FlagType, slug=slug)
-    content_type = ContentType.objects.get(pk=ctype_id)
+    content_type = ContentType.objects.get(app_label=app_label, model=model)
     model = content_type.model_class()
     obj = model.objects.get(pk=object_id)
     if request.method == 'POST':
@@ -42,7 +42,7 @@ def flag(request, slug, ctype_id, object_id,
 
 
 @login_required
-def unflag(request, slug, ctype_id, object_id,
+def unflag(request, slug, app_label, model, object_id,
         template_name='flagging/unflag_confirm.html',
         success_template_name='flagging/unflag_success.html'):
     """
@@ -56,7 +56,7 @@ def unflag(request, slug, ctype_id, object_id,
             FlagType object
     """
     flag_type = get_object_or_404(FlagType, slug=slug)
-    content_type = ContentType.objects.get(pk=ctype_id)
+    content_type = ContentType.objects.get(app_label=app_label, model=model)
     model = content_type.model_class()
     obj = model.objects.get(pk=object_id)
     if request.method == 'POST':
