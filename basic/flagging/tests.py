@@ -35,3 +35,10 @@ class FlaggingTestCase(TestCase):
 
         response = self.client.post(reverse('unflag', kwargs=kwargs))
         #self.assertEqual(response.status_code, 200)
+
+        kwargs = {
+            'username': 'nathanb',
+            'slug': 'test-flagging'
+        }
+        response = self.client.get(reverse('user_flags', kwargs=kwargs))
+        self.assertEqual(response.status_code, 200)

@@ -10,4 +10,8 @@ urlpatterns = patterns('basic.flagging.views',
         view='unflag',
         name='unflag'
     ),
+    url(r'^(?P<username>[-\w]+)/(?P<slug>[-\w]+)/$',
+        view='user_flags',
+        name='user_flags'
+    ),
 )

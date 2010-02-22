@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils import simplejson as json
 
@@ -72,4 +73,23 @@ def unflag(request, slug, app_label, model, object_id,
     return render_to_response(template_name, {
         'object': obj,
         'flag_type': flag_type
+    }, context_instance=RequestContext(request))
+
+
+def user_flags(request, username, slug, template_name='flagging/flag_list.html'):
+    """
+    Returns a list of flagged items for a particular user.
+    
+    Templates: ``flagging/flag_list.html``
+    Context:
+        flag_list
+            List of Flag objects
+    """
+    user = get_object_or_404(User, username=username)
+    flag_type = get_object_or_404(FlagType, slug=slug)
+    flag_list = Flag.objects.filter(user=user, flag_type=flag_type)
+    return render_to_response(template_name, {
+        'person': user,
+        'flag_type': flag_type,
+        'flag_list': flag_list
     }, context_instance=RequestContext(request))
