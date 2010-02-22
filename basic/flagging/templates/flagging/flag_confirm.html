@@ -13,7 +13,8 @@
 {% block content %}
   {% load flagging %}
 
-  <form action="{% flag_url for object and flag_type.slug %}" method="post">
-    <p>Are you sure you want to flag "{{ object }}"? <button type="submit">Indeed</button></p>
+  <form action="{{ object|flag_url:flag_type.slug }}" method="post">{% csrf_token %}
+    <p>Are you sure you want to flag "{{ object }}"?</p>
+    <p class="submit"><button type="submit">Indeed</button></p>
   </form>
 {% endblock %}
