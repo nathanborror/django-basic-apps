@@ -19,9 +19,7 @@ def thumbnail(url, size='200x200'):
     {{ story.leadphoto.url|thumbnail:"300x150" }}
 
     """
-    import Image
     import os
-    import urllib
 
     if url.startswith(settings.MEDIA_URL):
         url = url[len(settings.MEDIA_URL):]
@@ -37,7 +35,7 @@ def thumbnail(url, size='200x200'):
 
     # Find out if a thumbnail in this size already exists. If so, we'll not remake it.
     if not os.path.exists(thumbnail):
-        # The thumbnail doesn't already exist. Log a message that we are resizing.
+        import Image
 
         # Open the image.
         try:
