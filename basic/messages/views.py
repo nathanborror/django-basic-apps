@@ -1,10 +1,10 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
 from django.http import Http404, HttpResponseRedirect
+from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from readernaut.shortcuts import render
 from basic.messages.models import Message
 from basic.messages.forms import MessageForm
 
@@ -25,10 +25,10 @@ def message_list(request, mailbox='inbox', template_name='messages/message_list.
         message_list = Message.objects.filter(from_user=request.user, from_status=1)
     else:
         message_list = Message.objects.filter(to_user=request.user, to_status__in=(0,1,2))
-    return render(request, template_name, {
+    return render_to_response(template_name, {
         'message_list': message_list,
         'mailbox': mailbox
-    })
+    }, context_instance=RequestContext(request))
 
 
 @login_required
@@ -51,10 +51,10 @@ def message_create(request, username=None, template_name='messages/message_form.
         message.from_user = request.user
         message.save()
         return HttpResponseRedirect(reverse('user_messages'))
-    return render(request, template_name, {
+    return render_to_response(template_name, {
         'form': form,
         'to_user': to_user
-    })
+    }, context_instance=RequestContext(request))
 
 
 @login_required
@@ -84,7 +84,7 @@ def message_detail(request, mailbox, object_id, template_name='messages/message_
         message = get_object_or_404(Message, pk=object_id, to_user=request.user)
         message.to_status = 1
         message.save()
-    return render(request, template_name, {
+    return render_to_response(template_name, {
         'message': message,
         'mailbox': mailbox
-    })
+    }, context_instance=RequestContext(request))
