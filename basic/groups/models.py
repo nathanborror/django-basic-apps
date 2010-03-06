@@ -14,13 +14,6 @@ def get_group_icon_path(instance, filename):
 
 class Group(models.Model):
     """ Group model """
-    THEME_CHOICES = (
-        (1, 'Green'),
-        (2, 'Blue'),
-        (3, 'Red orange'),
-        (4, 'Yellow'),
-        (5, 'Purple')
-    )
     title = models.CharField(blank=False, max_length=255)
     slug = models.SlugField(unique=True, help_text="Used for the Group URL: http://example.com/groups/the-club/")
     tease = models.TextField(blank=True, help_text="Brief explaination of what this group is. Shows up when the group is listed amoung other groups.")
@@ -28,7 +21,6 @@ class Group(models.Model):
     icon = models.FileField(upload_to=get_group_icon_path, blank=True, help_text="Needs to be larger than 120x120 pixels.")
     invite_only = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    theme = models.PositiveSmallIntegerField(choices=THEME_CHOICES, default=2, help_text="Sets your background color.")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
