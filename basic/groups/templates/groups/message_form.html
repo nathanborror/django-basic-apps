@@ -1,0 +1,22 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}{% if message %}Edit{% else %}Create a{% endif %} comment{% endblock %}
+{% block body_class %}{{ block.super }} topics message_form{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% if message %}Edit{% else %}Create a{% endif %} comment</h2>
+{% endblock %}
+
+
+{% block content %}
+  <form action="{% if message %}{% url group_message_edit message_id=message.id %}{% else %}{% url group_message_create slug=group.slug, topic_id=topic.id %}{% endif %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="POST" class="comment_form">{% csrf_token %}
+    <p>{{ form.message }}
+      {% if form.message.errors %}<span class="errors">{{ form.message.errors }}</span>{% endif %}</p>
+    <p class="submit">
+      <button type="submit" name="post" value="Post">Save</button>
+      <a class="cancel" href="{{ message.get_absolute_url }}">Cancel</a>
+    </p>
+  </form>
+{% endblock %}

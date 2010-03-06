@@ -1,0 +1,25 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block fulltitle %}{{ group }}{% endblock %}
+{% block body_class %}{{ block.super }} group_detail{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+
+  <p class="button"><a href="{% url group_topic_create slug=group.slug %}?next={{ request.path }}">Start a topic</a></p>
+
+  {% if topic_list %}
+    <div class="list">
+      <h2>Recent topic activity</h2>
+      {% for topic in topic_list %}
+        <div class="item">
+          <h5><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h5>
+          <p>{{ topic.description|truncatewords:"30"|striptags }}</p>
+          <p class="datetime">Posted by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a> on {{ topic.created|date }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

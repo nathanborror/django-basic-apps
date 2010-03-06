@@ -1,0 +1,23 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}Create a topic{% endblock %}
+{% block body_class %}{{ block.super }} topics topic_form{% endblock %}
+
+
+{% block content_title %}
+  <h2>Create a topic</h2>
+{% endblock %}
+
+
+{% block content %}
+  <form action="{% if topic %}{% url group_topic_edit topic_id=topic.id %}{% else %}{% url group_topic_create slug=group.slug %}{% endif %}" method="post">{% csrf_token %}
+    <fieldset>
+      {{ form.as_p }}
+    </fieldset>
+    <p class="submit">
+      <button type="submit" name="submit" value="Create topic">{% if topic %}Save{% else %}Post{% endif %} topic</button>
+      {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}
+    </p>
+  </form>
+{% endblock %}

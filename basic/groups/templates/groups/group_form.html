@@ -1,0 +1,23 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}{% if group %}Edit{% else %}Create a{% endif %} group{% endblock %}
+{% block body_class %}{{ block.super }} group_form{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% if group %}Edit{% else %}Create a{% endif %} group</h2>
+{% endblock %}
+
+
+{% block content %}
+  <form action="{% if group %}{% url group_edit slug=group.slug %}{% else %}{% url group_create %}{% endif %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+    <fieldset>
+      {{ form.as_p }}
+    </fieldset>
+    <p class="submit">
+      <button type="submit" name="submit">Save</button>
+      {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}
+    </p>
+  </form>
+{% endblock %}

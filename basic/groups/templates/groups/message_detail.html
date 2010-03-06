@@ -1,0 +1,18 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}Topic message{% endblock %}
+{% block body_class %}{{ block.super }} topics message_detail{% endblock %}
+
+
+{% block content_title %}
+  <h2><a href="{{ topic.get_absolute_url }}">{{ topic }}</a></h2>
+  <h3>Message</h3>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+
+  {{ message.message|markdown }}
+{% endblock %}

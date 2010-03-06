@@ -1,0 +1,23 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}Group members{% endblock %}
+{% block body_class %}{{ block.super }} group_members{% endblock %}
+
+
+{% block content_title %}
+  <h2>Group members</h2>
+{% endblock %}
+
+
+{% block content %}
+  <p><a href="{% url group_invite slug=group.slug %}?next={{ request.path }}">Invite a friend</a></p>
+
+  {% if member_list %}
+    <ul>
+      {% for member in member_list %}
+        <li><a href="{{ member.user.get_absolute_url }}">{{ member.user.username }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

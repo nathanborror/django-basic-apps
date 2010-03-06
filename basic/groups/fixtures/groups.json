@@ -1,0 +1,61 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "nathanb",
+      "first_name": "Nathan",
+      "last_name": "Borror",
+      "is_active": true,
+      "is_superuser": 1,
+      "is_staff": 1,
+      "last_login": "2008-06-16 17:29:46",
+      "password": "sha1$22e4a$035f396b87e3fc9eff7c3b1dd7ac7b3f0c1bf20b",
+      "email": "nathan@nathanborror.com",
+      "date_joined": "2008-06-16 17:29:46"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "groups.group",
+    "fields": {
+      "title": "Infinite Summer",
+      "slug": "infinite-summer",
+      "tease": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "creator": 1,
+      "icon": "group_icons/1.jpg",
+      "invite_only": 0,
+      "is_active": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "groups.grouptopic",
+    "fields": {
+      "group": 1,
+      "user": 1,
+      "title": "Lorem ipsum dolor sit",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "is_active": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "groups.groupmessage",
+    "fields": {
+      "topic": 1,
+      "user": 1,
+      "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "is_active": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "groups.groupmember",
+    "fields": {
+      "user": 1,
+      "group": 1,
+      "status": 1
+    }
+  }
+]

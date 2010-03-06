@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block title %}Groups{% endblock %}
+{% block body_class %}{{ block.super }} groups group_list{% endblock %}
+
+
+{% block content_title %}
+  <h2>Groups</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <p><a href="{% url group_create %}?next={{ request.path }}">Start a group</a></p>
+  {% endif %}
+
+  {% if membership_list %}
+    <div class="list">
+      <h2>Group memberships</h2>
+      <ul>
+        {% for membership in membership_list %}
+          <li><a href="{{ membership.group.get_absolute_url }}">{{ membership.group }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if group_list %}
+    <div class="list">
+      <h2>Other groups</h2>
+      <ul>
+        {% for group in group_list %}
+          <li><a href="{{ group.get_absolute_url }}">{{ group }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock %}

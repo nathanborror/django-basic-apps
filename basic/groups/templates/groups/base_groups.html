@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block title %}{% if group %}{{ group.title }}{% else %}Groups{% endif %}{% endblock %}
+{% block body_class %}groups{% endblock %}
+
+
+{% block content_title %}
+  {% load i18n %}
+
+  {% if group %}
+    <h2><a href="{{ group.get_absolute_url }}">{{ group }}</a></h2>
+    <ul>
+      <li class="activity"><a href="{% url group slug=group.slug %}">Activity</a></li>
+      <li class="members"><a href="{% url group_members slug=group.slug %}">Members</a></li>
+      <li class="topics"><a href="{% url group_topics slug=group.slug %}">Topics</a></li>
+      {% for page in group.pages.all %}
+        <li class="{{ page.slug }}"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+      {% endfor %}
+    </ul>
+    <p class="button"><a href="{% url group_edit slug=group.slug %}">Edit group</a></p>
+  {% endif %}
+{% endblock %}
