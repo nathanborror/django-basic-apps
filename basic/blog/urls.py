@@ -34,7 +34,7 @@ urlpatterns = patterns('basic.blog.views',
         view='search',
         name='blog_search'
     ),
-    url(r'^page/(?P<page>\w)/$',
+    url(r'^page/(?P<page>\d+)/$',
         view='post_list',
         name='blog_index_paginated'
     ),
