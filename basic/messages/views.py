@@ -5,9 +5,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from basic.messages.models import Message
+from basic.messages.models import Message, FROM_STATUS_DRAFT, FROM_STATUS_SENT,
+    FROM_STATUS_DELETED, TO_STATUS_NEW, TO_STATUS_READ, TO_STATUS_REPLIED,
+    TO_STATUS_DELETED
 from basic.messages.forms import MessageForm
-
 
 @login_required
 def message_list(request, mailbox='inbox', template_name='messages/message_list.html'):
@@ -22,9 +23,9 @@ def message_list(request, mailbox='inbox', template_name='messages/message_list.
             String representing the current 'mailbox'
     """
     if mailbox == 'sent':
-        message_list = Message.objects.filter(from_user=request.user, from_status=1)
+        message_list = Message.objects.filter(from_user=request.user, from_status=FROM_STATUS_SENT)
     else:
-        message_list = Message.objects.filter(to_user=request.user, to_status__in=(0,1,2))
+        message_list = Message.objects.filter(to_user=request.user, to_status__in=(TO_STATUS_NEW,TO_STATUS_READ,TO_STATUS_REPLIED))
     return render_to_response(template_name, {
         'message_list': message_list,
         'mailbox': mailbox
@@ -63,10 +64,10 @@ def message_remove(request):
         object_id = request.POST.get('object_id', '')
         try:
             message = Message.objects.get(pk=object_id, to_user=request.user)
-            message.to_status = 3
+            message.to_status = TO_STATUS_DELETED
         except Message.DoesNotExist:
             message = Message.objects.get(pk=object_id, from_user=request.user)
-            message.from_status = 2
+            message.from_status = FROM_STATUS_DELETED
         except Message.DoesNotExist:
             raise Http404
 
@@ -82,7 +83,7 @@ def message_detail(request, mailbox, object_id, template_name='messages/message_
         message = get_object_or_404(Message, pk=object_id, from_user=request.user)
     elif mailbox == 'inbox':
         message = get_object_or_404(Message, pk=object_id, to_user=request.user)
-        message.to_status = 1
+        message.to_status = TO_STATUS_READ
         message.save()
     return render_to_response(template_name, {
         'message': message,

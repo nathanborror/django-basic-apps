@@ -5,19 +5,28 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericForeignKey
 
+FROM_STATUS_DRAFT = 0
+FROM_STATUS_SENT = 1
+FROM_STATUS_DELETED = 2
+
+TO_STATUS_NEW = 0
+TO_STATUS_READ = 1
+TO_STATUS_REPLIED = 2
+TO_STATUS_DELETED = 3
+
 
 class Message(models.Model):
     """ Message model """
     FROM_STATUS_CHOICES = (
-        (0, 'Draft'),
-        (1, 'Sent'),
-        (2, 'Deleted')
+        (FROM_STATUS_DRAFT, 'Draft'),
+        (FROM_STATUS_SENT, 'Sent'),
+        (FROM_STATUS_DELETED, 'Deleted')
     )
     TO_STATUS_CHOICES = (
-        (0, 'New'),
-        (1, 'Read'),
-        (2, 'Replied'),
-        (3, 'Deleted')
+        (TO_STATUS_NEW, 'New'),
+        (TO_STATUS_READ, 'Read'),
+        (TO_STATUS_REPLIED, 'Replied'),
+        (TO_STATUS_DELETED, 'Deleted')
     )
     from_user = models.ForeignKey(User, related_name='sent_messages')
     to_user = models.ForeignKey(User, related_name='messages')
