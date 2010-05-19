@@ -10,7 +10,7 @@ from basic.messages.models import Message, FROM_STATUS_DRAFT, FROM_STATUS_SENT, 
 from basic.messages.forms import MessageForm
 
 @login_required
-def message_list(request, mailbox='inbox', template_name='messages/message_list.html'):
+def message_list(request, mailbox=None, template_name='messages/message_list.html'):
     """
     Returns a list of user messages.
     
