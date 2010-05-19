@@ -49,3 +49,7 @@ class Message(models.Model):
 
     def __unicode__(self):
         return u'<Message>'
+
+    @permalink
+    def get_absolute_url(self):
+        return ('messages:message', None, {'object_id': self.pk})

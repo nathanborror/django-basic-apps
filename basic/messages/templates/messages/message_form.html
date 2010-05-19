@@ -20,7 +20,7 @@
       {% if form.message.errors %}<span class="errors">{{ form.message.errors|join:", " }}</span>{% endif %}</p>
     <p class="submit">
       <button type="submit" name="submit" value="Send">Send</button>
-      <a href="{% url messages %}" class="cancel">Cancel</a>
+      <a href="{% url messages:messages %}" class="cancel">Cancel</a>
     </p>
   </form>
 {% endblock %}

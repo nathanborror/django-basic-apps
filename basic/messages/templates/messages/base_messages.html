@@ -8,9 +8,9 @@
 {% block content_aside %}
   <h3>Messages</h3>
   <ul>
-    <li><a href="{% url messages mailbox="inbox" %}">Inbox</a></li>
-    <li><a href="{% url messages mailbox="sent" %}">Sent</a></li>
-    <li><a href="{% url messages mailbox="trash" %}">Trash</a></li>
-    <li><a href="{% url message_create %}">Compose</a></li>
+    <li><a href="{% url messages:messages mailbox="inbox" %}">Inbox</a></li>
+    <li><a href="{% url messages:messages mailbox="sent" %}">Sent</a></li>
+    <li><a href="{% url messages:messages mailbox="trash" %}">Trash</a></li>
+    <li><a href="{% url messages:create %}">Compose</a></li>
   </ul>
 {% endblock %}

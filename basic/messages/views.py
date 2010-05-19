@@ -5,9 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from basic.messages.models import Message, FROM_STATUS_DRAFT, FROM_STATUS_SENT,
-    FROM_STATUS_DELETED, TO_STATUS_NEW, TO_STATUS_READ, TO_STATUS_REPLIED,
-    TO_STATUS_DELETED
+from basic.messages.models import Message, FROM_STATUS_DRAFT, FROM_STATUS_SENT, FROM_STATUS_DELETED, TO_STATUS_NEW, TO_STATUS_READ, TO_STATUS_REPLIED, TO_STATUS_DELETED
 from basic.messages.forms import MessageForm
 
 @login_required
@@ -51,7 +49,7 @@ def message_create(request, username=None, template_name='messages/message_form.
         message = form.save(commit=False)
         message.from_user = request.user
         message.save()
-        return HttpResponseRedirect(reverse('user_messages'))
+        return HttpResponseRedirect(reverse('messages:messages'))
     return render_to_response(template_name, {
         'form': form,
         'to_user': to_user
@@ -59,33 +57,26 @@ def message_create(request, username=None, template_name='messages/message_form.
 
 
 @login_required
-def message_remove(request):
+def message_remove(request, object_id, template_name='messages/message_remove_confirm.html'):
+    message = get_object_or_404(Message, pk=object_id)
     if request.method == 'POST':
-        object_id = request.POST.get('object_id', '')
-        try:
-            message = Message.objects.get(pk=object_id, to_user=request.user)
+        if message.to_user == request.user:
             message.to_status = TO_STATUS_DELETED
-        except Message.DoesNotExist:
-            message = Message.objects.get(pk=object_id, from_user=request.user)
+        else:
             message.from_status = FROM_STATUS_DELETED
-        except Message.DoesNotExist:
-            raise Http404
-
         message.save()
-        return HttpResponseRedirect(reverse('user_messages'))
-    else:
-        raise Http404
+        return HttpResponseRedirect(reverse('messages:messages'))
+    return render_to_response(template_name, {
+        'message': message
+    }, context_instance=RequestContext(request))
 
 
 @login_required
-def message_detail(request, mailbox, object_id, template_name='messages/message_detail.html'):
-    if mailbox == 'sent':
-        message = get_object_or_404(Message, pk=object_id, from_user=request.user)
-    elif mailbox == 'inbox':
-        message = get_object_or_404(Message, pk=object_id, to_user=request.user)
+def message_detail(request, object_id, template_name='messages/message_detail.html'):
+    message = get_object_or_404(Message, pk=object_id)
+    if message.to_user == request.user:
         message.to_status = TO_STATUS_READ
         message.save()
     return render_to_response(template_name, {
-        'message': message,
-        'mailbox': mailbox
+        'message': message
     }, context_instance=RequestContext(request))

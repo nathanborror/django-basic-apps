@@ -15,13 +15,13 @@
     {% for message in message_list %}
       {% if mailbox == 'sent' %}
         <li><small class="status">{{ message.get_from_status_display }}</small>
-          <a href="{% url message object_id=message.pk, inbox="sent" %}">{{ message.subject }}</a></li>
+          <a href="{{ message.get_absolute_url }}">{{ message.subject }}</a></li>
       {% else %}
         <li><small class="status">{{ message.get_to_status_display }}</small>
-          <a href="{% url message object_id=message.pk, inbox="inbox" %}">{{ message.subject }}</a></li>
+          <a href="{{ message.get_absolute_url }}">{{ message.subject }}</a></li>
       {% endif %}
     {% endfor %}
   </ul>
 
-  <p><a href="{% url message_create %}" class="button">Compose message</a></p>
+  <p><a href="{% url messages:create %}" class="button">Compose message</a></p>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "messages/base_messages.html" %}
+
+
+{% block title %}Remove message{% endblock %}
+{% block body_class %}{{ block.super }} message_remove_confirm{% endblock %}
+
+
+{% block content_title %}
+  <h2>Remove message</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+  <form action="." method="post">{% csrf_token %}
+    <p>Are you sure you want to remove this message?</p>
+    <p class="submit"><button type="submit">Indeed</button></p>
+  </form>
+{% endblock %}
