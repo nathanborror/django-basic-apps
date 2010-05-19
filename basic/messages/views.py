@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from basic.messages.models import Message, FROM_STATUS_DRAFT, FROM_STATUS_SENT, FROM_STATUS_DELETED, TO_STATUS_NEW, TO_STATUS_READ, TO_STATUS_REPLIED, TO_STATUS_DELETED
 from basic.messages.forms import MessageForm
@@ -21,9 +22,18 @@ def message_list(request, mailbox='inbox', template_name='messages/message_list.
             String representing the current 'mailbox'
     """
     if mailbox == 'sent':
-        message_list = Message.objects.filter(from_user=request.user, from_status=FROM_STATUS_SENT)
+        message_list = Message.objects.filter(from_user=request.user, 
+            from_status=FROM_STATUS_SENT)
+    elif mailbox == 'inbox':
+        message_list = Message.objects.filter(to_user=request.user, 
+            to_status=TO_STATUS_NEW)
+    elif mailbox == 'trash':
+        message_list = Message.objects.filter(
+            Q(to_user=request.user, to_status=TO_STATUS_DELETED) |
+            Q(from_user=request.user, from_status=FROM_STATUS_DELETED))
     else:
-        message_list = Message.objects.filter(to_user=request.user, to_status__in=(TO_STATUS_NEW,TO_STATUS_READ,TO_STATUS_REPLIED))
+        message_list = Message.objects.filter(to_user=request.user, 
+            to_status__in=(TO_STATUS_NEW,TO_STATUS_READ,TO_STATUS_REPLIED))
     return render_to_response(template_name, {
         'message_list': message_list,
         'mailbox': mailbox
