@@ -31,7 +31,7 @@ def message_list(request, mailbox=None, template_name='messages/message_list.htm
 
     return render_to_response(template_name, {
         'message_list': message_list,
-        'mailbox': mailbox
+        'mailbox': mailbox or 'archive'
     }, context_instance=RequestContext(request))
 
 
