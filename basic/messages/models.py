@@ -53,7 +53,7 @@ class Message(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('messages:message', None, {'object_id': self.pk})
-    
+
     @property
     def is_new(self):
         if self.to_status == TO_STATUS_NEW:

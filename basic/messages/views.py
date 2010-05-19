@@ -13,7 +13,7 @@ from basic.messages.forms import MessageForm
 def message_list(request, mailbox=None, template_name='messages/message_list.html'):
     """
     Returns a list of user messages.
-    
+
     Template:: ``messages/message_list.html``
     Context:
         message_list
@@ -22,17 +22,17 @@ def message_list(request, mailbox=None, template_name='messages/message_list.htm
             String representing the current 'mailbox'
     """
     if mailbox == 'sent':
-        message_list = Message.objects.filter(from_user=request.user, 
+        message_list = Message.objects.filter(from_user=request.user,
             from_status=FROM_STATUS_SENT)
     elif mailbox == 'inbox':
-        message_list = Message.objects.filter(to_user=request.user, 
+        message_list = Message.objects.filter(to_user=request.user,
             to_status=TO_STATUS_NEW)
     elif mailbox == 'trash':
         message_list = Message.objects.filter(
             Q(to_user=request.user, to_status=TO_STATUS_DELETED) |
             Q(from_user=request.user, from_status=FROM_STATUS_DELETED))
     else:
-        message_list = Message.objects.filter(to_user=request.user, 
+        message_list = Message.objects.filter(to_user=request.user,
             to_status__in=(TO_STATUS_NEW,TO_STATUS_READ,TO_STATUS_REPLIED))
     return render_to_response(template_name, {
         'message_list': message_list,
@@ -44,7 +44,7 @@ def message_list(request, mailbox=None, template_name='messages/message_list.htm
 def message_create(request, username=None, template_name='messages/message_form.html'):
     """
     Handles a new message and displays a form.
-    
+
     Template:: ``messages/message_form.html``
     Context:
         form
