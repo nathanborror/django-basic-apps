@@ -11,17 +11,20 @@
 
 
 {% block content %}
-  <ul>
+  <table>
     {% for message in message_list %}
-      {% if mailbox == 'sent' %}
-        <li><small class="status">{{ message.get_from_status_display }}</small>
-          <a href="{{ message.get_absolute_url }}">{{ message.subject }}</a></li>
+    <tr{% if message.is_new and message.from_user != user %} class="new_message"{% endif %}>
+      {% if message.to_user == user %}
+        <td>{{ message.from_user }}</td>
       {% else %}
-        <li><small class="status">{{ message.get_to_status_display }}</small>
-          <a href="{{ message.get_absolute_url }}">{{ message.subject }}</a></li>
+        <td>To: {{ message.to_user }}</td>
+        <td>{{ message.get_from_status_display }}</td>
       {% endif %}
+      <td><a href="{{ message.get_absolute_url }}">{{ message.subject }}</a></td>
+      <td>{{ message.created|date }}</td>
+    </tr>
     {% endfor %}
-  </ul>
+  </table>
 
   <p><a href="{% url messages:create %}" class="button">Compose message</a></p>
 {% endblock %}

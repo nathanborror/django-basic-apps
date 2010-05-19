@@ -10,6 +10,7 @@
   <ul>
     <li><a href="{% url messages:messages mailbox="inbox" %}">Inbox</a></li>
     <li><a href="{% url messages:messages mailbox="sent" %}">Sent</a></li>
+    <li><a href="{% url messages:messages %}">Archive</a></li>
     <li><a href="{% url messages:messages mailbox="trash" %}">Trash</a></li>
     <li><a href="{% url messages:create %}">Compose</a></li>
   </ul>
