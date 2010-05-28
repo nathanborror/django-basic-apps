@@ -11,8 +11,8 @@
 
 
 {% block content %}
-  <form action="." method="post">{% csrf_token %}
-    <p><label for="id_to_user">To</label> {{ form.to_user }}
+  <form action="{% if message %}{% url messages:reply message.id %}{% else %}.{% endif %}" method="post">{% csrf_token %}
+    <p><label for="id_to_user">To</label> {% if message %}{{ message.from_user }} <span style="display:none;">{{ form.to_user }}</span>{% else %}{{ form.to_user }}{% endif %}
       {% if form.to_user.errors %}<span class="errors">{{ form.to_user.errors|join:", " }}</span>{% endif %}</p>
     <p><label for="id_subject">Subject</label> {{ form.subject }}
       {% if form.subject.errors %}<span class="errors">{{ form.subject.errors|join:", " }}</span>{% endif %}</p>

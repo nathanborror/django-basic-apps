@@ -79,8 +79,29 @@ def message_create(request, content_type_id=None, object_id=None,
     }, context_instance=RequestContext(request))
 
 
+def message_reply(request, object_id, template_name='messages/message_form.html'):
+    """
+    Handles a reply to a specific message.
+    """
+    original_message = get_object_or_404(Message, pk=object_id)
+    form = MessageForm(request.POST or None, initial={'to_user': original_message.from_user})
+    if form.is_valid():
+        message = form.save(commit=False)
+        message.object = original_message
+        message.from_user = request.user
+        message = form.save()
+        return HttpResponseRedirect(reverse('messages:messages'))
+    return render_to_response(template_name, {
+        'form': form,
+        'message': original_message
+    }, context_instance=RequestContext(request))
+
+
 @login_required
 def message_remove(request, object_id, template_name='messages/message_remove_confirm.html'):
+    """
+    Remove a message.
+    """
     message = get_object_or_404(Message, pk=object_id)
     if request.method == 'POST':
         if message.to_user == request.user:
@@ -96,10 +117,16 @@ def message_remove(request, object_id, template_name='messages/message_remove_co
 
 @login_required
 def message_detail(request, object_id, template_name='messages/message_detail.html'):
+    """
+    Return a message.
+    """
     message = get_object_or_404(Message, pk=object_id)
+    content_type = ContentType.objects.get_for_model(message)
+    thread_list = Message.objects.filter(object_id=message.object.pk, content_type=content_type).order_by('id')
     if message.to_user == request.user:
         message.to_status = TO_STATUS_READ
         message.save()
     return render_to_response(template_name, {
-        'message': message
+        'message': message,
+        'thread_list': thread_list
     }, context_instance=RequestContext(request))

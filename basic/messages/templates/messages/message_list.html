@@ -24,7 +24,7 @@
       {% endif %}
       <td><a href="{{ message.get_absolute_url }}">{{ message.subject|default:"No subject" }}</a></td>
       <td>{{ message.created|date }}</td>
-      <td><a href="{% message_url message %}?to={{ message.from_user.username }}">reply</a></td>
+      <td><a href="{% url messages:reply message.pk %}">reply</a></td>
     </tr>
     {% endfor %}
   </table>

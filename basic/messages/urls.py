@@ -14,6 +14,10 @@ urlpatterns = patterns('basic.messages.views',
         view='message_remove',
         name='remove'),
 
+    url(r'(?P<object_id>\d+)/reply/$',
+        view='message_reply',
+        name='reply'),
+
     url(r'(?P<object_id>\d+)/$',
         view='message_detail',
         name='message'),
