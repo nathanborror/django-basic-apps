@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from basic.messages.models import Message
+from basic.messages.models import Message, TO_STATUS_READ, TO_STATUS_DELETED, FROM_STATUS_DELETED
 from basic.messages.forms import MessageForm
 
 @login_required
