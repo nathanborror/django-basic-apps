@@ -69,7 +69,7 @@ def message_create(request, content_type_id=None, object_id=None,
         message = form.save(commit=False)
         if related_object:
             message.object = related_object
-        message.from_user_id = request.user.pk
+        message.from_user = request.user
         message = form.save()
         return HttpResponseRedirect(reverse('messages:messages'))
     return render_to_response(template_name, {

@@ -12,7 +12,7 @@
 
 {% block content %}
   <form action="." method="post">{% csrf_token %}
-    <p><label for="id_to_user">To</label> {% if to_user %}{{ to_user.username }}{% else %}{{ form.to_user }}{% endif %}
+    <p><label for="id_to_user">To</label> {{ form.to_user }}
       {% if form.to_user.errors %}<span class="errors">{{ form.to_user.errors|join:", " }}</span>{% endif %}</p>
     <p><label for="id_subject">Subject</label> {{ form.subject }}
       {% if form.subject.errors %}<span class="errors">{{ form.subject.errors|join:", " }}</span>{% endif %}</p>
