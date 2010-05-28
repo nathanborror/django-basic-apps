@@ -77,3 +77,9 @@ class Message(models.Model):
         if self.to_status == TO_STATUS_NEW:
             return True
         return False
+
+    def save(self, *args, **kwargs):
+        super(Message, self).save(*args, **kwargs)
+        if not self.object:
+            self.object = self
+            self.save()

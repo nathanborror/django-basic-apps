@@ -4,9 +4,12 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.contenttypes.models import ContentType
 
 from basic.messages.models import Message, TO_STATUS_READ, TO_STATUS_DELETED, FROM_STATUS_DELETED
 from basic.messages.forms import MessageForm
+from basic.tools.baseconv import base62
 
 @login_required
 def message_list(request, mailbox=None, template_name='messages/message_list.html'):
@@ -36,7 +39,8 @@ def message_list(request, mailbox=None, template_name='messages/message_list.htm
 
 
 @login_required
-def message_create(request, username=None, template_name='messages/message_form.html'):
+def message_create(request, content_type_id=None, object_id=None, 
+                    template_name='messages/message_form.html'):
     """
     Handles a new message and displays a form.
 
@@ -45,19 +49,33 @@ def message_create(request, username=None, template_name='messages/message_form.
         form
             MessageForm object
     """
-    if username:
-        to_user = get_object_or_404(User, username=username)
+    if request.GET.get('to', None):
+        to_user = get_object_or_404(User, username=request.GET['to'])
     else:
         to_user = None
+    
+    if content_type_id and object_id:
+        content_type = ContentType.objects.get(pk=base62.to_decimal(content_type_id))
+        Model = content_type.model_class()
+        try:
+            related_object = Model.objects.get(pk=base62.to_decimal(object_id))
+        except ObjectDoesNotExist:
+            raise Http404, "The object ID was invalid."
+    else:
+        related_object = None
+    
     form = MessageForm(request.POST or None, initial={'to_user': to_user})
     if form.is_valid():
         message = form.save(commit=False)
-        message.from_user = request.user
-        message.save()
+        if related_object:
+            message.object = related_object
+        message.from_user_id = request.user.pk
+        message = form.save()
         return HttpResponseRedirect(reverse('messages:messages'))
     return render_to_response(template_name, {
         'form': form,
-        'to_user': to_user
+        'to_user': to_user,
+        'related_object': related_object
     }, context_instance=RequestContext(request))
 
 

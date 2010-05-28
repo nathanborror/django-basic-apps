@@ -6,7 +6,7 @@ urlpatterns = patterns('basic.messages.views',
         view='message_list',
         name='messages'),
 
-    url(r'compose(?:/to:(?P<username>\w+))?/$',
+    url(r'compose(?:/(?P<content_type_id>\w+):(?P<object_id>\w+))?/$',
         view='message_create',
         name='create'),
 

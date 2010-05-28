@@ -11,6 +11,8 @@
 
 
 {% block content %}
+  {% load messages %}
+
   <table>
     {% for message in message_list %}
     <tr{% if message.is_new and message.from_user != user %} class="new_message"{% endif %}>
@@ -22,6 +24,7 @@
       {% endif %}
       <td><a href="{{ message.get_absolute_url }}">{{ message.subject|default:"No subject" }}</a></td>
       <td>{{ message.created|date }}</td>
+      <td><a href="{% message_url message %}">reply</a></td>
     </tr>
     {% endfor %}
   </table>
