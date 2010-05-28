@@ -20,7 +20,7 @@
         <td>To: {{ message.to_user }}</td>
         <td>{{ message.get_from_status_display }}</td>
       {% endif %}
-      <td><a href="{{ message.get_absolute_url }}">{{ message.subject }}</a></td>
+      <td><a href="{{ message.get_absolute_url }}">{{ message.subject|default:"No subject" }}</a></td>
       <td>{{ message.created|date }}</td>
     </tr>
     {% endfor %}
