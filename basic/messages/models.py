@@ -66,7 +66,7 @@ class Message(models.Model):
         ordering = ('-id',)
 
     def __unicode__(self):
-        return u'<Message>'
+        return u'Message from %s' % self.from_user.username
 
     @permalink
     def get_absolute_url(self):

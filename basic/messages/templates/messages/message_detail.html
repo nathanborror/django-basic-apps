@@ -16,7 +16,7 @@
     <div class="message_list">
       {% for thread_message in thread_list %}
           <div class="item{% if thread_message == message %} current{% endif %}">
-            <h4>{{ thread_message.to_user }} <a href="{{ thread_message.get_absolute_url }}">{{ thread_message.subject }}</a> {{ thread_message.created|date }}</h4>
+            <h4>{{ thread_message.from_user }} <a href="{{ thread_message.get_absolute_url }}">{{ thread_message.subject|default:"No subject" }}</a> {{ thread_message.created|date }}</h4>
             <div class="body">
               {{ thread_message.message|linebreaks }}
               <p><a href="{% url messages:reply thread_message.pk %}">reply</a></p>

@@ -6,14 +6,19 @@
 
 
 {% block content_title %}
-  <h2>Message composer</h2>
+  <h2>{% if message %}Reply{% else %}Message composer{% endif %}</h2>
 {% endblock %}
 
 
 {% block content %}
   <form action="{% if message %}{% url messages:reply message.id %}{% else %}.{% endif %}" method="post">{% csrf_token %}
-    <p><label for="id_to_user">To</label> {% if message %}{{ message.from_user }} <span style="display:none;">{{ form.to_user }}</span>{% else %}{{ form.to_user }}{% endif %}
-      {% if form.to_user.errors %}<span class="errors">{{ form.to_user.errors|join:", " }}</span>{% endif %}</p>
+    {% if message %}
+      {{ message.message|linebreaks }}
+      <span style="display:none;">{{ form.to_user }}</span>
+    {% else %}
+      <p><label for="id_to_user">To</label> {{ form.to_user }}
+        {% if form.to_user.errors %}<span class="errors">{{ form.to_user.errors|join:", " }}</span>{% endif %}</p>
+    {% endif %}
     <p><label for="id_subject">Subject</label> {{ form.subject }}
       {% if form.subject.errors %}<span class="errors">{{ form.subject.errors|join:", " }}</span>{% endif %}</p>
     <p><label for="id_message">Message</label> {{ form.message }}

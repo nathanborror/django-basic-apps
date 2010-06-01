@@ -84,10 +84,14 @@ def message_reply(request, object_id, template_name='messages/message_form.html'
     Handles a reply to a specific message.
     """
     original_message = get_object_or_404(Message, pk=object_id)
-    form = MessageForm(request.POST or None, initial={'to_user': original_message.from_user})
+    initial = {
+        'to_user': original_message.object.from_user,
+        'subject': 'Re: %s' % original_message.subject
+    }
+    form = MessageForm(request.POST or None, initial=initial)
     if form.is_valid():
         message = form.save(commit=False)
-        message.object = original_message
+        message.object = original_message.object
         message.from_user = request.user
         message = form.save()
         return HttpResponseRedirect(reverse('messages:messages'))
