@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <form action="{% url relationship_follow username=to_user.username %}{% if next %}?next={{ next }}{% endif %}" method="post">
+  <form action="{% url relationship_follow username=to_user.username %}{% if next %}?next={{ next }}{% endif %}" method="post">{% csrf_token %}
     <p>Are you sure you want to add {{ to_user }} as a friend?
       <button type="submit" name="submit" value="Indeed">Indeed</button></p>
   </form>
