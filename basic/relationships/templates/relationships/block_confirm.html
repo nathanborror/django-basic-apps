@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <form action="{% url relationship_block username=user_to_block.username %}" method="post">
+  <form action="{% url relationship_block username=user_to_block.username %}" method="post">{% csrf_token %}
     <p>Are you sure you want to block {{ user_to_block }}?
       <button type="submit" name="submit" value="Indeed">Indeed</button></p>
   </form>
