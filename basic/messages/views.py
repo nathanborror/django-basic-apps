@@ -85,7 +85,7 @@ def message_reply(request, object_id, template_name='messages/message_form.html'
     """
     original_message = get_object_or_404(Message, pk=object_id)
     initial = {
-        'to_user': original_message.object.from_user,
+        'to_user': original_message.from_user,
         'subject': 'Re: %s' % original_message.subject
     }
     form = MessageForm(request.POST or None, initial=initial)
