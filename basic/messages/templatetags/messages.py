@@ -1,9 +1,12 @@
 from django import template
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.db import models
 
+from basic.tools.templatetags.utils import parse_ttag
 from basic.tools.baseconv import base62
 
+Message = models.get_model('messages', 'message')
 register = template.Library()
 
 
@@ -25,3 +28,33 @@ def message_url(obj):
                 })
     except AttributeError:
         return ''
+
+
+class GetMessages(template.Node):
+    def __init__(self, object_name, varname):
+        self.object_name = object_name
+        self.varname = varname
+
+    def render(self, context):
+        obj = template.resolve_variable(self.object_name, context)
+        ctype = ContentType.objects.get_for_model(obj)
+        message_list = Message.objects.filter(object_id=obj.id, content_type=ctype).order_by('id')
+        context[self.varname] = message_list
+        return ''
+
+def do_get_messages(parser, token):
+    """
+    Get messages for an object.
+
+    Syntax:
+        {% get_messages for [object] as [varname] %}
+
+    Example:
+        {% get_messages for object as message_list %}
+    """
+    tags = parse_ttag(token, ['for', 'as'])
+    if len(tags) != 3:
+        raise template.TemplateSyntaxError, '%r tag has invalid arguments' % tags['tag_name']
+    return GetMessages(object_name=tags['for'], varname=tags['as'])
+
+register.tag('get_messages', do_get_messages)
