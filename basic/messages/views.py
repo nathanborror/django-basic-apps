@@ -49,6 +49,7 @@ def message_create(request, content_type_id=None, object_id=None,
         form
             MessageForm object
     """
+    next = request.GET.get('next', None)
     if request.GET.get('to', None):
         to_user = get_object_or_404(User, username=request.GET['to'])
     else:
@@ -71,11 +72,12 @@ def message_create(request, content_type_id=None, object_id=None,
             message.object = related_object
         message.from_user = request.user
         message = form.save()
-        return HttpResponseRedirect(reverse('messages:messages'))
+        return HttpResponseRedirect(next or reverse('messages:messages'))
     return render_to_response(template_name, {
         'form': form,
         'to_user': to_user,
-        'related_object': related_object
+        'related_object': related_object,
+        'next': next,
     }, context_instance=RequestContext(request))
 
 
@@ -84,6 +86,7 @@ def message_reply(request, object_id, template_name='messages/message_form.html'
     Handles a reply to a specific message.
     """
     original_message = get_object_or_404(Message, pk=object_id)
+    next = request.GET.get('next', None)
     initial = {
         'to_user': original_message.from_user,
         'subject': 'Re: %s' % original_message.subject
@@ -94,10 +97,11 @@ def message_reply(request, object_id, template_name='messages/message_form.html'
         message.object = original_message.object
         message.from_user = request.user
         message = form.save()
-        return HttpResponseRedirect(reverse('messages:messages'))
+        return HttpResponseRedirect(next or reverse('messages:messages'))
     return render_to_response(template_name, {
         'form': form,
-        'message': original_message
+        'message': original_message,
+        'next': next,
     }, context_instance=RequestContext(request))
 
 
@@ -107,15 +111,17 @@ def message_remove(request, object_id, template_name='messages/message_remove_co
     Remove a message.
     """
     message = get_object_or_404(Message, pk=object_id)
+    next = request.GET.get('next', None)
     if request.method == 'POST':
         if message.to_user == request.user:
             message.to_status = TO_STATUS_DELETED
         else:
             message.from_status = FROM_STATUS_DELETED
         message.save()
-        return HttpResponseRedirect(reverse('messages:messages'))
+        return HttpResponseRedirect(next or reverse('messages:messages'))
     return render_to_response(template_name, {
-        'message': message
+        'message': message,
+        'next': next,
     }, context_instance=RequestContext(request))
 
 
