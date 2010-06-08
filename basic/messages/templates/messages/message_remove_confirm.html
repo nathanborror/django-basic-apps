@@ -12,7 +12,7 @@
 
 {% block content %}
   {% load markup %}
-  <form action="." method="post">{% csrf_token %}
+  <form action=".{% if next %}?next={{ next }}{% endif %}" method="post">{% csrf_token %}
     <p>Are you sure you want to remove this message?</p>
     <p class="submit"><button type="submit">Indeed</button></p>
   </form>

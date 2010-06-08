@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <form action="{% if message %}{% url messages:reply message.id %}{% else %}.{% endif %}" method="post">{% csrf_token %}
+  <form action="{% if message %}{% url messages:reply message.id %}{% else %}.{% endif %}{% if next %}?next={{ next }}{% endif %}" method="post">{% csrf_token %}
     {% if message %}
       {{ message.message|linebreaks }}
       <span style="display:none;">{{ form.to_user }}</span>
