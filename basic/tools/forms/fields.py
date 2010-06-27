@@ -7,6 +7,9 @@ class AutoCompleteWidget(Widget):
     Widget that presents an <input> field that can be used to search for
     objects instead of a giant <select> field
 
+    You will need to include jQuery Autocomplete which can be found here:
+    http://docs.jquery.com/Plugins/Autocomplete
+
     Include media:
 
         basic/tools/media/stylesheets/autocomplete.css
