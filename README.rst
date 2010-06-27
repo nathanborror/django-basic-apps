@@ -8,7 +8,7 @@ To install any of the apps listed simply create a folder on your ``PYTHONPATH`` 
 
 Below are a list of per app dependancies:
 
-Dependancies
+Dependencies
 ============
 
 * Basic Inlines are required to use the Blog app
