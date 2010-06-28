@@ -1,10 +1,11 @@
 """
 >>> from django.test import Client
 >>> from basic.bookmarks.models import Bookmark
+>>> from django.core.urlresolvers import reverse
 
 >>> client = Client()
 
->>> response = client.get('/bookmarks/')
+>>> response = client.get(reverse('bookmark_index'))
 >>> response.status_code
 200
 
