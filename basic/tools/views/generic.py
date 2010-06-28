@@ -22,12 +22,10 @@ def auto_complete(request, queryset, fields=None):
     limit = request.GET.get('limit', 10)
     query = request.GET.get('q', '')
     if fields:
-        q_objects = []
+        q_object = Q()
         for field in fields:
-            kwargs = {field: query}
-            q_objects.append(Q(**kwargs))
-        args = reduce(lambda q1, q2: q1 | q2, q_objects)
-        queryset = queryset.filter(args)
+            q_object |= Q(**{field: query})
+        queryset = queryset.filter(q_object)
 
     for obj in queryset[:limit]:
         object_list.append({'text': obj.__unicode__(), 'id': obj.pk})
