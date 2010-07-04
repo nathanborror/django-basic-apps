@@ -75,7 +75,8 @@ def topic_detail(request, slug, topic_id,
 
 
 @membership_required
-def topic_edit(request, topic_id, template_name='groups/topics/topic_form.html'):
+def topic_edit(request, slug, topic_id,
+        template_name='groups/topics/topic_form.html'):
     """
     Returns a group topic form page.
 
@@ -103,7 +104,7 @@ def topic_edit(request, topic_id, template_name='groups/topics/topic_form.html')
 
 
 @membership_required
-def topic_remove(request, topic_id,
+def topic_remove(request, slug, topic_id,
         template_name='groups/topics/topic_remove_confirm.html'):
     """
     Returns a group topic delete confirmation page.

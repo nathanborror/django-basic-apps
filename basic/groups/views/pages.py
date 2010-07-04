@@ -6,11 +6,29 @@ from basic.groups.forms import *
 from basic.tools.shortcuts import render, redirect
 
 
+def page_list(request, slug, template_name='groups/pages/page_list.html'):
+    """
+    Returns a list of pages for a group.
+
+    Templates: ``groups/pages/page_list.html``
+    Context:
+        group
+            Group object
+        page_list
+            List of GroupPage objects
+    """
+    group = get_object_or_404(Group, slug=slug)
+    return render(request, template_name, {
+        'group': group,
+        'page_list': group.pages.all()
+    })
+
+
 def page_detail(request, slug, page_slug,
         template_name='groups/pages/page_detail.html'):
     """
     Returns a group page.
-    
+
     Templates: ``groups/pages/page_detail.html``
     Context:
         group
@@ -27,11 +45,10 @@ def page_detail(request, slug, page_slug,
 
 
 @ownership_required
-def page_create(request, slug, page_slug,
-        template_name='groups/pages/page_form.html'):
+def page_create(request, slug, template_name='groups/pages/page_form.html'):
     """
     Creates a group page.
-    
+
     Templates: ``groups/pages/page_form.html``
     Context:
         group

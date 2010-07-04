@@ -1,5 +1,7 @@
+import datetime
+
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 
 from basic.groups.models import Group, GroupMember
@@ -32,7 +34,7 @@ def ownership_required(function=None):
         if GroupMember.objects.is_owner(group, request.user):
             return function(request, *args, **kwargs)
         else:
-            return Http404
+            raise Http404
     return decorator
 
 
@@ -47,5 +49,5 @@ def moderator_required(function=None):
         if GroupMember.objects.is_moderator(group, request.user):
             return function(request, *args, **kwargs)
         else:
-            return Http404
+            raise Http404
     return decorator

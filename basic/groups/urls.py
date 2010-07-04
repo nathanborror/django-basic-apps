@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 
 
 GROUP_URL = r'(?P<slug>[-\w]+)/'
-PAGE_URL = r'%spage/(?P<page_slug>[-\w]+)/' % GROUP_URL
+PAGE_URL = r'%spages/(?P<page_slug>[-\w]+)/' % GROUP_URL
 TOPIC_URL = r'%stopics/(?P<topic_id>\d+)/' % GROUP_URL
 MESSAGE_URL = r'%smessages/(?P<message_id>\d+)/' % TOPIC_URL
 
@@ -33,6 +33,7 @@ urlpatterns += patterns('basic.groups.views.pages',
     url(r'^%s$' % PAGE_URL,                     'page_detail',          name='page'),
     url(r'^%sedit/$' % PAGE_URL,                'page_edit',            name='page_edit'),
     url(r'^%sremove/$' % PAGE_URL,              'page_remove',          name='page_remove'),
+    url(r'^%spages/$' % GROUP_URL,              'page_list',            name='pages'),
 )
 
 # Messages

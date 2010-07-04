@@ -1,0 +1,23 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}Pages{% endblock %}
+{% block body_class %}{{ block.super }} pages page_list{% endblock %}
+
+
+{% block content_title %}
+  <h2>Pages</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% if page_list %}
+    <div class="list">
+      {% for page in page_list %}
+        <div class="item">
+          <h5><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></h5>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

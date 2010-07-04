@@ -38,7 +38,6 @@ def group_create(request, template_name='groups/group_form.html'):
             group = form.save(commit=False)
             group.creator = request.user
             group.save()
-
             creator = GroupMember.objects.create(user=request.user, group=group, status=0)
             return redirect(request, group)
     else:

@@ -6,6 +6,16 @@ from basic.groups.managers import *
 from basic.tools.shortcuts import get_image_path
 
 
+GROUP_OWNER = 0
+GROUP_MODERATOR = 1
+GROUP_MEMBER = 2
+GROUP_MEMBER_CHOICES = (
+    (GROUP_OWNER, 'Owner'),
+    (GROUP_MODERATOR, 'Moderator'),
+    (GROUP_MEMBER, 'Member')
+)
+
+
 class Group(models.Model):
     """ Group model """
     title = models.CharField(blank=False, max_length=255)
@@ -41,7 +51,7 @@ class Group(models.Model):
 
 class GroupPage(models.Model):
     """ GroupPage model """
-    group = models.ForeignKey(Group, related_name='group_texts')
+    group = models.ForeignKey(Group, related_name='pages')
     title = models.CharField(blank=True, max_length=100)
     slug = models.SlugField()
     body = models.TextField(blank=True)
@@ -77,10 +87,22 @@ class GroupTopic(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('groups:topic', None, {
-            'slug': self.group.slug,
-            'topic_id': self.pk
-        })
+        return ('groups:topic', [self.group.slug, self.pk])
+
+    @permalink
+    def get_edit_url(self):
+        return ('groups:topic_edit', [self.group.slug, self.pk])
+
+    @permalink
+    def get_remove_url(self):
+        return ('groups:topic_remove', [self.group.slug, self.pk])
+
+
+class GroupMessageManager(models.Manager):
+    """Returns messages that are flagged as active."""
+
+    def get_query_set(self):
+        return super(GroupMessageManager, self).get_query_set().filter(is_active=True)
 
 
 class GroupMessage(models.Model):
@@ -98,18 +120,49 @@ class GroupMessage(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('groups:message', None, {
-            'slug': self.topic.group.slug,
-            'topic_id': self.topic.pk,
-            'message_id': self.pk
-        })
+        return ('groups:message',
+            [self.topic.group.slug, self.topic.pk, self.pk])
+
+    @permalink
+    def get_edit_url(self):
+        return ('groups:message_edit',
+            [self.topic.group.slug, self.topic.pk, self.pk])
+
+    @permalink
+    def get_remove_url(self):
+        return ('groups:message_remove',
+            [self.topic.group.slug, self.topic.pk, self.pk])
+
+
+class GroupMemberManager(models.Manager):
+    """Returns memebers that belong to a group"""
+    def is_member(self, group, user):
+        if user.is_anonymous():
+            return False
+        if self.filter(group=group, user=user).count() > 0:
+            return True
+        return False
+
+    def is_owner(self, group, user):
+        if user.is_anonymous():
+            return False
+        if self.filter(group=group, user=user, status=GROUP_OWNER).count() > 0:
+            return True
+        return False
+
+    def is_moderator(self, group, user):
+        if user.is_anonymous():
+            return False
+        if self.filter(group=group, user=user, status=GROUP_MODERATOR).count() > 0:
+            return True
+        return False
 
 
 class GroupMember(models.Model):
     """ GroupMember model """
     user = models.ForeignKey(User, related_name='group_memberships')
     group = models.ForeignKey(Group, related_name='members')
-    status = models.PositiveSmallIntegerField(choices=((0, 'Owner'),(1, 'Moderator'),(2, 'Member')), default=2)
+    status = models.PositiveSmallIntegerField(choices=GROUP_MEMBER_CHOICES, default=GROUP_MEMBER)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     objects = GroupMemberManager()
@@ -118,4 +171,4 @@ class GroupMember(models.Model):
         unique_together = (('user', 'group'),)
 
     def __unicode__(self):
-        return '%s' % self.user
+        return self.user.username
