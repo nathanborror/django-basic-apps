@@ -10,7 +10,7 @@ def topic_list(request, slug, template_name='groups/topics/topic_list.html'):
     """
     Returns a group topic list page.
 
-    Templates: ``groups/topic_list.html``
+    Templates: ``groups/topics/topic_list.html``
     Context:
         group
             Group object
@@ -30,7 +30,7 @@ def topic_create(request, slug, template_name='groups/topics/topic_form.html'):
     """
     Returns a group topic form page.
 
-    Templates: ``groups/topic_form.html``
+    Templates: ``groups/topics/topic_form.html``
     Context:
         form
             GroupTopicForm object
@@ -57,7 +57,7 @@ def topic_detail(request, slug, topic_id,
     """
     Returns a group topic detail page.
 
-    Templates: ``groups/topic_detail.html``
+    Templates: ``groups/topics/topic_detail.html``
     Context:
         topic
             GroupTopic object
@@ -79,7 +79,7 @@ def topic_edit(request, topic_id, template_name='groups/topics/topic_form.html')
     """
     Returns a group topic form page.
 
-    Templates: ``groups/topic_form.html``
+    Templates: ``groups/topics/topic_form.html``
     Context:
         form
             GroupTopicForm object
@@ -108,7 +108,7 @@ def topic_remove(request, topic_id,
     """
     Returns a group topic delete confirmation page.
 
-    Templates: ``groups/topic_remove_confirm.html``
+    Templates: ``groups/topics/topic_remove_confirm.html``
     Context:
         topic
             GroupTopic object
@@ -120,8 +120,3 @@ def topic_remove(request, topic_id,
         topic.save()
         return redirect(request, group)
     return render(request, template_name, {'topic': topic})
-
-
-def topic_moderate(request, topic_id,
-        template_name='groups/topics/topic_moderate_confirm.html'):
-    pass

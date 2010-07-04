@@ -11,7 +11,7 @@ def page_detail(request, slug, page_slug,
     """
     Returns a group page.
     
-    Templates: ``groups/group_page.html``
+    Templates: ``groups/pages/page_detail.html``
     Context:
         group
             Group object
@@ -32,7 +32,7 @@ def page_create(request, slug, page_slug,
     """
     Creates a group page.
     
-    Templates: `` groups/group_page_form.html``
+    Templates: ``groups/pages/page_form.html``
     Context:
         group
             Group object

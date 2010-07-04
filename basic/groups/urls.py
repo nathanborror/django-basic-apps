@@ -24,7 +24,6 @@ urlpatterns += patterns('basic.groups.views.topics',
     url(r'^%s$' % TOPIC_URL,                    'topic_detail',         name='topic'),
     url(r'^%sedit/$' % TOPIC_URL,               'topic_edit',           name='topic_edit'),
     url(r'^%sremove/$' % TOPIC_URL,             'topic_remove',         name='topic_remove'),
-    url(r'^%smoderate/$' % TOPIC_URL,           'topic_moderate',       name='topic_moderate'),
     url(r'^%stopics/$' % GROUP_URL,             'topic_list',           name='topics'),
 )
 
@@ -42,5 +41,5 @@ urlpatterns += patterns('basic.groups.views.messages',
     url(r'^%s$' % MESSAGE_URL,                  'message_detail',       name='message'),
     url(r'^%sedit/$' % MESSAGE_URL,             'message_edit',         name='message_edit'),
     url(r'^%sremove/$' % MESSAGE_URL,           'message_remove',       name='message_remove'),
-    url(r'^%soderate/$' % MESSAGE_URL,          'message_moderate',     name='message_moderate'),
+    url(r'^%smessages/$' % TOPIC_URL,           'message_list',         name='messages'),
 )

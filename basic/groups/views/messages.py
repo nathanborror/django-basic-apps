@@ -6,12 +6,34 @@ from basic.groups.forms import *
 from basic.tools.shortcuts import render, redirect
 
 
+def message_list(request, slug, topic_id, template_name='groups/messages/message_list.html'):
+    """
+    Returns a group topic message list page.
+
+    Templates: ``groups/messages/message_list.html``
+    Context:
+        group
+            Group object
+        topic
+            GroupTopic object
+        message_list
+            List of GroupMessage objects
+    """
+    group = get_object_or_404(Group, slug=slug, is_active=True)
+    topic = get_object_or_404(GroupTopic, pk=topic_id, group=group, is_active=True)
+    return render(request, template_name, {
+        'group': group,
+        'topic': topic,
+        'message_list': topic.messages.all()
+    })
+
+
 def message_detail(request, slug, topic_id, message_id,
         template_name='groups/messages/message_detail.html'):
     """
     Returns a message detail page.
 
-    Templates: ``groups/message_detail.html``
+    Templates: ``groups/messages/message_detail.html``
     Context:
         group
             Group object
@@ -36,7 +58,7 @@ def message_create(request, slug, topic_id,
     """
     Returns a group message form.
 
-    Templates: ``groups/message_form.html``
+    Templates: ``groups/messages/message_form.html``
     Context:
         group
             Group object
@@ -70,7 +92,7 @@ def message_edit(request, slug, topic_id, message_id,
     """
     Returns a group message edit form.
 
-    Templates: ``groups/message_form.html``
+    Templates: ``groups/messages/message_form.html``
     Context:
         group
             Group object
@@ -103,7 +125,7 @@ def message_remove(request, slug, topic_id, message_id,
     """
     Returns a message delete confirmation page.
 
-    Templates: ``groups/message_remove_confirm.html``
+    Templates: ``groups/messages/message_remove_confirm.html``
     Context:
         group
             Group object
@@ -122,8 +144,3 @@ def message_remove(request, slug, topic_id, message_id,
         'topic': message.topic,
         'message': message,
     })
-
-
-def message_moderate(request, slug, topic_id, message_id,
-        template_name='groups/messages/message_moderate_confirm.html'):
-    pass

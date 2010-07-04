@@ -1,0 +1,31 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}Messages for "{{ topic }}"{% endblock %}
+{% block body_class %}{{ block.super }} messages message_list{% endblock %}
+
+
+{% block content_title %}
+  <h2>Messages for "{{ topic }}"</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% if message_list %}
+    <div class="list">
+      {% for message in message_list %}
+        <div class="item">
+          {{ message.message|markdown }}
+          <p class="datetime">Posted by <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a> on {{ message.created|date }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form action="{% url groups:message_create group.slug, topic.id %}?next={{ request.path }}" method="post">{% csrf_token %}
+    <p>{{ message_form.message }}</p>
+    <p class="submit">
+      <button type="submit" name="post" value="Post">Post</button>
+    </p>
+  </form>
+{% endblock %}
