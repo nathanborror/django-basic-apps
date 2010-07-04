@@ -8,7 +8,7 @@
 {% block content %}
   {% load markup %}
 
-  <p class="button"><a href="{% url group_topic_create slug=group.slug %}?next={{ request.path }}">Start a topic</a></p>
+  <p><a class="button" href="{% url groups:topic_create group.slug %}?next={{ request.path }}">Start a topic</a></p>
 
   {% if topic_list %}
     <div class="list">

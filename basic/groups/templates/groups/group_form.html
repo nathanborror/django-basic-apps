@@ -11,10 +11,12 @@
 
 
 {% block content %}
-  <form action="{% if group %}{% url group_edit slug=group.slug %}{% else %}{% url group_create %}{% endif %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
-    <fieldset>
-      {{ form.as_p }}
-    </fieldset>
+  {% load stringutils %}
+
+  <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+    {% for field in form %}
+      {{ field|format_field }}
+    {% endfor %}
     <p class="submit">
       <button type="submit" name="submit">Save</button>
       {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}

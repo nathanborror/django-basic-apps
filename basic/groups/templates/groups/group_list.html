@@ -12,7 +12,7 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <p><a href="{% url group_create %}?next={{ request.path }}">Start a group</a></p>
+    <p><a href="{% url groups:create %}?next={{ request.path }}">Start a group</a></p>
   {% endif %}
 
   {% if membership_list %}

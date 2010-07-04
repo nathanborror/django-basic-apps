@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <p><a href="{% url group_invite slug=group.slug %}?next={{ request.path }}">Invite a friend</a></p>
+  <p><a href="{% url groups:invite group.slug %}?next={{ request.path }}">Invite a friend</a></p>
 
   {% if member_list %}
     <ul>

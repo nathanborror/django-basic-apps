@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <form action="{% url group_invite slug=group.slug %}" method="post">{% csrf_token %}
+  <form action="." method="post">{% csrf_token %}
     <fieldset>
       {{ form.as_p }}
     </fieldset>

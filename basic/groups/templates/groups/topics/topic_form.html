@@ -11,10 +11,12 @@
 
 
 {% block content %}
-  <form action="{% if topic %}{% url group_topic_edit topic_id=topic.id %}{% else %}{% url group_topic_create slug=group.slug %}{% endif %}" method="post">{% csrf_token %}
-    <fieldset>
-      {{ form.as_p }}
-    </fieldset>
+  {% load stringutils %}
+
+  <form action="." method="post">{% csrf_token %}
+    {% for field in form %}
+      {{ field|format_field }}
+    {% endfor %}
     <p class="submit">
       <button type="submit" name="submit" value="Create topic">{% if topic %}Save{% else %}Post{% endif %} topic</button>
       {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}

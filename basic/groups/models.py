@@ -3,13 +3,7 @@ from django.db.models import permalink
 from django.contrib.auth.models import User
 
 from basic.groups.managers import *
-
-
-def get_group_icon_path(instance, filename):
-    import os.path, hashlib
-    name = hashlib.md5("%s_%s" % ("group", instance.id)).hexdigest()
-    ext = os.path.splitext(filename)
-    return os.path.join('groups', '%s%s' % (name, ext[1]))
+from basic.tools.shortcuts import get_image_path
 
 
 class Group(models.Model):
@@ -18,30 +12,25 @@ class Group(models.Model):
     slug = models.SlugField(unique=True, help_text="Used for the Group URL: http://example.com/groups/the-club/")
     tease = models.TextField(blank=True, help_text="Brief explaination of what this group is. Shows up when the group is listed amoung other groups.")
     creator = models.ForeignKey(User, related_name='created_groups', help_text="Serves as a record as who the original creator was in case ownership is transfered.")
-    icon = models.FileField(upload_to=get_group_icon_path, blank=True, help_text="Needs to be larger than 120x120 pixels.")
+    icon = models.FileField(upload_to=get_image_path, blank=True, help_text="Needs to be larger than 120x120 pixels.")
     invite_only = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = 'group'
-        verbose_name_plural = 'groups'
-        db_table = 'groups'
 
     def __unicode__(self):
         return self.title
 
     @permalink
     def get_absolute_url(self):
-        return ('group', None, {'slug': self.slug})
+        return ('groups:group', None, {'slug': self.slug})
 
     def owners(self):
         return self.members.filter(status=0)
 
     def moderators(self):
         return self.members.filter(status=1)
-    
+
     def is_member(self, user):
         try:
             member = self.members.get(user=user)
@@ -59,17 +48,12 @@ class GroupPage(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        verbose_name = 'group page'
-        verbose_name_plural = 'group pages'
-        db_table = 'group_pages'
-
     def __unicode__(self):
         return self.title
 
     @permalink
     def get_absolute_url(self):
-        return ('group_page', None, {
+        return ('groups:page', None, {
             'slug': self.group.slug,
             'page_slug': self.slug
         })
@@ -86,9 +70,6 @@ class GroupTopic(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'group topic'
-        verbose_name_plural = 'group topics'
-        db_table = 'group_topics'
         ordering = ('-id',)
 
     def __unicode__(self):
@@ -96,7 +77,7 @@ class GroupTopic(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('group_topic', None, {
+        return ('groups:topic', None, {
             'slug': self.group.slug,
             'topic_id': self.pk
         })
@@ -112,17 +93,12 @@ class GroupMessage(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        verbose_name = 'group message'
-        verbose_name_plural = 'group messages'
-        db_table = 'group_messages'
-
     def __unicode__(self):
         return self.message
 
     @permalink
     def get_absolute_url(self):
-        return ('group_topic_message', None, {
+        return ('groups:message', None, {
             'slug': self.topic.group.slug,
             'topic_id': self.topic.pk,
             'message_id': self.pk
@@ -139,9 +115,6 @@ class GroupMember(models.Model):
     objects = GroupMemberManager()
 
     class Meta:
-        verbose_name = 'group member'
-        verbose_name_plural = 'group members'
-        db_table = 'group_members'
         unique_together = (('user', 'group'),)
 
     def __unicode__(self):

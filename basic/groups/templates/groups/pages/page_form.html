@@ -1,0 +1,25 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}{% if message %}Edit{% else %}Create a{% endif %} group page{% endblock %}
+{% block body_class %}{{ block.super }} pages page_form{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% if message %}Edit{% else %}Create a{% endif %} group page</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load stringutils %}
+
+  <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
+    {% for field in form %}
+      {{ field|format_field }}
+    {% endfor %}
+    <p class="submit">
+      <button type="submit" name="post" value="Post">Save</button>
+      <a class="cancel" href="{{ message.get_absolute_url }}">Cancel</a>
+    </p>
+  </form>
+{% endblock %}

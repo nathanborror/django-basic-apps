@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <form action="{% url group_join slug=group.slug %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
+  <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
     <fieldset>
       <p>Are you sure you want to join the group, "{{ group }}?"</p>
     </fieldset>

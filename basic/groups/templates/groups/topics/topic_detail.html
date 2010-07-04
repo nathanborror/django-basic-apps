@@ -1,0 +1,33 @@
+{% extends "groups/base_groups.html" %}
+
+
+{% block title %}{{ topic }}{% endblock %}
+{% block body_class %}{{ block.super }} topics topic_detail{% endblock %}
+
+
+{% block content_title %}
+  <h2>{{ topic }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+
+  {{ topic.description|markdown }}
+
+  <div class="list">
+    {% for message in topic.messages.all %}
+      <div class="item">
+        {{ message.message|markdown }}
+        <p class="datetime">Posted by <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a> on {{ message.created|date }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form action="{% url groups:message_create group.slug, topic.id %}?next={{ request.path }}" method="post">{% csrf_token %}
+    <p>{{ message_form.message }}</p>
+    <p class="submit">
+      <button type="submit" name="post" value="Post">Post</button>
+    </p>
+  </form>
+{% endblock %}

@@ -11,9 +11,12 @@
 
 
 {% block content %}
-  <form action="{% if message %}{% url group_message_edit message_id=message.id %}{% else %}{% url group_message_create slug=group.slug, topic_id=topic.id %}{% endif %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="POST" class="comment_form">{% csrf_token %}
-    <p>{{ form.message }}
-      {% if form.message.errors %}<span class="errors">{{ form.message.errors }}</span>{% endif %}</p>
+  {% load stringutils %}
+
+  <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
+    {% for field in form %}
+      {{ field|format_field }}
+    {% endfor %}
     <p class="submit">
       <button type="submit" name="post" value="Post">Save</button>
       <a class="cancel" href="{{ message.get_absolute_url }}">Cancel</a>

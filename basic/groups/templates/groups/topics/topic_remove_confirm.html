@@ -11,7 +11,7 @@
 
 
 {% block content %}
-  <form action="{% url group_topic_remove topic_id=topic.pk %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
+  <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
     <fieldset>
       <p>Are you sure you want to remove "{{ topic }}" from your group?</p>
     </fieldset>

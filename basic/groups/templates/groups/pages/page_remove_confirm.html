@@ -1,19 +1,19 @@
 {% extends "groups/base_groups.html" %}
 
 
-{% block title %}Group delete confirmation{% endblock %}
-{% block body_class %}{{ block.super }} group_confirm_delete{% endblock %}
+{% block title %}Remove group page{% endblock %}
+{% block body_class %}{{ block.super }} pages page_confirm_delete{% endblock %}
 
 
 {% block content_title %}
-  <h2>Group delete confirmation</h2>
+  <h2>Remove group page</h2>
 {% endblock %}
 
 
 {% block content %}
   <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
     <fieldset>
-      <p>Are you sure you want to delete the group "{{ group }}?"</p>
+      <p>Are you sure you want to remove this group page?</p>
     </fieldset>
     <p class="submit">
       <button type="submit" name="submit" value="Indeed">Indeed</button>
