@@ -7,105 +7,85 @@ from basic.groups.models import *
 
 
 class GroupTestCase(TestCase):
-    fixtures = ['groups.json']
+    fixtures = ['groups.json', 'users.json']
 
     def setUp(self):
-        self.user = User.objects.get(username='nathanb')
-        self.slug = 'infinite-summer'
+        self.user1 = User.objects.get(username='nathanb')
+        self.user2 = User.objects.get(username='laurah')
 
-    def test_anonymous_join(self):
-        response = self.client.get(reverse('group_join', kwargs={'slug': self.slug}))
-        self.assertEqual(response.status_code, 302)
+        self.group = Group.objects.get(pk=1)
+        self.topic = GroupTopic.objects.get(pk=1)
+        self.message = GroupMessage.objects.get(pk=1)
+        self.page = GroupPage.objects.get(pk=1)
 
-    def test_anonymous_members(self):
-        response = self.client.get(reverse('group_members', kwargs={'slug': self.slug}))
-        self.assertEqual(response.status_code, 200)
-
-    def test_anonymous_groups(self):
-        kwargs = {'slug': self.slug}
-
-        response = self.client.get(reverse('groups'))
-        self.assertEqual(response.status_code, 200)
-
-        response = self.client.get(reverse('group', kwargs=kwargs))
-        self.assertEqual(response.status_code, 200)
-
-        response = self.client.get(reverse('group_edit', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-        response = self.client.get(reverse('group_remove', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-    def test_anonymous_topics(self):
-        kwargs = {'slug': self.slug}
-
-        response = self.client.get(reverse('group_topics', kwargs=kwargs))
-        self.assertEqual(response.status_code, 200)
-
-        response = self.client.get(reverse('group_topic_create', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-        kwargs['topic_id'] = 1
-
-        response = self.client.get(reverse('group_topic', kwargs=kwargs))
-        self.assertEqual(response.status_code, 200)
-
-        kwargs = {
-            'slug': 'infinite-summer',
-            'topic_id': 1
-        }
-
-        response = self.client.get(reverse('group_topic_edit', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-        response = self.client.get(reverse('group_topic_remove', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-    def test_anonymous_messages(self):
-        kwargs = {
-            'slug': self.slug,
-            'topic_id': 1
-        }
-
-        response = self.client.get(reverse('group_message_create', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-        kwargs['message_id'] = 1
-
-        response = self.client.get(reverse('group_topic_message', kwargs=kwargs))
-        self.assertEqual(response.status_code, 200)
-
-        kwargs = {
-            'slug': self.slug,
-            'message_id': 1
-        }
-
-        response = self.client.get(reverse('group_message_edit', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-        response = self.client.get(reverse('group_message_remove', kwargs=kwargs))
-        self.assertEqual(response.status_code, 302)
-
-    def test_groups(self):
-        self.client.login(username=self.user.username, password='n')
-
-        response = self.client.get(reverse('group', kwargs={'slug': self.slug}))
-        self.assertEqual(response.status_code, 200)
-
-        kwargs = {
-            'title': 'My new gorup',
-            'slug': 'my-new-group',
-            'invite_only': 0
-        }
-        response = self.client.post(reverse('group_create'), kwargs)
-        self.assertEqual(response.status_code, 200)
+        self.client.login(username=self.user1.username, password='n')
 
     def test_join(self):
-        self.client.login(username=self.user.username, password='n')
-
-        response = self.client.get(reverse('group_join', kwargs={'slug': self.slug}))
+        response = self.client.get(reverse('groups:join', args=[self.group.slug]))
         self.assertEqual(response.status_code, 200)
 
-    # TEST GROUP EDIT/DELETE
-    # TEST TOPICS
-    # TEST MESSAGES
+    def test_members(self):
+        response = self.client.get(reverse('groups:members', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_groups(self):
+        group_args = [self.group.slug]
+
+        response = self.client.get(reverse('groups:groups'))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:group', args=group_args))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:edit', args=group_args))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:remove', args=group_args))
+        self.assertEqual(response.status_code, 200)
+
+    def test_pages(self):
+        page_args = [self.group.slug, self.page.slug]
+
+        response = self.client.get(reverse('groups:pages', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:page_create', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:page', args=page_args))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:page_edit', args=page_args))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:page_remove', args=page_args))
+        self.assertEqual(response.status_code, 200)
+
+    def test_topics(self):
+        response = self.client.get(reverse('groups:topics', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:topic_create', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.topic.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.topic.get_edit_url())
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.topic.get_remove_url())
+        self.assertEqual(response.status_code, 200)
+
+    def test_messages(self):
+        response = self.client.get(reverse('groups:message_create', args=[self.group.slug, self.topic.pk]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.message.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.message.get_edit_url())
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(self.message.get_remove_url())
+        self.assertEqual(response.status_code, 200)

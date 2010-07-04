@@ -1,61 +1,65 @@
 [
   {
-    "pk": 1,
-    "model": "auth.user",
+    "pk": 1, 
+    "model": "groups.group", 
     "fields": {
-      "username": "nathanb",
-      "first_name": "Nathan",
-      "last_name": "Borror",
-      "is_active": true,
-      "is_superuser": 1,
-      "is_staff": 1,
-      "last_login": "2008-06-16 17:29:46",
-      "password": "sha1$22e4a$035f396b87e3fc9eff7c3b1dd7ac7b3f0c1bf20b",
-      "email": "nathan@nathanborror.com",
-      "date_joined": "2008-06-16 17:29:46"
+      "tease": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", 
+      "creator": 100, 
+      "is_active": true, 
+      "modified": "2010-07-04 12:37:27", 
+      "created": "2010-07-04 00:33:59", 
+      "invite_only": false, 
+      "title": "Infinite Summer", 
+      "slug": "infinite-summer", 
+      "icon": ""
     }
-  },
+  }, 
   {
-    "pk": 1,
-    "model": "groups.group",
+    "pk": 1, 
+    "model": "groups.grouppage", 
     "fields": {
-      "title": "Infinite Summer",
-      "slug": "infinite-summer",
-      "tease": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "creator": 1,
-      "icon": "group_icons/1.jpg",
-      "invite_only": 0,
-      "is_active": 1
+      "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 
+      "group": 1, 
+      "created": "2010-07-04 12:37:27", 
+      "title": "About", 
+      "modified": "2010-07-04 12:37:27", 
+      "slug": "about"
     }
-  },
+  }, 
   {
-    "pk": 1,
-    "model": "groups.grouptopic",
+    "pk": 1, 
+    "model": "groups.grouptopic", 
     "fields": {
-      "group": 1,
-      "user": 1,
-      "title": "Lorem ipsum dolor sit",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "is_active": 1
+      "group": 1, 
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 
+      "created": "2010-07-04 00:38:12", 
+      "title": "I have a topic to talk about", 
+      "is_active": true, 
+      "modified": "2010-07-04 12:39:12", 
+      "user": 100
     }
-  },
+  }, 
   {
-    "pk": 1,
-    "model": "groups.groupmessage",
+    "pk": 1, 
+    "model": "groups.groupmessage", 
     "fields": {
-      "topic": 1,
-      "user": 1,
-      "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "is_active": 1
+      "created": "2010-07-04 00:38:17", 
+      "is_active": true, 
+      "modified": "2010-07-04 00:38:17", 
+      "topic": 1, 
+      "user": 100, 
+      "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
-  },
+  }, 
   {
-    "pk": 1,
-    "model": "groups.groupmember",
+    "pk": 1, 
+    "model": "groups.groupmember", 
     "fields": {
-      "user": 1,
-      "group": 1,
-      "status": 1
+      "status": 0, 
+      "group": 1, 
+      "user": 100, 
+      "modified": "2010-07-04 00:33:59", 
+      "created": "2010-07-04 00:33:59"
     }
   }
 ]
