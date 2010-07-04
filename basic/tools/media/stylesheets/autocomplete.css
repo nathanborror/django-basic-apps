@@ -3,5 +3,9 @@
 .ac_results li { padding: 3px 5px; }
 .ac_results .ac_over { background-color: #fff999; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; }
 
-.ac_result { display: block; margin-top: 1px; padding: 5px 10px; border: 1px solid #ddd; background-color: #eee; font-size: 12px; line-height: 16px; color: #777; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;}
-.ac_result a { margin-right: 5px; color: #999; }
+.ac_result { display: block; margin-top: 1px; padding: 5px 10px; background-color: #eee; font-size: 12px; line-height: 16px; color: #fff;
+  background: -webkit-gradient(linear, center top, center bottom, from(#777), to(#555));
+  background: -moz-linear-gradient(top center, #777, #666);
+  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
+.ac_result a { margin-right: 10px; color: #999; }
+.ac_result a:hover { color: #ddd; text-decoration: none; }
