@@ -62,7 +62,9 @@ def page_create(request, slug, template_name='groups/pages/page_form.html'):
     if request.method == 'POST':
         form = GroupPageForm(request.POST)
         if form.is_valid():
-            page = form.save()
+            page = form.save(commit=False)
+            page.group = group
+            page.save()
             return redirect(request, page)
 
     return render(request, template_name, {
@@ -79,7 +81,7 @@ def page_edit(request, slug, page_slug,
     form = GroupPageForm(instance=page)
 
     if request.method == 'POST':
-        form = GroupPageForm(request.POST)
+        form = GroupPageForm(request.POST, instance=page)
         if form.is_valid():
             page = form.save()
             return redirect(request, page)
