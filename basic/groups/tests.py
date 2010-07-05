@@ -29,12 +29,33 @@ class GroupTestCase(TestCase):
         response = self.client.get(reverse('groups:group', args=group_args))
         self.assertEqual(response.status_code, 200)
 
+        response = self.client.get(reverse('groups:create'))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(reverse('groups:create'), {
+            'title': 'My new group',
+            'slug': 'my-new-group'
+        })
+        self.assertEqual(response.status_code, 302)
+
+        group = Group.objects.get(pk=2)
+
         response = self.client.get(reverse('groups:edit', args=group_args))
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(reverse('groups:remove', args=group_args))
+        response = self.client.post(reverse('groups:edit', args=[group.slug]), {
+            'title': 'My really new group',
+            'slug': 'my-new-group'
+        })
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.get(reverse('groups:remove', args=[group.slug]))
         self.assertEqual(response.status_code, 200)
 
+        response = self.client.post(reverse('groups:remove', args=[group.slug]))
+        self.assertEqual(response.status_code, 302)
+
+    def test_group_membership(self):
         response = self.client.get(reverse('groups:join', args=[self.group.slug]))
         self.assertEqual(response.status_code, 200)
 
@@ -53,11 +74,24 @@ class GroupTestCase(TestCase):
         response = self.client.get(reverse('groups:page_create', args=[self.group.slug]))
         self.assertEqual(response.status_code, 200)
 
+        response = self.client.post(reverse('groups:page_create', args=[self.group.slug]), {
+            'title': 'Contact us',
+            'slug': 'contact',
+            'body': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+        })
+        self.assertEqual(response.status_code, 302)
+
         response = self.client.get(reverse('groups:page', args=page_args))
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get(reverse('groups:page_edit', args=page_args))
         self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(reverse('groups:page_edit', args=page_args), {
+            'title': 'About our group',
+            'slug': 'about'
+        })
+        self.assertEqual(response.status_code, 302)
 
         response = self.client.get(reverse('groups:page_remove', args=page_args))
         self.assertEqual(response.status_code, 200)
