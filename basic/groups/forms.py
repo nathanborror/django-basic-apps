@@ -31,6 +31,6 @@ class GroupInviteForm(forms.Form):
 
 
 class GroupPageForm(forms.ModelForm):
-    group = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.HiddenInput)
     class Meta:
         model = GroupPage
+        exclude = ('group',)
