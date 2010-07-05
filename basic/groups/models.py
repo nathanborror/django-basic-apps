@@ -52,13 +52,16 @@ class GroupPage(models.Model):
     """ GroupPage model """
     group = models.ForeignKey(Group, related_name='pages')
     title = models.CharField(blank=True, max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(help_text='Used for the page URL.')
     body = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        unique_together = (('slug', 'group'),)
 
     @permalink
     def get_absolute_url(self):
