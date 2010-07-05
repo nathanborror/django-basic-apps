@@ -12,13 +12,7 @@
 
 {% block content %}
   <form action="." method="post">{% csrf_token %}
-    <fieldset>
-      {{ form.as_p }}
-    </fieldset>
-
-    <p class="submit">
-      <button type="submit">Send</button>
-      {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}
-    </p>
+    {{ form|format_fields }}
+    <p class="submit"><button type="submit">Send</button></p>
   </form>
 {% endblock %}

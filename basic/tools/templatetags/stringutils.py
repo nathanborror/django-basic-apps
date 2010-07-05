@@ -46,3 +46,14 @@ def format_field(field):
     </p>
     """)
     return t.render(Context({'field': field}))
+
+
+@register.filter
+def format_fields(form):
+    t = Template("""
+    {% load stringutils %}
+    {% for field in form %}
+      {{ field|format_field }}
+    {% endfor %}
+    """)
+    return t.render(Context({'form': form}))

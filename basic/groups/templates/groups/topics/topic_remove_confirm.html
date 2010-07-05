@@ -12,12 +12,7 @@
 
 {% block content %}
   <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
-    <fieldset>
-      <p>Are you sure you want to remove "{{ topic }}" from your group?</p>
-    </fieldset>
-    <p class="submit">
-      <button type="submit" name="submit" value="Indeed">Indeed</button>
-      {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}
-    </p>
+    <p>Are you sure you want to remove "{{ topic }}" from your group?</p>
+    <p class="submit"><button type="submit">Indeed</button></p>
   </form>
 {% endblock %}

@@ -14,12 +14,7 @@
   {% load stringutils %}
 
   <form action="." method="post">{% csrf_token %}
-    {% for field in form %}
-      {{ field|format_field }}
-    {% endfor %}
-    <p class="submit">
-      <button type="submit" name="submit" value="Create topic">{% if topic %}Save{% else %}Post{% endif %} topic</button>
-      {% if request.GET.next %}<a class="cancel" href="{{ request.GET.next }}">Cancel</a>{% endif %}
-    </p>
+    {{ form|format_fields }}
+    <p class="submit"><button type="submit">Save</button></p>
   </form>
 {% endblock %}
