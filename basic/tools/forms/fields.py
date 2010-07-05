@@ -43,6 +43,7 @@ class AutoCompleteWidget(Widget):
         self.attrs = attrs or {}
         self.required = required
         self.Model = model
+        self.url = url
 
     def render(self, name, value, attrs=None):
         text_html = self.create_input(TextInput, name, self.text_field)
@@ -54,7 +55,7 @@ class AutoCompleteWidget(Widget):
             for obj in object_list:
                 results += '<span class="ac_result"><a href="#%s">x</a>%s</span>\n' % (obj.pk, obj.get_full_name())
 
-        script = '<script type="text/javascript">new AutoCompleteWidget("id_%s", "/library/autocomplete/authors/");</script>' % (self.text_field % name)
+        script = '<script type="text/javascript">new AutoCompleteWidget("id_%s", "%s");</script>' % (self.text_field % name, self.url)
         return mark_safe(u'\n'.join([text_html, results, hidden_html, script]))
 
     def create_input(self, Input, name, field, value=''):
