@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models import permalink
 from django.contrib.auth.models import User
 
-from basic.groups.managers import *
 from basic.tools.shortcuts import get_image_path
 
 

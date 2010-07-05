@@ -152,10 +152,10 @@ def group_invite(request, slug, template_name='groups/group_invite.html'):
     Templates: ``groups/group_invite.html``
     Context:
         form
-            InviteForm object
+            GroupInviteForm object
     """
     group = get_object_or_404(Group, slug=slug, is_active=True)
-    form = InviteForm(initial={'group': group.pk, 'user': request.user.pk})
+    form = GroupInviteForm(initial={'group': group.pk, 'user': request.user.pk})
     return render(request, template_name, {
         'group': group,
         'form': form

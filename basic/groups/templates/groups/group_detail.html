@@ -12,7 +12,7 @@
 
   {% if topic_list %}
     <div class="list">
-      <h2>Recent topic activity</h2>
+      <h3>Recent topic activity</h3>
       {% for topic in topic_list %}
         <div class="item">
           <h5><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h5>

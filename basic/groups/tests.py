@@ -20,14 +20,6 @@ class GroupTestCase(TestCase):
 
         self.client.login(username=self.user1.username, password='n')
 
-    def test_join(self):
-        response = self.client.get(reverse('groups:join', args=[self.group.slug]))
-        self.assertEqual(response.status_code, 200)
-
-    def test_members(self):
-        response = self.client.get(reverse('groups:members', args=[self.group.slug]))
-        self.assertEqual(response.status_code, 200)
-
     def test_groups(self):
         group_args = [self.group.slug]
 
@@ -41,6 +33,15 @@ class GroupTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get(reverse('groups:remove', args=group_args))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:join', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:members', args=[self.group.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse('groups:invite', args=[self.group.slug]))
         self.assertEqual(response.status_code, 200)
 
     def test_pages(self):
