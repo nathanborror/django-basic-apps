@@ -29,7 +29,7 @@ urlpatterns += patterns('basic.groups.views.topics',
 
 # Pages
 urlpatterns += patterns('basic.groups.views.pages',
-    url(r'^%spage/create/$' % GROUP_URL,        'page_create',          name='page_create'),
+    url(r'^%spages/create/$' % GROUP_URL,       'page_create',          name='page_create'),
     url(r'^%s$' % PAGE_URL,                     'page_detail',          name='page'),
     url(r'^%sedit/$' % PAGE_URL,                'page_edit',            name='page_edit'),
     url(r'^%sremove/$' % PAGE_URL,              'page_remove',          name='page_remove'),
