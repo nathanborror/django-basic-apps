@@ -8,12 +8,15 @@ AutoCompleteWidget = function(field, data) {
   var field = $('#'+field);
   var id_field = field.parent().find('input[type=hidden]');
 
-  function formatItem(item) {
-    return item.text;
+  function renderItem(ul, item) {
+    return $('<li></li>')
+      .data('item.autocomplete', item)
+      .append('<a>'+item.text+'</a>')
+      .appendTo(ul);
   }
 
-  function handleResult(e, data, formatted) {
-    var span = $('<span class="ac_result"><a href="#'+data.id+'">x</a>'+data.text+'</span>');
+  function handleResult(e, ui) {
+    var span = $('<span class="ui-autocomplete-result"><a href="#'+ui.item.id+'">x</a>'+ui.item.text+'</span>');
     span.insertAfter(field);
     field.val('');
 
@@ -23,7 +26,7 @@ AutoCompleteWidget = function(field, data) {
     else {
       id_list = [];
     }
-    id_list.push(data.id)
+    id_list.push(ui.item.id)
 
     id_field.val(id_list.join(','));
   }
@@ -46,24 +49,11 @@ AutoCompleteWidget = function(field, data) {
     result.remove();
   }
 
-  function parse(data) {
-    parsed = [];
-    for (var i=0; i<data.length; i++) {
-      parsed[parsed.length] = {
-        data: data[i],
-        value: data[i].text,
-        result: data[i].text
-      };
-    }
-    return parsed;
-  }
+  field.autocomplete({
+    source: data,
+    select: handleResult,
+    delay: 200
+  }).data('autocomplete')._renderItem = renderItem;
 
-  field.autocomplete(data, {
-    matchContains: true,
-    formatItem: formatItem,
-    parse: parse,
-    cacheLength: 0
-  }).result(handleResult);
-
-  $('span.ac_result a').live('click', removeResult);
+  $('span.ui-autocomplete-result a').live('click', removeResult);
 };
