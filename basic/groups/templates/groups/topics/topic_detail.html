@@ -12,12 +12,19 @@
   {% load markup %}
 
   {{ topic.description|markdown }}
+  <p class="byline">
+    Posted by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user }}</a> {{ topic.created|timesince }} ago.
+    {% if topic.user == user %}
+    <a class="edit" href="{{ topic.get_edit_url }}">Edit</a>
+    {% endif %}
+  </p>
 
   <div class="list">
     {% for message in topic.messages.all %}
       <div class="item">
         {{ message.message|markdown }}
-        <p class="datetime">Posted by <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a> on {{ message.created|date }}</p>
+        <p class="byline">Posted by <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a> on {{ message.created|timesince }} ago.
+          {% if message.user == user %}<a class="edit" href="{{ message.get_edit_url }}">Edit</a>{% endif %}</p>
       </div>
     {% endfor %}
   </div>

@@ -16,7 +16,8 @@
       {% for message in message_list %}
         <div class="item">
           {{ message.message|markdown }}
-          <p class="datetime">Posted by <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a> on {{ message.created|date }}</p>
+          <p class="byline">Posted by <a href="{{ message.user.get_absolute_url }}">{{ message.user.username }}</a> on {{ message.created|timesince }} ago.
+            {% if message.user == user %}<a class="edit" href="{{ message.get_edit_url }}">Edit</a>{% endif %}</p>
         </div>
       {% endfor %}
     </div>

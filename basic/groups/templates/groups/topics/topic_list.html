@@ -17,7 +17,8 @@
         <div class="item">
           <h5><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h5>
           <p>{{ topic.description|truncatewords:"30"|striptags }}</p>
-          <p class="datetime">Posted by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a> on {{ topic.created|date }}</p>
+          <p class="byline">Posted by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a> on {{ topic.created|timesince }} ago.
+            {% if topic.user == user %}<a class="edit" href="{{ topic.get_edit_url }}">Edit</a>{% endif %}</p>
         </div>
       {% endfor %}
     </div>

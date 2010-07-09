@@ -19,7 +19,11 @@ def group_list(request, username=None,
             Group object list
     """
     group_list = Group.objects.filter(is_active=True)
-    return render(request, template_name, {'group_list': group_list})
+    membership_list = group_list.filter(members__user=request.user)
+    return render(request, template_name, {
+        'group_list': group_list,
+        'membership_list': membership_list
+    })
 
 
 @login_required

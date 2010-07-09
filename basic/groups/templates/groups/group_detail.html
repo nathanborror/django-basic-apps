@@ -8,7 +8,11 @@
 {% block content %}
   {% load groups markup %}
 
-  <p><a class="button" href="{% url groups:topic_create group.slug %}?next={{ request.path }}">Start a topic</a></p>
+  {% if group.tease %}
+    <div class="tease">
+      {{ group.tease|markdown }}
+    </div>
+  {% endif %}
 
   {% if topic_list %}
     <div class="list">
@@ -17,7 +21,8 @@
         <div class="item">
           <h5><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h5>
           <p>{{ topic.description|truncatewords:"30"|striptags }}</p>
-          <p class="datetime">Posted by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a> on {{ topic.created|date }}</p>
+          <p class="byline">Posted by <a href="{{ topic.user.get_absolute_url }}">{{ topic.user.username }}</a> on {{ topic.created|timesince }}.
+            {% if topic.user == user %}<a class="edit" href="{{ topic.get_edit_url }}">Edit</a>{% endif %}</p>
         </div>
       {% endfor %}
     </div>

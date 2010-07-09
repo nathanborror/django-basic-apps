@@ -18,6 +18,7 @@ class GroupPageInline(admin.TabularInline):
 
 
 class GroupAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
     inlines = (
         GroupPageInline,
         GroupMemberInline
@@ -27,7 +28,6 @@ admin.site.register(Group, GroupAdmin)
 
 class GroupTopicAdmin(admin.ModelAdmin):
     raw_id_fields = ('user', 'group')
-    autocomplete_fields = {'group': ('title',), 'user': ('username',)}
     inlines = (GroupMessageInline,)
 admin.site.register(GroupTopic, GroupTopicAdmin)
 
