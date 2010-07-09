@@ -9,7 +9,7 @@
 
 
 {% block content %}
-  <p><a href="{% url groups:invite group.slug %}?next={{ request.path }}">Invite a friend</a></p>
+  {% load groups %}
 
   {% if member_list %}
     <ul>
@@ -17,5 +17,9 @@
         <li><a href="{{ member.user.get_absolute_url }}">{{ member.user.username }}</a></li>
       {% endfor %}
     </ul>
+  {% endif %}
+
+  {% if group|is_member:user %}
+    <p><a class="button" href="{% url groups:invite group.slug %}?next={{ request.path }}">Invite someone</a></p>
   {% endif %}
 {% endblock %}

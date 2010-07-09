@@ -155,7 +155,7 @@ class GroupMemberManager(models.Manager):
     def is_moderator(self, group, user):
         if user.is_anonymous():
             return False
-        if self.filter(group=group, user=user, status=GROUP_MODERATOR).count() > 0:
+        if self.filter(group=group, user=user, status__in=(GROUP_MODERATOR, GROUP_OWNER)).count() > 0:
             return True
         return False
 

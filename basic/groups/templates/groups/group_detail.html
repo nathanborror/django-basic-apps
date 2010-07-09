@@ -6,7 +6,7 @@
 
 
 {% block content %}
-  {% load markup %}
+  {% load groups markup %}
 
   <p><a class="button" href="{% url groups:topic_create group.slug %}?next={{ request.path }}">Start a topic</a></p>
 
@@ -21,5 +21,9 @@
         </div>
       {% endfor %}
     </div>
+  {% endif %}
+
+  {% if group|is_member:user %}
+    <p><a class="button" href="{% url groups:topic_create group.slug %}?next={{ request.path }}">Start a topic</a></p>
   {% endif %}
 {% endblock %}

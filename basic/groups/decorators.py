@@ -19,7 +19,7 @@ def membership_required(function=None):
         if GroupMember.objects.is_member(group, request.user):
             return function(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('group_join', {'slug': group.slug}))
+            return HttpResponseRedirect(reverse('groups:join', args=[group.slug]))
     return decorator
 
 

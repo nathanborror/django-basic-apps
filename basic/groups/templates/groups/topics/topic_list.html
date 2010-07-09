@@ -9,7 +9,7 @@
 
 
 {% block content %}
-  <p><a href="{% url groups:topic_create group.slug %}?next={{ request.path }}">Start a topic</a></p>
+  {% load groups %}
 
   {% if topic_list %}
     <div class="list">
@@ -21,5 +21,9 @@
         </div>
       {% endfor %}
     </div>
+  {% endif %}
+
+  {% if group|is_member:user %}
+    <p><a class="button" href="{% url groups:topic_create group.slug %}?next={{ request.path }}">Start a topic</a></p>
   {% endif %}
 {% endblock %}

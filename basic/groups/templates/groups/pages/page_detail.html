@@ -9,7 +9,10 @@
 
 
 {% block content %}
-  {% load markup %}
+  {% load groups markup %}
 
   {{ page.body|markdown }}
+
+  <p class="byline">Modifed {{ page.modified|timesince }} ago. 
+    {% if group|is_owner:user %}<a class="edit" href="{% url groups:page_edit group.slug, page.slug %}">Edit</a>{% endif %}</p>
 {% endblock %}

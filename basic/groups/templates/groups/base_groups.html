@@ -6,6 +6,8 @@
 
 
 {% block content_title %}
+  {% load groups %}
+
   {% if group %}
     <h2><a href="{{ group.get_absolute_url }}">{{ group }}</a> {% block group_title %}{% endblock %}</h2>
     <ul>
@@ -15,7 +17,12 @@
       {% for page in group.pages.all %}
         <li class="{{ page.slug }}"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
       {% endfor %}
+      {% if group|is_owner:user %}
+        <li><a class="edit" href="{% url groups:edit group.slug %}">Edit group</a></li>
+      {% endif %}
+      {% if not group|is_member:user %}
+        <li><a href="{% url groups:join group.slug %}">Join</a></li>
+      {% endif %}
     </ul>
-    <p><a class="button" href="{% url groups:edit group.slug %}">Edit group</a></p>
   {% endif %}
 {% endblock %}
