@@ -5,10 +5,7 @@
 {% block body_class %}{{ block.super }} group_page{% endblock %}
 
 
-{% block content_title %}
-  <h2>{{ page.title }}</h2>
-  {{ block.super }}
-{% endblock %}
+{% block group_title %}/ {{ page.title }}{% endblock %}
 
 
 {% block content %}

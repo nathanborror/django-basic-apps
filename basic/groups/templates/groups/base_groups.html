@@ -7,7 +7,7 @@
 
 {% block content_title %}
   {% if group %}
-    <h2><a href="{{ group.get_absolute_url }}">{{ group }}</a></h2>
+    <h2><a href="{{ group.get_absolute_url }}">{{ group }}</a> {% block group_title %}{% endblock %}</h2>
     <ul>
       <li class="activity"><a href="{% url groups:group group.slug %}">Activity</a></li>
       <li class="members"><a href="{% url groups:members group.slug %}">Members</a></li>
