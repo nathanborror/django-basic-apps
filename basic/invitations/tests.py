@@ -23,3 +23,8 @@ class InvitationTestCase(TestCase):
         }
         response = self.client.post(reverse('invitations:create'), post)
         self.assertEqual(response.status_code, 200)
+
+        invitation = Invitation.objects.get(pk=1)
+
+        response = self.client.get(invitation.get_absolute_url())
+        self.assertEqual(response.status_code, 200)

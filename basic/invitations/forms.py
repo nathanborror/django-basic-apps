@@ -7,4 +7,4 @@ from basic.invitations.models import Invitation
 class InvitationForm(forms.ModelForm):
     class Meta:
         model = Invitation
-        exclude = ('status', 'from_user', 'site')
+        exclude = ('status', 'from_user', 'site', 'token')

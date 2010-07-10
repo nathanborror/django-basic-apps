@@ -36,10 +36,14 @@ def invitation_create(request, template_name='invitations/invitation_form.html',
         form = InvitationForm(request.POST)
         if form.is_valid():
             invitation = form.save(commit=False)
+            invitation.token = Invitation.objects.create_token(invitation.email)
             invitation.from_user = request.user
             invitation.save()
+
+            # Reduce user's invitation allotment
             allotment.decrement(1)
 
+            # Send invitation email
             send_invitation_email(invitation)
             return render(request, success_template_name)
     else:
@@ -49,18 +53,28 @@ def invitation_create(request, template_name='invitations/invitation_form.html',
 
 
 @login_required
-def invitation_error(request, template_name='invitations/invitation_error.html'):
+def invitation_error(request, error_message='You do not have any invitations at this time.',
+        template_name='invitations/invitation_error.html'):
     """
     Returns an error template.
 
     Template: ``invitations/invitation_error.html``
 
     Context:
-        error
+        error_message
             String containing the error message.
     """
     return render(request, template_name, {
-        'error': "You do not have any invitations at this time."
+        'error_message': error_message
+    })
+
+
+def invitation_detail(request, token, template_name='invitations/invitation_detail.html'):
+    invitation = Invitation.objects.get_invitation(token)
+    if not invitation:
+        return invitation_error(request, "This invitation is no longer valid.")
+    return render(request, template_name, {
+        'invitation': invitation
     })
 
 
