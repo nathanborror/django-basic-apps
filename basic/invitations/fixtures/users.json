@@ -1,0 +1,11 @@
+[
+  {
+    "model" : "auth.user",
+    "pk" : 100,
+    "fields" : {
+      "username" : "nathanb",
+      "email" : "nathanb@example.com",
+      "password": "sha1$bf749$b167ac6b646995c49cd1d741060616afc9757781"
+    }
+  }
+]

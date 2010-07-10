@@ -1,0 +1,20 @@
+{% extends "invitations/base_invitations.html" %}
+
+
+{% block title %}Send an invitation{% endblock %}
+{% block body_class %}{{ block.super }} invitation_form{% endblock %}
+
+
+{% block content_title %}
+  <h2>Send an invitation {{ site_name }}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load stringutils %}
+
+  <form action="." method="post">{% csrf_token %}
+    {{ form|format_fields }}
+    <p><button type="submit">Send</button></p>
+  </form>
+{% endblock %}

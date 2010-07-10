@@ -1,0 +1,15 @@
+{% extends "invitations/base_invitations.html" %}
+
+
+{% block title %}Invitation sent{% endblock %}
+{% block body_class %}{{ block.super }} invitation_success{% endblock %}
+
+
+{% block content_title %}
+  <h2>Invitation sent</h2>
+{% endblock %}
+
+
+{% block content %}
+  <p>Your invitation has been sent. You have <strong>{{ user.invitationallotment.amount }} invitation{{ user.invitationallotment.amount|pluralize }}</strong> remaining.</p>
+{% endblock %}

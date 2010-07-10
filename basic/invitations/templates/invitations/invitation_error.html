@@ -1,0 +1,15 @@
+{% extends "invitations/base_invitations.html" %}
+
+
+{% block title %}Invitation error{% endblock %}
+{% block body_class %}{{ block.super }} invitation_error{% endblock %}
+
+
+{% block content_title %}
+  <h2>Invitation error</h2>
+{% endblock %}
+
+
+{% block content %}
+  <p>{{ error }}</p>
+{% endblock %}

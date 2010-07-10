@@ -1,0 +1,12 @@
+[
+  {
+    "pk": 1,
+    "model": "invitations.invitationallotment",
+    "fields": {
+      "amount": 4,
+      "user": 100,
+      "modified": "2010-07-10 12:53:12",
+      "created": "2010-07-10 12:52:26"
+    }
+  }
+]
