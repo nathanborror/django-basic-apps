@@ -21,12 +21,9 @@ INVITATION_STATUS_CHOICES = (
 class InvitationManager(models.Manager):
     def get_invitation(self, token):
         try:
-            invitation = self.get(token=token)
+            return self.get(token=token, status=INVITATION_STATUS_SENT)
         except self.model.DoesNotExist:
             return False
-
-        if invitation.status == INVITATION_STATUS_SENT:
-            return invitation
 
     def create_token(self, email):
         salt = sha_constructor(str(random.random())).hexdigest()[:5]
