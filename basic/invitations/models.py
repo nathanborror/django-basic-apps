@@ -1,4 +1,3 @@
-import re
 import random
 
 from django.db import models
@@ -6,9 +5,6 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.hashcompat import sha_constructor
-
-
-SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 INVITATION_ALLOTMENT = getattr(settings, 'INVITATION_ALLOTMENT', 5)
 
@@ -24,9 +20,6 @@ INVITATION_STATUS_CHOICES = (
 
 class InvitationManager(models.Manager):
     def get_invitation(self, token):
-        if not SHA1_RE.search(token):
-            return False
-
         try:
             invitation = self.get(token=token)
         except self.model.DoesNotExist:
