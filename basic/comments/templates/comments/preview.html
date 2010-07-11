@@ -1,0 +1,51 @@
+{% extends "comments/base_comments.html" %}
+
+
+{% load i18n %}
+
+
+{% block title %}{% trans "Preview your comment" %}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% trans "Preview your comment" %}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load comments stringutils %}
+
+  <form action="{% comment_form_target %}" method="post">{% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+    {% if form.errors %}
+      <h1>{% blocktrans count form.errors|length as counter %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}</h1>
+    {% else %}
+      <blockquote>{{ comment|linebreaks }}</blockquote>
+      <p>
+        {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit"> {% trans "or make changes" %}:
+      </p>
+    {% endif %}
+
+    {% for field in form %}
+      {% if field.name == "honeypot" %}
+        <p style="display:none;">{{ field.label_tag }} {{ field }}</p>
+      {% else %}
+        {% if user.is_authenticated %}
+          {% if field.name == "name" or field.name == "email" or field.name == "url" %}
+            {# Ignore fields for logged in users #}
+          {% else %}
+            {{ field|format_field }}
+          {% endif %}
+        {% else %}
+          {{ field|format_field }}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    <p class="submit">
+      <button type="submit" name="submit">{% trans "Post" %}</button>
+      <button type="submit" name="preview">{% trans "Preview" %}</button>
+    </p>
+  </form>
+{% endblock %}

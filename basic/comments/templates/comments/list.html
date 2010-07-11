@@ -1,0 +1,20 @@
+{% load markup %}
+
+<div class="list" id="comments">
+  {% for comment in comment_list %}
+    <div class="item" id="c{{ comment.id }}">
+      {% if comment.user %}
+        <h4><a href="{{ comment.user.get_absolute_url }}">{{ comment.user }}</a> <small>{{ comment.submit_date|timesince }} ago</small></h4>
+      {% else %}
+        <h4>{{ comment.name }} <small>{{ comment.submit_date|date }}</small></h4>
+      {% endif %}
+      {{ comment.comment|markdown }}
+      <p class="byline">
+        {% if comment.user == user %}
+          <a class="edit" href="{% url comments-edit comment.id %}">Edit</a>
+          <a class="remove" href="{% url comments-remove comment.id %}">Remove</a>
+        {% endif %}
+      </p>
+    </div>
+  {% endfor %}
+</div>

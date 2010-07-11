@@ -1,0 +1,23 @@
+{% extends "comments/base_comments.html" %}
+
+
+{% load i18n %}
+
+
+{% block title %}{% trans "Remove comment" %}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% trans "Remove comment" %}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <form action="." method="post">{% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" id="next">{% endif %}
+    <p>Are you sure you want to remove this comment?</p>
+    <p class="submit">
+      <button type="submit">{% trans "Remove" %}</button>
+    </p>
+  </form>
+{% endblock %}

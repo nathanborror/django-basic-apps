@@ -1,0 +1,24 @@
+{% extends "comments/base_comments.html" %}
+
+
+{% load i18n %}
+
+
+{% block title %}{% trans "Flag this comment" %}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% trans "Flag this comment" %}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <blockquote>{{ comment|linebreaks }}</blockquote>
+  <form action="." method="post">{% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" id="next">{% endif %}
+    <p class="submit">
+      <button type="submit">{% trans "Flag" %}</button>
+      <a class="cancel" href="{{ comment.get_absolute_url }}">Cancel</a>
+    </p>
+  </form>
+{% endblock %}

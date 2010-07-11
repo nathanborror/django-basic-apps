@@ -1,0 +1,15 @@
+{% extends "invitations/base_invitations.html" %}
+
+
+{% block title %}Comment error{% endblock %}
+{% block body_class %}{{ block.super }} comment_error{% endblock %}
+
+
+{% block content_title %}
+  <h2>Comment error</h2>
+{% endblock %}
+
+
+{% block content %}
+  {{ error_message|linebreaks }}
+{% endblock %}

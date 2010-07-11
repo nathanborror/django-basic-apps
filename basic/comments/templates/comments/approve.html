@@ -1,0 +1,22 @@
+{% extends "comments/base_comments.html" %}
+
+
+{% load i18n %}
+
+
+{% block title %}{% trans "Approve a comment" %}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% trans "Approve a comment" %}</h2>
+{% endblock %}
+
+
+{% block content %}
+  <blockquote>{{ comment|linebreaks }}</blockquote>
+
+  <form action="." method="post">{% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" id="next">{% endif %}
+    <p class="submit"><button type="submit">{% trans "Approve" %}</button></p>
+  </form>
+{% endblock %}

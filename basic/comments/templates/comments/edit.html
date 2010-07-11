@@ -1,0 +1,25 @@
+{% extends "comments/base_comments.html" %}
+
+
+{% load i18n %}
+
+
+{% block title %}{% trans "Edit comment" %}{% endblock %}
+
+
+{% block content_title %}
+  <h2>{% trans "Edit comment" %}</h2>
+{% endblock %}
+
+
+{% block content %}
+  {% load stringutils %}
+
+  <form action=".{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">{% csrf_token %}
+    {{ form|format_fields }}
+
+    <p class="submit">
+      <button type="submit">{% trans "Save" %}</button>
+    </p>
+  </form>
+{% endblock %}
