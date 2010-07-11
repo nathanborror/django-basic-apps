@@ -36,7 +36,7 @@ def format_text(value):
 @register.filter
 def format_field(field):
     t = Template("""
-    <p>
+    <p{% if field.is_hidden %} style="display:none;"{% endif %}>
       {{ field.label_tag }}
       <span class="field">
         {{ field }}
