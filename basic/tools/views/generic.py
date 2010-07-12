@@ -20,7 +20,7 @@ def auto_complete(request, queryset, fields=None):
     """
     object_list = []
     limit = request.GET.get('limit', 10)
-    query = request.GET.get('q', '')
+    query = request.GET.get('term', '')
     if fields:
         q_object = Q()
         for field in fields:
