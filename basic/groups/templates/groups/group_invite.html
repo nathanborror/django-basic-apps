@@ -11,6 +11,8 @@
 
 
 {% block content %}
+  {% load stringutils %}
+
   <form action="." method="post">{% csrf_token %}
     {{ form|format_fields }}
     <p class="submit"><button type="submit">Send</button></p>
