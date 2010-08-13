@@ -1,8 +1,9 @@
 from django.db import models
 from django.db.models import permalink
 from django.contrib.auth.models import User
+from django.conf import settings
 
-from basic.tools.shortcuts import get_image_path
+from basic.tools.shortcuts import build_filename
 
 
 GROUP_OWNER = 0
@@ -15,13 +16,21 @@ GROUP_MEMBER_CHOICES = (
 )
 
 
+def get_icon_path(instance, filename):
+    if instance.pk:
+        group = Group.objects.get(pk=instance.pk)
+        if group.icon:
+            return group.icon.path.replace(settings.MEDIA_ROOT, '')
+    return build_filename(instance, filename)
+
+
 class Group(models.Model):
     """ Group model """
     title = models.CharField(blank=False, max_length=255)
     slug = models.SlugField(unique=True, help_text="Used for the Group URL: http://example.com/groups/the-club/")
     tease = models.TextField(blank=True, help_text="Brief explaination of what this group is. Shows up when the group is listed amoung other groups.")
     creator = models.ForeignKey(User, related_name='created_groups', help_text="Serves as a record as who the original creator was in case ownership is transfered.")
-    icon = models.FileField(upload_to=get_image_path, blank=True, help_text="Needs to be larger than 120x120 pixels.")
+    icon = models.FileField(upload_to=get_icon_path, blank=True, help_text="Needs to be larger than 120x120 pixels.")
     invite_only = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
