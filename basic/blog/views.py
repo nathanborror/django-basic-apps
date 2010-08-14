@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.conf import settings
 
 from basic.blog.models import *
-from basic.tools.contstants import STOP_WORDS_RE
+from basic.tools.constants import STOP_WORDS_RE
 from tagging.models import Tag, TaggedItem
 
 
