@@ -11,7 +11,7 @@ def min(object_list, field):
     Example:
         {{ forecast|min:"high_temp" }}
     """
-    value_list = [getattr(o, obj, None) for o in object_list]
+    value_list = [getattr(o, field, None) for o in object_list]
     return min(value_list)
 
 
@@ -23,5 +23,5 @@ def max(object_list, field):
     Example:
         {{ forecast|max:"high_temp" }}
     """
-    value_list = [getattr(o, obj, None) for o in object_list]
+    value_list = [getattr(o, field, None) for o in object_list]
     return max(value_list)
