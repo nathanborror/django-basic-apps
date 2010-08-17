@@ -4,7 +4,7 @@ register = Library()
 
 
 @register.filter
-def min(object_list, field):
+def min_value(object_list, field):
     """
     Returns the min value given an object_list and a field.
 
@@ -16,7 +16,7 @@ def min(object_list, field):
 
 
 @register.filter
-def max(object_list, field):
+def max_value(object_list, field):
     """
     Returns the max value given an object_list and a field.
 
