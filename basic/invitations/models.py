@@ -54,7 +54,7 @@ class Invitation(models.Model):
 
 class InvitationAllotment(models.Model):
     """ InvitationAllotment model """
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='invitation_allotment')
     amount = models.IntegerField(default=INVITATION_ALLOTMENT)
     site = models.ForeignKey(Site, default=settings.SITE_ID)
     created = models.DateTimeField(auto_now_add=True)

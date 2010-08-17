@@ -28,7 +28,7 @@ def invitation_create(request, template_name='invitations/invitation_form.html',
             InvitationForm object
     """
     try:
-        allotment = request.user.invitationallotment
+        allotment = request.user.invitation_allotment
         if allotment.amount == 0:
             return invitation_error(request)
     except InvitationAllotment.DoesNotExist:

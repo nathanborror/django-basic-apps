@@ -1,18 +1,20 @@
 import os.path
 import hashlib
+import datetime
 
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 
 
-def get_image_path(instance, filename):
+def build_filename(instance, filename):
     """
     Converts an image filename to a hash.
     """
-    name = hashlib.md5("%s" % instance.id).hexdigest()
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    name = hashlib.md5('%s' % now).hexdigest()
     ext = os.path.splitext(filename)
-    return os.path.join("%s/%s" % (instance._meta.app_label, instance._meta.module_name), '%s%s' % (name, ext[1]))
+    return os.path.join('%s/%s' % (instance._meta.app_label, instance._meta.module_name), '%s%s' % (name, ext[1]))
 
 
 def render(request, *args, **kwargs):
