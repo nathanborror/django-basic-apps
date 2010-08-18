@@ -49,6 +49,21 @@ def unflag_url(obj, slug):
     })
 
 
+@register.filter
+def flagged_with(obj, slug):
+    """
+    Returns true of false based on whether the object is flagged one or more
+    times with a particular flag type.
+    """
+    content_type = ContentType.objects.get_for_model(obj)
+    flags = Flag.objects.filter(
+        flag_type__slug=slug,
+        content_type=content_type,
+        object_id=obj.pk
+    )
+    return flags.count() != 0
+
+
 class GetFlags(template.Node):
     def __init__(self, object_name, user, slug, varname):
         self.object_name = object_name
