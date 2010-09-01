@@ -18,7 +18,7 @@ urlpatterns = patterns('basic.messages.views',
         view='message_reply',
         name='reply'),
 
-    url(r'(?P<object_id>\d+)/$',
+    url(r'(?:(?P<mailbox>inbox|trash|sent)/)?(?P<object_id>\d+)/$',
         view='message_detail',
         name='message'),
 

@@ -23,15 +23,7 @@ def message_list(request, mailbox=None, template_name='messages/message_list.htm
         mailbox
             String representing the current 'mailbox'
     """
-    if mailbox == 'sent':
-        message_list = Message.objects.sent(request.user)
-    elif mailbox == 'inbox':
-        message_list = Message.objects.new(request.user)
-    elif mailbox == 'trash':
-        message_list = Message.objects.trash(request.user)
-    else:
-        message_list = Message.objects.archive(request.user)
-
+    message_list = _get_messages(request.user, mailbox)
     return render_to_response(template_name, {
         'message_list': message_list,
         'mailbox': mailbox or 'archive'
@@ -126,17 +118,28 @@ def message_remove(request, object_id, template_name='messages/message_remove_co
 
 
 @login_required
-def message_detail(request, object_id, template_name='messages/message_detail.html'):
+def message_detail(request, object_id, mailbox=None, template_name='messages/message_detail.html'):
     """
     Return a message.
     """
     message = get_object_or_404(Message, pk=object_id)
     content_type = ContentType.objects.get_for_model(message)
     thread_list = Message.objects.filter(object_id=message.object.pk, content_type=content_type).order_by('id')
+    message_list = _get_messages(request.user, mailbox)
     if message.to_user == request.user:
         message.to_status = TO_STATUS_READ
         message.save()
     return render_to_response(template_name, {
         'message': message,
-        'thread_list': thread_list
+        'thread_list': thread_list,
+        'message_list': message_list,
     }, context_instance=RequestContext(request))
+
+
+def _get_messages(user, mailbox):
+    if mailbox == 'sent':
+        return Message.objects.sent(user)
+    elif mailbox == 'trash':
+        return Message.objects.trash(user)
+    else:
+        return Message.objects.archive(user)
