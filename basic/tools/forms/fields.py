@@ -53,7 +53,7 @@ class AutoCompleteWidget(Widget):
         if value:
             object_list = self.Model.objects.filter(pk__in=value)
             for obj in object_list:
-                results += '<span class="ui-autocomplete-result"><a href="#%s">x</a>%s</span>\n' % (obj.pk, obj.get_full_name())
+                results += '<span class="ui-autocomplete-result"><a href="#%s">x</a>%s</span>\n' % (obj.pk, obj.__unicode__())
 
         script = '<script type="text/javascript">new AutoCompleteWidget("id_%s", "%s");</script>' % (self.text_field % name, self.url)
         return mark_safe(u'\n'.join([text_html, results, hidden_html, script]))
