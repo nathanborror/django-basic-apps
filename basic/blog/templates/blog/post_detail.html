@@ -32,7 +32,7 @@
   {% tags_for_object object as tag_list %}
   {% if tag_list %}
   <p class="inline_tag_list"><strong>{% trans "Related tags" %}:</strong>
-    {{ tag_list|join", " }}
+    {{ tag_list|join:", " }}
   </p>
   {% endif %}
 
