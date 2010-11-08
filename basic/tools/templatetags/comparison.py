@@ -43,14 +43,3 @@ def is_string(obj):
 @register.filter
 def is_number(obj):
     return isinstance(obj, int)
-
-
-@register.filter
-def get_vars(obj):
-    getvars = obj.copy()
-    if 'page' in obj:
-        del getvars['page']
-    if len(getvars.keys()) > 0:
-        return '&%s' % getvars.urlencode()
-    else:
-        return ''
