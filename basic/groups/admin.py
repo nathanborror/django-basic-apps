@@ -19,6 +19,7 @@ class GroupPageInline(admin.TabularInline):
 
 class GroupAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+    raw_id_fields = ('creator',)
     inlines = (
         GroupPageInline,
         GroupMemberInline
