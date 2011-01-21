@@ -23,13 +23,13 @@ def thumbnail(url, size='200x200'):
 
     if url.startswith(settings.MEDIA_URL):
         url = url[len(settings.MEDIA_URL):]
-    original_url = settings.MEDIA_ROOT + url
+    original_path = settings.MEDIA_ROOT + url
 
     # Define the thumbnail's filename, file path, and URL.
     try:
-        basename, format = original_url.rsplit('.', 1)
+        basename, format = original_path.rsplit('.', 1)
     except ValueError:
-        return os.path.join(settings.MEDIA_URL, original_url)
+        return os.path.join(settings.MEDIA_URL, url)
     thumbnail = basename + '_t' + size + '.' +  format
     thumbnail_url = '%s%s' % (settings.MEDIA_URL, thumbnail[len(settings.MEDIA_ROOT):])
 
@@ -39,9 +39,9 @@ def thumbnail(url, size='200x200'):
 
         # Open the image.
         try:
-            image = Image.open(original_url)
+            image = Image.open(original_path)
         except IOError:
-            return url
+            return os.path.join(settings.MEDIA_URL, url)
 
         # Make a copy of the original image so we can access its attributes, even
         # after we've changed some of them.
