@@ -1,5 +1,6 @@
 from django.template import Library
 from django.template.defaultfilters import lower
+from django.utils.safestring import mark_safe
 
 register = Library()
 
@@ -43,3 +44,13 @@ def is_string(obj):
 @register.filter
 def is_number(obj):
     return isinstance(obj, int)
+
+
+@register.filter
+def is_on(obj1, obj2):
+    """
+    Shortcut to render an 'on' class.
+    """
+    if obj1 == obj2:
+        return mark_safe(' class="on"')
+    return ''
