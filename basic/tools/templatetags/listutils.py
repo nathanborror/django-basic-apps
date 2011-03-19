@@ -29,3 +29,16 @@ def pop_from_GET(obj, attr):
     if not obj:
         return ''
     return '&%s' % obj.urlencode()
+
+
+@register.filter
+def empty_items(item_list, total):
+    """
+    Returns a list of null objects. Useful when you want to always show n
+    results and you have a list of < n.
+    """
+    list_length = len(item_list)
+    expected_total = int(total)
+    if list_length != expected_total:
+        return range(0, expected_total-list_length)
+    return ''
