@@ -1,4 +1,4 @@
-from django.contrib.syndication.feeds import FeedDoesNotExist
+from django.contrib.syndication.views import FeedDoesNotExist
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
