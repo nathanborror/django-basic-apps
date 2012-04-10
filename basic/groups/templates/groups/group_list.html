@@ -32,7 +32,7 @@
       </ul>
     </div>
   {% endif %}
-  
+
   {% if user.is_authenticated %}
     <p><a class="button" href="{% url groups:create %}?next={{ request.path }}">Start a group</a></p>
   {% endif %}

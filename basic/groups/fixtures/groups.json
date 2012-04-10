@@ -1,64 +1,64 @@
 [
   {
-    "pk": 1, 
-    "model": "groups.group", 
+    "pk": 1,
+    "model": "groups.group",
     "fields": {
-      "tease": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", 
-      "creator": 100, 
-      "is_active": true, 
-      "modified": "2010-07-04 12:37:27", 
-      "created": "2010-07-04 00:33:59", 
-      "invite_only": false, 
-      "title": "Infinite Summer", 
-      "slug": "infinite-summer", 
+      "tease": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "creator": 100,
+      "is_active": true,
+      "modified": "2010-07-04 12:37:27",
+      "created": "2010-07-04 00:33:59",
+      "invite_only": false,
+      "title": "Infinite Summer",
+      "slug": "infinite-summer",
       "icon": ""
     }
-  }, 
+  },
   {
-    "pk": 1, 
-    "model": "groups.grouppage", 
+    "pk": 1,
+    "model": "groups.grouppage",
     "fields": {
-      "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 
-      "group": 1, 
-      "created": "2010-07-04 12:37:27", 
-      "title": "About", 
-      "modified": "2010-07-04 12:37:27", 
+      "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "group": 1,
+      "created": "2010-07-04 12:37:27",
+      "title": "About",
+      "modified": "2010-07-04 12:37:27",
       "slug": "about"
     }
-  }, 
+  },
   {
-    "pk": 1, 
-    "model": "groups.grouptopic", 
+    "pk": 1,
+    "model": "groups.grouptopic",
     "fields": {
-      "group": 1, 
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 
-      "created": "2010-07-04 00:38:12", 
-      "title": "I have a topic to talk about", 
-      "is_active": true, 
-      "modified": "2010-07-04 12:39:12", 
+      "group": 1,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "created": "2010-07-04 00:38:12",
+      "title": "I have a topic to talk about",
+      "is_active": true,
+      "modified": "2010-07-04 12:39:12",
       "user": 100
     }
-  }, 
+  },
   {
-    "pk": 1, 
-    "model": "groups.groupmessage", 
+    "pk": 1,
+    "model": "groups.groupmessage",
     "fields": {
-      "created": "2010-07-04 00:38:17", 
-      "is_active": true, 
-      "modified": "2010-07-04 00:38:17", 
-      "topic": 1, 
-      "user": 100, 
+      "created": "2010-07-04 00:38:17",
+      "is_active": true,
+      "modified": "2010-07-04 00:38:17",
+      "topic": 1,
+      "user": 100,
       "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
-  }, 
+  },
   {
-    "pk": 1, 
-    "model": "groups.groupmember", 
+    "pk": 1,
+    "model": "groups.groupmember",
     "fields": {
-      "status": 0, 
-      "group": 1, 
-      "user": 100, 
-      "modified": "2010-07-04 00:33:59", 
+      "status": 0,
+      "group": 1,
+      "user": 100,
+      "modified": "2010-07-04 00:33:59",
       "created": "2010-07-04 00:33:59"
     }
   }

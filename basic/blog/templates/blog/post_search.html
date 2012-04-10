@@ -18,11 +18,11 @@
       <input type="submit" class="button" value="{% trans "Search" %}">
     </p>
   </form>
-  
+
   {% if message %}
   <p class="message">{{ message }}</p>
   {% endif %}
-  
+
   {% if object_list %}
   <div class="post_list">
     {% for post in object_list %}

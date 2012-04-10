@@ -14,13 +14,13 @@
   {% load markup %}
   <h3>{{ object.full_title }}
     {% if object.subtitle %}<em>{{ object.subtitle }}</em>{% endif %}</h3>
-  
+
   {% if object.cover %}
   <a class="cover" href="{{ object.amazon_url }}"><img src="{{ object.cover.url }}" alt="Book cover"></a>
   {% else %}
   <div class="no_cover"></div>
   {% endif %}
-  
+
   <ul class="info_list">
     <li>Author{{ object.authors.all|pluralize }}: {% for author in object.authors.all %}<a href="{{ author.get_absolute_url }}">{{ author.full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</li>
     <li>Publisher: <a href="{{ object.publisher.get_absolute_url }}">{{ object.publisher.full_title }}</a></li>
@@ -29,14 +29,14 @@
     <li>Genre: {% for genre in object.genre.all %}{{ genre.title }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
     <li>ISBN: {{ object.isbn }} (<a href="{{ object.amazon_url }}">Amazon</a>)</li>
   </ul>
-  
+
   {% if object.description %}
   <div class="description">
     <h4>Description</h4>
     {{ object.description|markdown:"safe" }}
   </div>
   {% endif %}
-  
+
   {% if object.highlight_set.all %}
   <div class="highlights">
     <h4>Highlights</h4>

@@ -13,7 +13,7 @@
 
 {% block content %}
   <h3>{{ object.full_title }} <em><a href="{{ object.website }}">Website</a></em></h3>
-  
+
   {% if object.musicians.all %}
   <h4>Members</h4>
   <ul class="link_list">
@@ -22,7 +22,7 @@
     {% endfor %}
   </ul>
   {% endif %}
-  
+
   {% if object.album_set.all %}
   <h4>Albums</h4>
   <ul class="link_list">

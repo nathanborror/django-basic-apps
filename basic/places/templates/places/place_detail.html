@@ -33,7 +33,7 @@
     <li><a href="mailto:{{ object.email }}">Email</a></li>
     <li>Type: {% for type in object.place_types.all %}<a href="{{ type.get_absolute_url }}">{{ type }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</li>
   </ul>
-  
+
   {% if object.description %}
   <div class="description">
     <h3>Description</h3>

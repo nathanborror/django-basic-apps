@@ -11,7 +11,7 @@
 {% endblock %}
 
 
-{% block content %}  
+{% block content %}
   <ul class="link_list">
     {% for month in date_list %}
     <li><a href="{% url blog_index %}{{ year }}/{{ month|date:"b" }}/" title="{% trans "View items posted this month" %}">{{ month|date:"F" }}</a></li>

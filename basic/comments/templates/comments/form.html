@@ -1,7 +1,7 @@
 {% load stringutils comments i18n %}
 
 <form action="{% comment_form_target %}" method="post">{% csrf_token %}
-  
+
 
   {% for field in form %}
     {% if field.name == "honeypot" %}

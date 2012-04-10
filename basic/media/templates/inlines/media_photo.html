@@ -15,7 +15,7 @@
 {% else %}
 
 <div{% if class %} class="{{ class }}"{% endif %}>
-    {% for object in object_list %}    
+    {% for object in object_list %}
         <p class="photo">
             <a href="{% url photo_detail object.slug %}" title="{% trans "View the full image" %}"><img src="{{ settings.MEDIA_URL }}{{ object.photo }}" alt="{{ object }}" /></a>
         </p>
