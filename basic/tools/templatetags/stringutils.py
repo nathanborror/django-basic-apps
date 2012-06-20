@@ -36,12 +36,12 @@ def format_text(value):
 @register.filter
 def format_field(field):
     t = Template("""
-    <p class="ui-form-field" {% if field.is_hidden %} style="display:none;"{% endif %}>
+    <p class="ui-field{% if field.errors %} ui-error{% endif %}" {% if field.is_hidden %} style="display:none;"{% endif %}>
       {{ field.label_tag }}
-      <span class="ui-field">
+      <span class="field">
+        {% if field.errors %}<span class="ui-field-error">{{ field.errors|join:", " }}</span>{% endif %}
         {{ field }}
         {% if field.help_text %}<span class="ui-field-help">{{ field.help_text }}</span>{% endif %}
-        {% if field.errors %}<span class="ui-field-error">{{ field.errors|join:", " }}</span>{% endif %}
       </span>
     </p>
     """)
