@@ -1,12 +1,14 @@
 from django.conf.urls.defaults import *
 
 
+USERNAME = r'(?P<username>[-.\w]+)'
+
 urlpatterns = patterns('basic.profiles.views',
     url(r'^edit/$',
         view='profile_edit',
         name='profile_edit',
     ),
-    url(r'^(?P<username>[-\w]+)/$',
+    url(r'^%s/$' % USERNAME,
         view='profile_detail',
         name='profile_detail',
     ),
