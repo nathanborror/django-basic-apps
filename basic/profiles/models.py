@@ -110,7 +110,7 @@ class Link(models.Model):
     """Service type model"""
     profile = models.ForeignKey(Profile)
     title = models.CharField(_('title'), max_length=100)
-    url = models.URLField(_('url'), verify_exists=True)
+    url = models.URLField(_('url'))
 
     class Meta:
         verbose_name = _('link')

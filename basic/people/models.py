@@ -44,7 +44,7 @@ class Person(models.Model):
     mugshot_credit = models.CharField(_('mugshot credit'), blank=True, max_length=200)
     birth_date = models.DateField(_('birth date'), blank=True, null=True)
     person_types = models.ManyToManyField(PersonType, blank=True)
-    website = models.URLField(_('website'), blank=True, verify_exists=True)
+    website = models.URLField(_('website'), blank=True)
 
     class Meta:
         verbose_name = _('person')
