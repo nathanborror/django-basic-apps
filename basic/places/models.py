@@ -78,7 +78,7 @@ class Place(models.Model):
     nickname = models.CharField(_('nickname'), blank=True, max_length=100)
     unit = models.CharField(_('unit'), blank=True, max_length=100, help_text='Suite or Apartment #')
     phone = PhoneNumberField(_('phone'), blank=True)
-    url = models.URLField(_('url'), blank=True, verify_exists=False)
+    url = models.URLField(_('url'), blank=True)
     email = models.EmailField(_('email'), blank=True)
     description = models.TextField(_('description'), blank=True)
     status = models.IntegerField(_('status'), choices=STATUS_CHOICES, default=1)

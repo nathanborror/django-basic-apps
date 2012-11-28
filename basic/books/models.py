@@ -27,7 +27,7 @@ class Publisher(models.Model):
     title = models.CharField(max_length=100)
     prefix = models.CharField(max_length=20, blank=True)
     slug = models.SlugField(unique=True)
-    website = models.URLField(blank=True, verify_exists=False)
+    website = models.URLField(blank=True)
 
     class Meta:
         db_table = 'book_publishers'

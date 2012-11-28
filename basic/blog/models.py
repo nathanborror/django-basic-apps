@@ -79,7 +79,7 @@ class Post(models.Model):
 class BlogRoll(models.Model):
     """Other blogs you follow."""
     name = models.CharField(max_length=100)
-    url = models.URLField(verify_exists=False)
+    url = models.URLField()
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:

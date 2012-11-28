@@ -70,7 +70,7 @@ class MobileProvider(models.Model):
 class ServiceType(models.Model):
     """Service type model"""
     title = models.CharField(_('title'), blank=True, max_length=100)
-    url = models.URLField(_('url'), blank=True, help_text='URL with a single \'{user}\' placeholder to turn a username into a service URL.', verify_exists=False)
+    url = models.URLField(_('url'), blank=True, help_text='URL with a single \'{user}\' placeholder to turn a username into a service URL.')
 
     class Meta:
         verbose_name = _('service type')
