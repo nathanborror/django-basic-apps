@@ -1,7 +1,6 @@
 import re
 
 from django.template import Library, Template, Context
-from django.contrib.markup.templatetags.markup import markdown
 from django.template.defaultfilters import urlizetrunc
 from django.utils.safestring import mark_safe
 
@@ -30,7 +29,7 @@ def smarty(value):
 
 @register.filter
 def format_text(value):
-    return twitterize(urlizetrunc(markdown(value), 30))
+    return twitterize(urlizetrunc(value, 30))
 
 
 @register.filter
