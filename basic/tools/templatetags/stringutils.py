@@ -56,3 +56,8 @@ def format_fields(form):
     {% endfor %}
     """)
     return t.render(Context({'form': form}))
+
+
+@register.filter
+def placeholder(field, text):
+    return mark_safe(re.sub('<input ', '<input placeholder="%s" ' % text, field))
