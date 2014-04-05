@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
@@ -6,12 +6,13 @@ from basic.relationships.models import *
 
 
 class RelationshipTestCase(TestCase):
-    fixtures = ['users.json']
 
+    @override_settings(AUTH_USER_MODEL='auth.User')
     def setUp(self):
-        self.user1 = User.objects.get(username='nathanb')
-        self.user2 = User.objects.get(username='laurah')
-
+        self.user1 = User.objects.create_user('nathanb', email='nathanb@example.com', password='n')
+        self.user2 = User.objects.create_user('laurah', email='laurah@example.com', password='l')
+        
+    @override_settings(AUTH_USER_MODEL='auth.User')
     def test_follow(self):
         self.client.login(username=self.user1.username, password='n')
 
@@ -33,7 +34,8 @@ class RelationshipTestCase(TestCase):
 
         fans = Relationship.objects.get_fans_for_user(self.user2)
         self.assertEqual(len(fans), 1)
-
+        
+    @override_settings(AUTH_USER_MODEL='auth.User')
     def test_block(self):
         self.client.login(username=self.user1.username, password='n')
 
@@ -59,7 +61,8 @@ class RelationshipTestCase(TestCase):
 
         friends = Relationship.objects.get_friends_for_user(self.user2)
         self.assertEqual(len(friends), 0)
-    
+        
+    @override_settings(AUTH_USER_MODEL='auth.User')
     def test_following(self):
         kwargs = {'username': self.user1.username}
         
@@ -75,7 +78,8 @@ class RelationshipTestCase(TestCase):
         response = self.client.get(reverse('relationship_following', kwargs=kwargs))
         self.assertEqual(response.status_code, 200)
         self.assertEqual([following.id for following in response.context['page'].object_list], [self.user2.pk])
-    
+        
+    @override_settings(AUTH_USER_MODEL='auth.User')
     def test_followers(self):
         kwargs = {'username': self.user2.username}
         

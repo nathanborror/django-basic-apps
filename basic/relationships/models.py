@@ -1,5 +1,5 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
 from django.conf import settings
@@ -65,8 +65,8 @@ class RelationshipManager(models.Manager):
 
 class Relationship(models.Model):
     """Relationship model"""
-    from_user = models.ForeignKey(User, related_name='from_users')
-    to_user = models.ForeignKey(User, related_name='to_users')
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='from_users')
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='to_users')
     created = models.DateTimeField(auto_now_add=True)
     is_blocked = models.BooleanField(default=False)
     objects = RelationshipManager()
