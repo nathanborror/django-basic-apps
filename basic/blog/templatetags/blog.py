@@ -7,6 +7,7 @@ from django.db import models
 Post = models.get_model('blog', 'post')
 Category = models.get_model('blog', 'category')
 BlogRoll = models.get_model('blog', 'blogroll')
+TaggedItem = models.get_model('tagging', 'taggeditem')
 
 register = template.Library()
 
@@ -138,3 +139,42 @@ def get_blogroll(parser, token):
         raise template.TemplateSyntaxError, "%s tag had invalid arguments" % tag_name
     var_name = m.groups()[0]
     return BlogRolls(var_name)
+
+
+class RelatedPosts(template.Node):
+    def __init__(self, post, var_name="related_posts"):
+        self.post = template.Variable(post)
+        self.var_name = var_name
+
+    def render(self, context):
+        self.post = self.post.resolve(context)
+        rel_posts = TaggedItem.objects.get_related(self.post, Post)
+        context[self.var_name] = rel_posts
+        return ''
+
+
+@register.tag()
+def get_related_posts(parser, token):
+    """
+    Returns a queryset with all related posts that share at least
+    one tag with this post, ordered by major coincidence.
+    
+    Syntax::
+    
+        {% get_related_posts post_instance as related_posts %}
+        
+    """
+
+    bits = token.split_contents()
+    tag_name, bits = bits[0], bits[1:]
+
+    if (len(bits) == 3) and (bits[1] != 'as'):
+        # variable name passed
+        return RelatedPosts(bits[0], bits[2])
+    elif len(bits) == 1:
+        # default var name will be used
+        return RelatedPosts(bits[0])
+    else:
+        raise template.TemplateSyntaxError(
+            'get_related_posts usage is {%% get_related_posts post_object as related_posts %%}')
+get_related_posts.is_safe = True
