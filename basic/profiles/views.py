@@ -8,6 +8,19 @@ from django.core.urlresolvers import reverse
 from basic.profiles.models import *
 from basic.profiles.forms import *
 
+from django.core.exceptions import ObjectDoesNotExist
+
+def get_or_create_profile(user):
+    try:
+        #Update by Leon de Almeida:
+        #   enable profiles to be created automatically if they don't exist
+        #profile = user.get_profile()
+        profile = Profile.objects.get(user=user)
+    except ObjectDoesNotExist:
+        profile = Profile(user=user)
+        profile.save()
+        
+    return profile
 
 def profile_list(request):
     return list_detail.object_list(
@@ -23,7 +36,11 @@ def profile_detail(request, username):
         user = User.objects.get(username__iexact=username)
     except User.DoesNotExist:
         raise Http404
-    profile = Profile.objects.get(user=user)
+    
+    #Update by Leon de Almeida:
+    #   enable profiles to be created automatically if they don't exist
+    #profile = Profile.objects.get(user=user)
+    profile = get_or_create_profile(user=user)
     context = { 'object':profile }
     return render_to_response('profiles/profile_detail.html', context, context_instance=RequestContext(request))
 
@@ -33,7 +50,10 @@ def profile_edit(request, template_name='profiles/profile_form.html'):
     """Edit profile."""
 
     if request.POST:
-        profile = Profile.objects.get(user=request.user)
+        #Update by Leon de Almeida:
+        #   enable profiles to be created automatically if they don't exist
+        #profile = Profile.objects.get(user=request.user)
+        profile = get_or_create_profile(user=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
         user_form = UserForm(request.POST, instance=request.user)
         service_formset = ServiceFormSet(request.POST, instance=profile)
@@ -53,7 +73,10 @@ def profile_edit(request, template_name='profiles/profile_form.html'):
                 'link_formset': link_formset
             }
     else:
-        profile = Profile.objects.get(user=request.user)
+        #Update by Leon de Almeida:
+        #   enable profiles to be created automatically if they don't exist
+        #profile = Profile.objects.get(user=request.user)
+        profile = get_or_create_profile(user=request.user)
         service_formset = ServiceFormSet(instance=profile)
         link_formset = LinkFormSet(instance=profile)
         context = {
