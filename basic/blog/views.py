@@ -68,8 +68,10 @@ def post_detail(request, slug, year, month, day, **kwargs):
     unpublished post detail for previewing purposes.
     """
     posts = None
+    allow_future = False
     if request.user.is_superuser:
         posts = Post.objects.all()
+        allow_future = True
     else:
         posts = Post.objects.published()
     return date_based.object_detail(
@@ -80,6 +82,7 @@ def post_detail(request, slug, year, month, day, **kwargs):
         date_field='publish',
         slug=slug,
         queryset=posts,
+        allow_future=allow_future,
         **kwargs
     )
 post_detail.__doc__ = date_based.object_detail.__doc__
