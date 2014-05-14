@@ -1,3 +1,7 @@
 *.pyc
 *.db
 *.txt
+.tox
+dist
+MANIFEST
+*.egg-info

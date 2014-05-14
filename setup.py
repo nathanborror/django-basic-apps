@@ -1,5 +1,5 @@
 import os
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 
 def fullsplit(path, result=None):
@@ -35,4 +35,7 @@ setup(name='django-basic-apps',
     description='Django Basic Apps',
     author='Nathan Borror',
     url='http://github.com/nathanborror/django-basic-apps',
-    packages=packages)
+    package_data={'': ['*.html', '*.js', '*.css', '*.json']},
+    include_package_data=True,
+    packages=find_packages(),
+)

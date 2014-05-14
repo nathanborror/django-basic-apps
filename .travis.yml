@@ -1,0 +1,9 @@
+language: python
+
+python:
+  - 2.6
+  - 2.7
+
+before_install: pip install --use-mirrors Django django-registration django-tagging BeautifulSoup python-dateutil
+install: python setup.py install
+script: python test_environment/manage.py test --verbosity=2 bookmarks books comments events flagging inlines media movies music people places profiles relationships
