@@ -1,5 +1,7 @@
 from django import template
 from django.conf import settings
+import urllib
+
 register = template.Library()
 
 
@@ -23,7 +25,7 @@ def thumbnail(url, size='200x200'):
 
     if url.startswith(settings.MEDIA_URL):
         url = url[len(settings.MEDIA_URL):]
-    original_path = settings.MEDIA_ROOT + url
+    original_path = urllib.unquote(settings.MEDIA_ROOT + url)
 
     # Define the thumbnail's filename, file path, and URL.
     try:
