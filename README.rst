@@ -1,14 +1,14 @@
 =================
-Django Basic Apps
+DJANGO BASIC APPS
 =================
 
-Simple apps for Django projects.
+Simple and amazing apps for Django projects.
 
 To install any of the apps listed simply create a folder on your ``PYTHONPATH`` named 'basic' and place the apps you wish to use in that folder. Then added ``basic.<app_name>`` to your project's ``settings.py`` file. (replace <app_name> with the apps you wish to use, naturally).
 
 Below are a list of per app dependancies:
 
-Dependencies
+DEPENDENCIES
 ============
 
 * Basic Inlines are required to use the Blog app
@@ -19,7 +19,7 @@ Dependencies
 * Dateutil (http://labix.org/python-dateutil)
 * Django Registration for the invitations app
 
-Inlines
+INLINES
 =======
 
 Inlines is a template filter that can be used in
